@@ -28,7 +28,7 @@ Usage
 **NOTE**: this project may be moved to Github in future for easier usage. For now, use below instruction for local setup
 
 1. Checkout equinix-terraform-sdk
-2. In your project's `go.mod` use `replace` directive and point it out to  `ecx-go-client` directory from checked out repository
+2. In your project's `go.mod` use `replace` directive and point it out to  `ecx-go` directory from checked out repository
    ```
    require ecx-go/v3 v3.0.0
    replace ecx-go/v3 v3.0.0 => ../ecx-go
@@ -39,7 +39,7 @@ Usage
    ```
    import (
 	  "oauth2-go"
-	  "ecx-go-/v3"
+	  "ecx-go/v3"
    )
    ```
 
@@ -58,7 +58,7 @@ Usage
     ```
 4. Create ECX REST client with a given `baseURL` and oauth's `http.Client`
     ```
-    var ecxClient ecx.Client = ecx.NewClient(baseURL, ctx, authClient)
+    var ecxClient ecx.Client = ecx.NewClient(ctx, baseURL, authClient)
     ```
 5. Use ECX client to perform some operation `i.e. fetch`
     ```
