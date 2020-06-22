@@ -1,0 +1,99 @@
+{
+    "uuid": "8614a847-3ae1-4bb4-a9b6-287ff140ef7b",
+    "name": "Test",
+    "requiredRedundancy": false,
+    "connectionNameLabel": "Connection",
+    "equinixManagedPortAndVlan": false,
+    "apiAvailable": false,
+    "allowOverSubscription": false,
+    "vlanSameAsPrimary": false,
+    "tagType": "CTAGED",
+    "ctagLabel": "Seller-Side C-Tag",
+    "enableAutoGenerateServiceKey": false,
+    "onProfileApprovalRejectNotification": [
+        "John.Doe@example.com",
+        "Marry.Doe@example.com"
+    ],
+    "onBandwidthThresholdNotification": [
+        "John.Doe@example.com",
+        "Marry.Doe@example.com"
+    ],
+    "onVcApprovalRejectionNotification": [
+        "John.Doe@example.com",
+        "Marry.Doe@example.com"
+    ],
+    "ports": [
+        {
+            "id": "36c1ce48-e1b9-4dbb-891f-bb9db0a7940f",
+            "sellerRegion": null,
+            "sellerRegionDescription": null,
+            "metroCode": "LD",
+            "inTrail": null,
+            "crossConnectId": null,
+            "xa": null
+        },
+        {
+            "id": "a853da6d-7f0c-4972-af73-44f71c46259e",
+            "sellerRegion": null,
+            "sellerRegionDescription": null,
+            "metroCode": "LD",
+            "inTrail": null,
+            "crossConnectId": null,
+            "xa": null
+        },
+        {
+            "id": "3912a8c4-673f-432f-ae8e-ae878cc6feed",
+            "sellerRegion": null,
+            "sellerRegionDescription": null,
+            "metroCode": "FR",
+            "inTrail": null,
+            "crossConnectId": null,
+            "xa": null
+        }
+    ],
+    "allowCustomSpeed": false,
+    "speedFromAPI": false,
+    "connectionAccessibility": "HYBRID",
+    "speedBands": [
+        {
+            "speed": 200,
+            "unit": "MB"
+        },
+        {
+            "speed": 500,
+            "unit": "MB"
+        },
+        {
+            "speed": 1000,
+            "unit": "MB"
+        }
+    ],
+    "state": "DELETED",
+    "createdDate": "2020-05-07T10:26:13.536Z",
+    "createdBy": "John.Doe@example.com1",
+    "lastUpdatedDate": "2020-05-15T11:58:07.212Z",
+    "lastUpdatedBy": "John.Doe@example.com1",
+    "globalCustId": "0077000000538487UV",
+    "custOrgId": 101820,
+    "createdByFullName": "John Doe",
+    "lastUpdatedByFullName": "John Doe",
+    "createdByEmail": "John.Doe@example.com",
+    "updatedByEmail": "John.Doe@example.com",
+    "organizationName": "API Playground",
+    "allowHighAvailability": true,
+    "allowAuthorizationKeyReUse": true,
+    "allowSecondaryLocation": true,
+    "private": true,
+    "features": {
+        "cloudReach": false,
+        "testProfile": true
+    },
+    "alertPercentage": 20.0,
+    "authKeyLabel": "Virtual Circuit OCID",
+    "integrationId": "Example-company-CrossConnect-01",
+    "overSubscription": "5x",
+    "privateUserEmails": [
+        "John.Doe@example.com",
+        "Marry.Doe@example.com"
+    ]
+}
