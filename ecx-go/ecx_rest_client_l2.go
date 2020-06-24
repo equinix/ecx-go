@@ -74,6 +74,8 @@ func mapGETToL2Connection(getResponse api.L2ConnectionResponse) *L2Connection {
 		PortUUID:            getResponse.PortUUID,
 		VlanSTag:            getResponse.VlanSTag,
 		VlanCTag:            getResponse.VlanCTag,
+		NamedTag:            getResponse.NamedTag,
+		AdditionalInfo:      mapAdditionalInfoAPIToDomain(getResponse.AdditionalInfo),
 		ZSidePortUUID:       getResponse.ZSidePortUUID,
 		ZSideVlanSTag:       getResponse.ZSideVlanSTag,
 		ZSideVlanCTag:       getResponse.ZSideVlanCTag,
@@ -94,6 +96,8 @@ func createL2ConnectionRequest(l2connection L2Connection) api.L2ConnectionReques
 		PrimaryPortUUID:      l2connection.PortUUID,
 		PrimaryVlanSTag:      l2connection.VlanSTag,
 		PrimaryVlanCTag:      l2connection.VlanCTag,
+		NamedTag:             l2connection.NamedTag,
+		AdditionalInfo:       mapAdditionalInfoDomainToAPI(l2connection.AdditionalInfo),
 		PrimaryZSidePortUUID: l2connection.ZSidePortUUID,
 		PrimaryZSideVlanSTag: l2connection.ZSideVlanSTag,
 		PrimaryZSideVlanCTag: l2connection.ZSideVlanCTag,
@@ -112,4 +116,26 @@ func createL2RedundantConnectionRequest(primary L2Connection, secondary L2Connec
 	connReq.SecondaryZSideVlanSTag = secondary.ZSideVlanSTag
 	connReq.SecondaryZSideVlanCTag = secondary.ZSideVlanCTag
 	return connReq
+}
+
+func mapAdditionalInfoDomainToAPI(info []L2ConnectionAdditionalInfo) []api.L2ConnectionAdditionalInfo {
+	apiInfo := make([]api.L2ConnectionAdditionalInfo, len(info))
+	for i, v := range info {
+		apiInfo[i] = api.L2ConnectionAdditionalInfo{
+			Name:  v.Name,
+			Value: v.Value,
+		}
+	}
+	return apiInfo
+}
+
+func mapAdditionalInfoAPIToDomain(apiInfo []api.L2ConnectionAdditionalInfo) []L2ConnectionAdditionalInfo {
+	info := make([]L2ConnectionAdditionalInfo, len(apiInfo))
+	for i, v := range apiInfo {
+		info[i] = L2ConnectionAdditionalInfo{
+			Name:  v.Name,
+			Value: v.Value,
+		}
+	}
+	return info
 }

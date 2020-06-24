@@ -16,6 +16,25 @@ const (
 	baseURL = "http://localhost:8888"
 )
 
+var testPrimaryConnection = L2Connection{
+	Name:                "name",
+	ProfileUUID:         "profileUUID",
+	Speed:               666,
+	SpeedUnit:           "MB",
+	Notifications:       []string{"janek@equinix.com", "marek@equinix.com"},
+	PurchaseOrderNumber: "orderNumber",
+	PortUUID:            "primaryPortUUID",
+	VlanSTag:            100,
+	VlanCTag:            101,
+	NamedTag:            "Private",
+	AdditionalInfo:      []L2ConnectionAdditionalInfo{{Name: "asn", Value: "1543"}, {Name: "global", Value: "false"}},
+	ZSidePortUUID:       "primaryZSidePortUUID",
+	ZSideVlanSTag:       200,
+	ZSideVlanCTag:       201,
+	SellerRegion:        "EMEA",
+	SellerMetroCode:     "AM",
+	AuthorizationKey:    "authorizationKey"}
+
 func TestGetL2Connection(t *testing.T) {
 	//Given
 	respBody := api.L2ConnectionResponse{}
@@ -61,22 +80,7 @@ func TestCreateL2Connection(t *testing.T) {
 		},
 	)
 	defer httpmock.DeactivateAndReset()
-	newConnection := L2Connection{
-		Name:                "name",
-		ProfileUUID:         "profileUUID",
-		Speed:               666,
-		SpeedUnit:           "MB",
-		Notifications:       []string{"janek@equinix.com", "marek@equinix.com"},
-		PurchaseOrderNumber: "orderNumber",
-		PortUUID:            "primaryPortUUID",
-		VlanSTag:            100,
-		VlanCTag:            101,
-		ZSidePortUUID:       "primaryZSidePortUUID",
-		ZSideVlanSTag:       200,
-		ZSideVlanCTag:       201,
-		SellerRegion:        "EMEA",
-		SellerMetroCode:     "AM",
-		AuthorizationKey:    "authorizationKey"}
+	newConnection := testPrimaryConnection
 
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
@@ -108,22 +112,7 @@ func TestCreateRedundantL2Connection(t *testing.T) {
 		},
 	)
 	defer httpmock.DeactivateAndReset()
-	newPriConn := L2Connection{
-		Name:                "name",
-		ProfileUUID:         "profileUUID",
-		Speed:               666,
-		SpeedUnit:           "MB",
-		Notifications:       []string{"janek@equinix.com", "marek@equinix.com"},
-		PurchaseOrderNumber: "orderNumber",
-		PortUUID:            "primaryPortUUID",
-		VlanSTag:            100,
-		VlanCTag:            101,
-		ZSidePortUUID:       "primaryZSidePortUUID",
-		ZSideVlanSTag:       200,
-		ZSideVlanCTag:       201,
-		SellerRegion:        "EMEA",
-		SellerMetroCode:     "AM",
-		AuthorizationKey:    "authorizationKey"}
+	newPriConn := testPrimaryConnection
 	newSecConn := L2Connection{
 		Name:          "secName",
 		PortUUID:      "secondaryPortUUID",
@@ -181,12 +170,18 @@ func verifyL2Connection(t *testing.T, conn L2Connection, resp api.L2ConnectionRe
 	assert.Equal(t, resp.PortUUID, conn.PortUUID, "PrimaryPortUUID matches")
 	assert.Equal(t, resp.VlanSTag, conn.VlanSTag, "PrimaryVlanSTag matches")
 	assert.Equal(t, resp.VlanCTag, conn.VlanCTag, "PrimaryVlanCTag matches")
+	assert.Equal(t, resp.NamedTag, conn.NamedTag, "NamedTag matches")
 	assert.Equal(t, resp.ZSidePortUUID, conn.ZSidePortUUID, "PrimaryZSidePortUUID matches")
 	assert.Equal(t, resp.ZSideVlanSTag, conn.ZSideVlanSTag, "PrimaryZSideVlanSTag matches")
 	assert.Equal(t, resp.ZSideVlanCTag, conn.ZSideVlanCTag, "PrimaryZSideVlanCTag matches")
 	assert.Equal(t, resp.SellerMetroCode, conn.SellerMetroCode, "SellerMetroCode matches")
 	assert.Equal(t, resp.AuthorizationKey, conn.AuthorizationKey, "AuthorizationKey matches")
 	assert.Equal(t, resp.RedundantUUID, conn.RedundantUUID, "RedundantUUID key matches")
+
+	assert.Equal(t, len(resp.AdditionalInfo), len(conn.AdditionalInfo), "AdditionalInfo array size matches")
+	for i := range resp.AdditionalInfo {
+		verifyL2ConnectionAdditionalInfo(t, conn.AdditionalInfo[i], resp.AdditionalInfo[i])
+	}
 }
 
 func verifyL2ConnectionRequest(t *testing.T, conn L2Connection, req api.L2ConnectionRequest) {
@@ -199,12 +194,18 @@ func verifyL2ConnectionRequest(t *testing.T, conn L2Connection, req api.L2Connec
 	assert.Equal(t, conn.PortUUID, req.PrimaryPortUUID, "PrimaryPortUUID matches")
 	assert.Equal(t, conn.VlanSTag, req.PrimaryVlanSTag, "PrimaryVlanSTag matches")
 	assert.Equal(t, conn.VlanCTag, req.PrimaryVlanCTag, "PrimaryVlanCTag matches")
+	assert.Equal(t, conn.NamedTag, req.NamedTag, "NamedTag matches")
 	assert.Equal(t, conn.ZSidePortUUID, req.PrimaryZSidePortUUID, "PrimaryZSidePortUUID matches")
 	assert.Equal(t, conn.ZSideVlanSTag, req.PrimaryZSideVlanSTag, "PrimaryZSideVlanSTag matches")
 	assert.Equal(t, conn.ZSideVlanCTag, req.PrimaryZSideVlanCTag, "PrimaryZSideVlanCTag matches")
 	assert.Equal(t, conn.SellerRegion, req.SellerRegion, "SellerRegion matches")
 	assert.Equal(t, conn.SellerMetroCode, req.SellerMetroCode, "SellerMetroCode matches")
 	assert.Equal(t, conn.AuthorizationKey, req.AuthorizationKey, "Authorization key matches")
+
+	assert.Equal(t, len(conn.AdditionalInfo), len(req.AdditionalInfo), "AdditionalInfo array size matches")
+	for i := range conn.AdditionalInfo {
+		verifyL2ConnectionAdditionalInfo(t, conn.AdditionalInfo[i], req.AdditionalInfo[i])
+	}
 }
 
 func verifyRedundantL2ConnectionRequest(t *testing.T, primary L2Connection, secondary L2Connection, req api.L2ConnectionRequest) {
@@ -216,4 +217,9 @@ func verifyRedundantL2ConnectionRequest(t *testing.T, primary L2Connection, seco
 	assert.Equal(t, secondary.ZSidePortUUID, req.SecondaryZSidePortUUID, "SecondaryZSidePortUUID matches")
 	assert.Equal(t, secondary.ZSideVlanSTag, req.SecondaryZSideVlanSTag, "SecondaryZSideVlanSTag matches")
 	assert.Equal(t, secondary.ZSideVlanCTag, req.SecondaryZSideVlanCTag, "SecondaryZSideVlanCTag matches")
+}
+
+func verifyL2ConnectionAdditionalInfo(t *testing.T, info L2ConnectionAdditionalInfo, apiInfo api.L2ConnectionAdditionalInfo) {
+	assert.Equal(t, info.Name, apiInfo.Name, "Name matches")
+	assert.Equal(t, info.Value, apiInfo.Value, "Value matches")
 }

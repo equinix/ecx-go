@@ -35,6 +35,8 @@ type L2Connection struct {
 	PortUUID            string
 	VlanSTag            int
 	VlanCTag            int
+	NamedTag            string
+	AdditionalInfo      []L2ConnectionAdditionalInfo
 	ZSidePortUUID       string
 	ZSideVlanSTag       int
 	ZSideVlanCTag       int
@@ -42,6 +44,12 @@ type L2Connection struct {
 	SellerMetroCode     string
 	AuthorizationKey    string
 	RedundantUUID       string
+}
+
+//L2ConnectionAdditionalInfo additional info object used in L2 connections
+type L2ConnectionAdditionalInfo struct {
+	Name  string
+	Value string
 }
 
 //L2ServiceProfile describes layer 2 service profile managed by ECX Farbic

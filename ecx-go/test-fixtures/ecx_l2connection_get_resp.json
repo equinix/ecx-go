@@ -43,5 +43,16 @@
     "remote": true,
     "private": false,
     "self": false,
-    "redundantUUID": "a653087c-f128-41d9-967d-c718223a72d6"
+    "redundantUUID": "a653087c-f128-41d9-967d-c718223a72d6",
+    "namedTag": "Private",
+    "additionalInfo": [
+        {
+            "name": "global",
+            "value": "false"
+        },
+        {
+            "name": "ASN",
+            "value": "345"
+        }
+    ]
 }
