@@ -71,18 +71,20 @@ func transformErrorBody(body []byte) RestError {
 
 func mapErrorAPIToDomain(apiError api.ErrorResponse) RestError {
 	return RestError{
-		Message: apiError.ErrorMessage,
+		Message: fmt.Sprintf("[Error: Property: '%v', %v]", apiError.Property, apiError.ErrorMessage),
 		Errors:  []Error{{apiError.ErrorCode, apiError.ErrorMessage}},
 	}
 }
 
 func mapErrorsAPIToDomain(apiErrors api.ErrorResponses) RestError {
 	errors := make([]Error, len(apiErrors))
+	msg := ""
 	for i, v := range apiErrors {
 		errors[i] = Error{v.ErrorCode, v.ErrorMessage}
+		msg = msg + fmt.Sprintf(" [Error %v: Property: '%v', %v]", i+1, v.Property, v.ErrorMessage)
 	}
 	return RestError{
-		Message: "Multiple errors occured",
+		Message: "Multiple errors occured: " + msg,
 		Errors:  errors,
 	}
 }
