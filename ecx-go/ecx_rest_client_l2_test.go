@@ -158,6 +158,44 @@ func TestDeleteL2Connection(t *testing.T) {
 	assert.Nil(t, err, "Client should not return an error")
 }
 
+func TestUpdateL2Connection(t *testing.T) {
+	//Given
+	respBody := api.L2ConnectionUpdateResponse{}
+	if err := readJSONData("./test-fixtures/ecx_l2connection_update_resp.json", &respBody); err != nil {
+		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+	}
+	connID := "connId"
+	newName := "newConnName"
+	newSpeed := 500
+	newSpeedUnit := "MB"
+	reqBody := api.L2ConnectionUpdateRequest{}
+	testHc := &http.Client{}
+	httpmock.ActivateNonDefault(testHc)
+	httpmock.RegisterResponder("PATCH", fmt.Sprintf("%s/ecx/v3/l2/connections/%s?action=update", baseURL, connID),
+		func(r *http.Request) (*http.Response, error) {
+			if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
+				return httpmock.NewStringResponse(400, ""), nil
+			}
+			resp, _ := httpmock.NewJsonResponse(200, respBody)
+			return resp, nil
+		},
+	)
+	defer httpmock.DeactivateAndReset()
+
+	//When
+	c := NewClient(context.Background(), baseURL, testHc)
+	err := c.NewL2ConnectionUpdateRequest(connID).
+		WithName(newName).
+		WithBandwidth(newSpeed, newSpeedUnit).
+		Execute()
+
+	//Then
+	assert.Nil(t, err, "Client should not return an error")
+	assert.Equal(t, newName, reqBody.Name, "Name matches")
+	assert.Equal(t, newSpeed, reqBody.Speed, "Speed matches")
+	assert.Equal(t, newSpeedUnit, reqBody.SpeedUnit, "SpeedUnit matches")
+}
+
 func verifyL2Connection(t *testing.T, conn L2Connection, resp api.L2ConnectionResponse) {
 	assert.Equal(t, resp.UUID, conn.UUID, "UUID matches")
 	assert.Equal(t, resp.Name, conn.Name, "Name matches")

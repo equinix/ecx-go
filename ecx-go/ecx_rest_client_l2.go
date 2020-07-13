@@ -8,6 +8,14 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
+type restL2ConnectionUpdateRequest struct {
+	uuid      string
+	name      string
+	speed     int
+	speedUnit string
+	c         RestClient
+}
+
 //GetL2Connection operation retrieves layer 2 connection with a given UUID
 func (c RestClient) GetL2Connection(uuid string) (*L2Connection, error) {
 	url := fmt.Sprintf("%s/ecx/v3/l2/connections/%s", c.baseURL, url.PathEscape(uuid))
@@ -57,6 +65,46 @@ func (c RestClient) DeleteL2Connection(uuid string) error {
 	req := c.R().SetResult(&respBody)
 	if err := c.execute(req, resty.MethodDelete, url); err != nil {
 		return err
+	}
+	return nil
+}
+
+//NewL2ConnectionUpdateRequest creates new composite update request for a connection with a given UUID
+func (c RestClient) NewL2ConnectionUpdateRequest(uuid string) L2ConnectionUpdateRequest {
+	return &restL2ConnectionUpdateRequest{
+		uuid: uuid,
+		c:    c,
+	}
+}
+
+//WithName sets new connection name in a composite connection update request
+func (req *restL2ConnectionUpdateRequest) WithName(name string) L2ConnectionUpdateRequest {
+	req.name = name
+	return req
+}
+
+//WithBandwidth sets new connection bandwidth in a composite connection update request
+func (req *restL2ConnectionUpdateRequest) WithBandwidth(speed int, speedUnit string) L2ConnectionUpdateRequest {
+	req.speed = speed
+	req.speedUnit = speedUnit
+	return req
+}
+
+//Execute attempts to update connection according new data set in composite update request.
+//This is not atomic operation and if any update will fail, other changes won't be reverted.
+//UpdateError will be returned if any of requested data failed to update
+func (req *restL2ConnectionUpdateRequest) Execute() error {
+	url := fmt.Sprintf("%s/ecx/v3/l2/connections/%s", req.c.baseURL, url.PathEscape(req.uuid))
+	reqBody := api.L2ConnectionUpdateRequest{
+		Name:      req.name,
+		Speed:     req.speed,
+		SpeedUnit: req.speedUnit,
+	}
+	if req.name != "" || (req.speed > 0 && req.speedUnit != "") {
+		restReq := req.c.R().SetQueryParam("action", "update").SetBody(&reqBody)
+		if err := req.c.execute(restReq, resty.MethodPatch, url); err != nil {
+			return err
+		}
 	}
 	return nil
 }

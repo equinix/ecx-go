@@ -71,3 +71,17 @@ type L2ConnectionAdditionalInfo struct {
 	Name  string `json:"name,omitempty"`
 	Value string `json:"value,omitempty"`
 }
+
+//L2ConnectionUpdateRequest describes layer2 connection update request
+type L2ConnectionUpdateRequest struct {
+	Name      string `json:"connectionNewName,omitempty"`
+	Speed     int    `json:"speed,omitempty"`
+	SpeedUnit string `json:"speedUnit,omitempty"`
+}
+
+//L2ConnectionUpdateRequest describes layer2 connection update response
+type L2ConnectionUpdateResponse struct {
+	Message             string `json:"message,omitempty"`
+	PrimaryConnectionID string `json:"primaryConnectionId,omitempty"`
+	Status              string `json:"status,omitempty"`
+}
