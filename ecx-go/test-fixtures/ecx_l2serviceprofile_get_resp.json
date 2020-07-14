@@ -1,6 +1,7 @@
 {
     "uuid": "8614a847-3ae1-4bb4-a9b6-287ff140ef7b",
     "name": "Test",
+    "description": "Test profile",
     "requiredRedundancy": false,
     "connectionNameLabel": "Connection",
     "equinixManagedPortAndVlan": false,

@@ -56,6 +56,7 @@ var testProfile = L2ServiceProfile{
 	SpeedFromAPI:      false,
 	TagType:           "tagType",
 	VlanSameAsPrimary: false,
+	Description:       "Test profile",
 }
 
 func TestGetL2ServiceProfile(t *testing.T) {
@@ -80,7 +81,6 @@ func TestGetL2ServiceProfile(t *testing.T) {
 	//Then
 	assert.Nil(t, err, "Client should not return an error")
 	assert.NotNil(t, prof, "Client should return a response")
-	//verifyL2ServiceProfileResponse(t, serverResp, *resp)
 	verifyL2ServiceProfile(t, *prof, respBody)
 }
 
@@ -194,6 +194,7 @@ func verifyL2ServiceProfile(t *testing.T, prof L2ServiceProfile, resp api.L2Serv
 	assert.Equal(t, resp.SpeedFromAPI, prof.SpeedFromAPI, "SpeedFromAPI matches")
 	assert.Equal(t, resp.TagType, prof.TagType, "TagType matches")
 	assert.Equal(t, resp.VlanSameAsPrimary, prof.VlanSameAsPrimary, "VlanSameAsPrimary matches")
+	assert.Equal(t, resp.Description, prof.Description, "Description matches")
 
 	assert.Equal(t, resp.Features.CloudReach, prof.Features.CloudReach, "Features.CloudReach matches")
 	assert.Equal(t, resp.Features.TestProfile, prof.Features.TestProfile, "Features.TestProfile matches")
@@ -206,12 +207,6 @@ func verifyL2ServiceProfile(t *testing.T, prof L2ServiceProfile, resp api.L2Serv
 		assert.Equal(t, resp.SpeedBands[i].Speed, prof.SpeedBands[i].Speed, fmt.Sprintf("SpeedBands[%v].Speed matches", i))
 		assert.Equal(t, resp.SpeedBands[i].SpeedUnit, prof.SpeedBands[i].SpeedUnit, fmt.Sprintf("SpeedBands[%v].SpeedUnit matches", i))
 	}
-}
-
-func verifyL2ServiceProfileResponse(t *testing.T, prof L2ServiceProfile, resp api.L2ServiceProfile) {
-	assert.Equal(t, resp.UUID, prof.UUID, "UUID matches")
-	assert.Equal(t, resp.UUID, prof.State, "State matches")
-	verifyL2ServiceProfile(t, prof, resp)
 }
 
 func verifyL2ServiceProfileUpdate(t *testing.T, prof L2ServiceProfile, req api.L2ServiceProfile) {

@@ -88,6 +88,7 @@ func mapL2ServiceProfileDomainToAPI(l2profile L2ServiceProfile) api.L2ServicePro
 		SpeedFromAPI:                        l2profile.SpeedFromAPI,
 		TagType:                             l2profile.TagType,
 		VlanSameAsPrimary:                   l2profile.VlanSameAsPrimary,
+		Description:                         l2profile.Description,
 	}
 }
 
@@ -119,6 +120,7 @@ func mapL2ServiceProfileAPIToDomain(apiProfile api.L2ServiceProfile) *L2ServiceP
 		SpeedFromAPI:                        apiProfile.SpeedFromAPI,
 		TagType:                             apiProfile.TagType,
 		VlanSameAsPrimary:                   apiProfile.VlanSameAsPrimary,
+		Description:                         apiProfile.Description,
 	}
 }
 

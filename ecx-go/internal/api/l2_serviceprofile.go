@@ -28,6 +28,7 @@ type L2ServiceProfile struct {
 	SpeedFromAPI                        bool                        `json:"speedFromAPI"`
 	TagType                             string                      `json:"tagType,omitempty"`
 	VlanSameAsPrimary                   bool                        `json:"vlanSameAsPrimary"`
+	Description                         string                      `json:"description,omitempty"`
 }
 
 //L2ServiceProfileDeleteResponse delete l2 service profile response

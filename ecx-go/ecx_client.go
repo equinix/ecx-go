@@ -88,6 +88,7 @@ type L2ServiceProfile struct {
 	SpeedFromAPI                        bool
 	TagType                             string
 	VlanSameAsPrimary                   bool
+	Description                         string
 }
 
 //L2ServiceProfilePort describes port used in L2 service profile
