@@ -8,6 +8,7 @@ type Client interface {
 	CreateL2RedundantConnection(priConn L2Connection, secConn L2Connection) (*L2Connection, error)
 	NewL2ConnectionUpdateRequest(uuid string) L2ConnectionUpdateRequest
 	DeleteL2Connection(uuid string) error
+	ConfirmL2Connection(uuid string, confirmConn L2ConnectionToConfirm) (*L2ConnectionConfirmation, error)
 
 	GetL2ServiceProfile(uuid string) (*L2ServiceProfile, error)
 	CreateL2ServiceProfile(sp L2ServiceProfile) (*L2ServiceProfile, error)
@@ -30,7 +31,7 @@ type Error struct {
 	ErrorMessage string
 }
 
-//L2Connection describes layer 2 connection managed by ECX Farbic
+//L2Connection describes layer 2 connection managed by ECX Fabric
 type L2Connection struct {
 	UUID                string
 	Name                string
@@ -60,7 +61,19 @@ type L2ConnectionAdditionalInfo struct {
 	Value string
 }
 
-//L2ServiceProfile describes layer 2 service profile managed by ECX Farbic
+//L2ConnectionToConfirm accepts the hosted connection in the seller side
+type L2ConnectionToConfirm struct {
+	AccessKey string
+	SecretKey string
+}
+
+//L2ConnectionConfirmation describes a connection confirmed
+type L2ConnectionConfirmation struct {
+	PrimaryConnectionID string
+	Message             string
+}
+
+//L2ServiceProfile describes layer 2 service profile managed by ECX Fabric
 type L2ServiceProfile struct {
 	UUID                                string
 	State                               string
