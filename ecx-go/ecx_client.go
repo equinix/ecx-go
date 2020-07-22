@@ -3,6 +3,8 @@ package ecx
 
 //Client describes operations provided by ECX Fabric client module
 type Client interface {
+	GetUserPort(name string) (*Port, error)
+
 	GetL2Connection(uuid string) (*L2Connection, error)
 	CreateL2Connection(conn L2Connection) (*L2Connection, error)
 	CreateL2RedundantConnection(priConn L2Connection, secConn L2Connection) (*L2Connection, error)
@@ -120,4 +122,18 @@ type L2ServiceProfileSpeedBand struct {
 type L2ServiceProfileFeatures struct {
 	CloudReach  bool
 	TestProfile bool
+}
+
+//Port describes ECX Fabric's user port
+type Port struct {
+	UUID          string
+	Name          string
+	Region        string
+	IBX           string
+	MetroCode     string
+	Priority      string
+	Encapsulation string
+	Buyout        bool
+	Bandwidth     string
+	Status        string
 }
