@@ -18,7 +18,6 @@ func TestGetUserPort(t *testing.T) {
 	if err := readJSONData("./test-fixtures/ecx_ports_get.json", &respBody); err != nil {
 		assert.Failf(t, "Cannont read test response due to %s", err.Error())
 	}
-	portName := "sit-001-CX-SV1-NL-Dot1q-BO-10G-PRI-JUN-35"
 	testHc := &http.Client{}
 	httpmock.ActivateNonDefault(testHc)
 	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/ecx/v3/port/userport", baseURL),
@@ -29,15 +28,14 @@ func TestGetUserPort(t *testing.T) {
 	)
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
-	port, err := ecxClient.GetUserPort(portName)
+	ports, err := ecxClient.GetUserPorts()
 
 	//Then
 	assert.Nil(t, err, "Client should not return an error")
-	assert.NotNil(t, port, "Client should return a response")
-	for _, v := range respBody {
-		if v.Name == portName {
-			verifyPort(t, *port, v)
-		}
+	assert.NotNil(t, ports, "Client should return a response")
+	assert.Equal(t, len(respBody), len(ports), "Client returned valid number of ports")
+	for i := range ports {
+		verifyPort(t, ports[i], respBody[i])
 	}
 }
 

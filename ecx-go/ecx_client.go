@@ -3,8 +3,7 @@ package ecx
 
 //Client describes operations provided by ECX Fabric client module
 type Client interface {
-	GetUserPort(name string) (*Port, error)
-
+	GetUserPorts() ([]Port, error)
 	GetL2Connection(uuid string) (*L2Connection, error)
 	CreateL2Connection(conn L2Connection) (*L2Connection, error)
 	CreateL2RedundantConnection(priConn L2Connection, secConn L2Connection) (*L2Connection, error)
@@ -12,6 +11,7 @@ type Client interface {
 	DeleteL2Connection(uuid string) error
 	ConfirmL2Connection(uuid string, confirmConn L2ConnectionToConfirm) (*L2ConnectionConfirmation, error)
 
+	GetL2SellerProfiles() ([]L2ServiceProfile, error)
 	GetL2ServiceProfile(uuid string) (*L2ServiceProfile, error)
 	CreateL2ServiceProfile(sp L2ServiceProfile) (*L2ServiceProfile, error)
 	UpdateL2ServiceProfile(sp L2ServiceProfile) (*L2ServiceProfile, error)

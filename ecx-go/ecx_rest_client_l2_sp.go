@@ -4,9 +4,32 @@ import (
 	"ecx-go/v3/internal/api"
 	"fmt"
 	"net/url"
+	"strconv"
 
 	"github.com/go-resty/resty/v2"
 )
+
+//GetL2SellerProfiles operations retrievies available layer2 seller service profiles
+func (c RestClient) GetL2SellerProfiles() ([]L2ServiceProfile, error) {
+	url := fmt.Sprintf("%s/ecx/v3/l2/serviceprofiles/services", c.baseURL)
+	respBody := api.L2SellerProfilesResponse{}
+	req := c.R().SetResult(&respBody)
+	if err := c.execute(req, resty.MethodGet, url); err != nil {
+		return nil, err
+	}
+	content := make([]api.L2ServiceProfile, 0, respBody.TotalCount)
+	content = append(content, respBody.Content...)
+	isLast := respBody.IsLastPage
+	for pageNum := 1; !isLast; pageNum++ {
+		req := c.R().SetResult(&respBody).SetQueryParam("pageNumber", strconv.Itoa(pageNum))
+		if err := c.execute(req, resty.MethodGet, url); err != nil {
+			return nil, err
+		}
+		content = append(content, respBody.Content...)
+		isLast = respBody.IsLastPage
+	}
+	return mapL2SellerProfilesAPIToDomain(content), nil
+}
 
 //GetL2ServiceProfile operation retrieves layer 2 servie profile with a given UUID
 func (c RestClient) GetL2ServiceProfile(uuid string) (*L2ServiceProfile, error) {
@@ -180,4 +203,12 @@ func mapSpeedBandsAPIToDomain(apiBands []api.L2ServiceProfileSpeedBand) []L2Serv
 		}
 	}
 	return bands
+}
+
+func mapL2SellerProfilesAPIToDomain(apiProfiles []api.L2ServiceProfile) []L2ServiceProfile {
+	transformed := make([]L2ServiceProfile, len(apiProfiles))
+	for i := range apiProfiles {
+		transformed[i] = *mapL2ServiceProfileAPIToDomain(apiProfiles[i])
+	}
+	return transformed
 }

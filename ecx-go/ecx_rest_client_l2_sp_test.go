@@ -59,6 +59,40 @@ var testProfile = L2ServiceProfile{
 	Description:       "Test profile",
 }
 
+func TestGetL2SellerProfiles(t *testing.T) {
+	//Given
+	respBodyOne := api.L2SellerProfilesResponse{}
+	if err := readJSONData("./test-fixtures/ecx_l2sellerprofile_get_p0.json", &respBodyOne); err != nil {
+		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+	}
+	respBodyTwo := api.L2SellerProfilesResponse{}
+	if err := readJSONData("./test-fixtures/ecx_l2sellerprofile_get_p1.json", &respBodyTwo); err != nil {
+		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+	}
+	testHc := &http.Client{}
+	httpmock.ActivateNonDefault(testHc)
+	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/ecx/v3/l2/serviceprofiles/services", baseURL),
+		func(r *http.Request) (*http.Response, error) {
+			resp, _ := httpmock.NewJsonResponse(200, respBodyOne)
+			return resp, nil
+		},
+	)
+	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/ecx/v3/l2/serviceprofiles/services?pageNumber=1", baseURL),
+		func(r *http.Request) (*http.Response, error) {
+			resp, _ := httpmock.NewJsonResponse(200, respBodyTwo)
+			return resp, nil
+		},
+	)
+	//When
+	ecxClient := NewClient(context.Background(), baseURL, testHc)
+	profiles, err := ecxClient.GetL2SellerProfiles()
+
+	//Then
+	assert.Nil(t, err, "Client should not return an error")
+	assert.NotNil(t, profiles, "Client should return a response")
+	assert.Equal(t, respBodyOne.TotalCount, len(profiles))
+}
+
 func TestGetL2ServiceProfile(t *testing.T) {
 	//Given
 	respBody := api.L2ServiceProfile{}

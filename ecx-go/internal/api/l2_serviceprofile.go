@@ -59,3 +59,12 @@ type L2ServiceProfileFeatures struct {
 type CreateL2ServiceProfileResponse struct {
 	UUID string `json:"uuid,omitempty"`
 }
+
+//L2SellerProfilesResponse response with list of l2 selller profiles
+type L2SellerProfilesResponse struct {
+	IsLastPage  bool               `json:"isLastPage"`
+	IsFirstPage bool               `json:"isFirstPage"`
+	TotalCount  int                `json:"totalCount,omitempty"`
+	PageSize    int                `json:"PageSize,omitempty"`
+	Content     []L2ServiceProfile `json:"content,omitempty"`
+}
