@@ -11,35 +11,28 @@ Library gives possibility to create L2 connections and service profiles on Equin
 
 Features
 ------------------
-Client library consumes ECX Fabric's REST API version 3 and allows to:
-- authenticate and obtain bearer tokens from Equinix's oAuth token endpoint
-- manage ECX L2 connections
+Client library consumes ECX Fabric's REST API and allows to:
+- manage ECXF L2 connections
   - retrieve L2 connection details
   - create non redundant L2 connection
   - create redundant L2 connection
   - delete L2 connection
-- manage ECX L2 service profiles
+  - update L2 connection (name and speed)
+- manage ECXF L2 service profiles
+- retrieve list of ECXF user ports
+- retrieve list of ECXF L2 seller profiles
 
 **NOTE**: scope of this library is limited to needs of Terraform provider plugin and it is not providing full capabilities of ECXF API
 
 Usage
 ------------------
-### Project setup
-**NOTE**: this project may be moved to Github in future for easier usage. For now, use below instruction for local setup
-
-1. Checkout equinix-terraform-sdk
-2. In your project's `go.mod` use `replace` directive and point it out to  `ecx-go` directory from checked out repository
-   ```
-   require ecx-go/v3 v3.0.0
-   replace ecx-go/v3 v3.0.0 => ../ecx-go
-   ```
-
 ### Code
-1. Add ecx-go modules to import statement
+1. Add ecx-go module to import statement.
+   In below example, Equinix `oauth2-go` module is imported as well
    ```
    import (
-	  "oauth2-go"
-	  "ecx-go/v3"
+	  "github.com/equinix/oauth2-go"
+	  "github.com/equinix/ecx-go"
    )
    ```
 

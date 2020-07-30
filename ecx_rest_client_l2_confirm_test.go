@@ -2,17 +2,17 @@ package ecx
 
 import (
 	"context"
-	"ecx-go/v3/internal/api"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"testing"
 
+	"github.com/equinix/ecx-go/internal/api"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 )
 
-var testConnectionToConfirm = L2ConnectionToConfirm {
+var testConnectionToConfirm = L2ConnectionToConfirm{
 	AccessKey: "accessKey",
 	SecretKey: "secretKey",
 }
@@ -39,7 +39,7 @@ func TestConfirmL2Connection(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 	connectionToConfirm := testConnectionToConfirm
 
-    //When
+	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
 	confirmation, err := ecxClient.ConfirmL2Connection(connID, connectionToConfirm)
 

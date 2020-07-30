@@ -2,12 +2,12 @@ package ecx
 
 import (
 	"context"
-	"ecx-go/v3/internal/api"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"testing"
 
+	"github.com/equinix/ecx-go/internal/api"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 )

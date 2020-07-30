@@ -1,10 +1,10 @@
 package ecx
 
 import (
-	"ecx-go/v3/internal/api"
 	"fmt"
 	"net/url"
 
+	"github.com/equinix/ecx-go/internal/api"
 	"github.com/go-resty/resty/v2"
 )
 

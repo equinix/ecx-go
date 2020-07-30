@@ -1,4 +1,4 @@
-module ecx-go/v3
+module github.com/equinix/ecx-go
 
 go 1.14
 

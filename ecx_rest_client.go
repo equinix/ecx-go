@@ -2,11 +2,11 @@ package ecx
 
 import (
 	"context"
-	"ecx-go/v3/internal/api"
 	"encoding/json"
 	"fmt"
 	"net/http"
 
+	"github.com/equinix/ecx-go/internal/api"
 	"github.com/go-resty/resty/v2"
 )
 
