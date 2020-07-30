@@ -1,0 +1,7 @@
+{
+  "errorCode": "IC-LAYER2-PROFILE-009",
+  "errorMessage": "Seller region required",
+  "moreInfo": "",
+  "errorMessageKey": "IC-LAYER2.IC-LAYER2-PROFILE-009",
+  "property": "sellerRegion"
+}
