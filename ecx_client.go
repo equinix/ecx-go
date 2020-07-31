@@ -44,6 +44,7 @@ type L2Connection struct {
 	Notifications       []string
 	PurchaseOrderNumber string
 	PortUUID            string
+	DeviceUUID          string
 	VlanSTag            int
 	VlanCTag            int
 	NamedTag            string

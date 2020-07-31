@@ -24,6 +24,7 @@ var testPrimaryConnection = L2Connection{
 	Notifications:       []string{"janek@equinix.com", "marek@equinix.com"},
 	PurchaseOrderNumber: "orderNumber",
 	PortUUID:            "primaryPortUUID",
+	DeviceUUID:          "primaryDeviceUUID",
 	VlanSTag:            100,
 	VlanCTag:            101,
 	NamedTag:            "Private",
@@ -116,6 +117,7 @@ func TestCreateRedundantL2Connection(t *testing.T) {
 	newSecConn := L2Connection{
 		Name:          "secName",
 		PortUUID:      "secondaryPortUUID",
+		DeviceUUID:    "secondaryDeviceUUID",
 		VlanSTag:      690,
 		VlanCTag:      691,
 		ZSidePortUUID: "secondaryZSidePortUUID",
@@ -230,6 +232,7 @@ func verifyL2ConnectionRequest(t *testing.T, conn L2Connection, req api.L2Connec
 	assert.ElementsMatch(t, conn.Notifications, req.Notifications, "Notifications match")
 	assert.Equal(t, conn.PurchaseOrderNumber, req.PurchaseOrderNumber, "PurchaseOrderNumber matches")
 	assert.Equal(t, conn.PortUUID, req.PrimaryPortUUID, "PrimaryPortUUID matches")
+	assert.Equal(t, conn.DeviceUUID, req.VirtualDeviceUUID, "VirtualDeviceUUID matches")
 	assert.Equal(t, conn.VlanSTag, req.PrimaryVlanSTag, "PrimaryVlanSTag matches")
 	assert.Equal(t, conn.VlanCTag, req.PrimaryVlanCTag, "PrimaryVlanCTag matches")
 	assert.Equal(t, conn.NamedTag, req.NamedTag, "NamedTag matches")
@@ -250,6 +253,7 @@ func verifyRedundantL2ConnectionRequest(t *testing.T, primary L2Connection, seco
 	verifyL2ConnectionRequest(t, primary, req)
 	assert.Equal(t, secondary.Name, req.SecondaryName, "SecondaryName matches")
 	assert.Equal(t, secondary.PortUUID, req.SecondaryPortUUID, "SecondaryPortUUID matches")
+	assert.Equal(t, secondary.DeviceUUID, req.SecondaryVirtualDeviceUUID, "SecondaryVirtualDeviceUUID matches")
 	assert.Equal(t, secondary.VlanSTag, req.SecondaryVlanSTag, "SecondaryVlanSTag matches")
 	assert.Equal(t, secondary.VlanCTag, req.SecondaryVlanCTag, "SecondaryVlanCTag matches")
 	assert.Equal(t, secondary.ZSidePortUUID, req.SecondaryZSidePortUUID, "SecondaryZSidePortUUID matches")

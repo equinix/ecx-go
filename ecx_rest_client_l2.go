@@ -142,6 +142,7 @@ func createL2ConnectionRequest(l2connection L2Connection) api.L2ConnectionReques
 		Notifications:        l2connection.Notifications,
 		PurchaseOrderNumber:  l2connection.PurchaseOrderNumber,
 		PrimaryPortUUID:      l2connection.PortUUID,
+		VirtualDeviceUUID:    l2connection.DeviceUUID,
 		PrimaryVlanSTag:      l2connection.VlanSTag,
 		PrimaryVlanCTag:      l2connection.VlanCTag,
 		NamedTag:             l2connection.NamedTag,
@@ -158,6 +159,7 @@ func createL2RedundantConnectionRequest(primary L2Connection, secondary L2Connec
 	connReq := createL2ConnectionRequest(primary)
 	connReq.SecondaryName = secondary.Name
 	connReq.SecondaryPortUUID = secondary.PortUUID
+	connReq.SecondaryVirtualDeviceUUID = secondary.DeviceUUID
 	connReq.SecondaryVlanSTag = secondary.VlanSTag
 	connReq.SecondaryVlanCTag = secondary.VlanCTag
 	connReq.SecondaryZSidePortUUID = secondary.ZSidePortUUID
