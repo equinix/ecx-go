@@ -120,6 +120,7 @@ func mapGETToL2Connection(getResponse api.L2ConnectionResponse) *L2Connection {
 		Notifications:       getResponse.Notifications,
 		PurchaseOrderNumber: getResponse.PurchaseOrderNumber,
 		PortUUID:            getResponse.PortUUID,
+		DeviceUUID:          getResponse.VirtualDeviceUUID,
 		VlanSTag:            getResponse.VlanSTag,
 		VlanCTag:            getResponse.VlanCTag,
 		NamedTag:            getResponse.NamedTag,

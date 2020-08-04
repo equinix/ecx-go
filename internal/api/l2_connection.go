@@ -11,6 +11,7 @@ type L2ConnectionResponse struct {
 	Notifications       []string                     `json:"notifications"`
 	PurchaseOrderNumber string                       `json:"purchaseOrderNumber"`
 	PortUUID            string                       `json:"portUUID,omitempty"`
+	VirtualDeviceUUID   string                       `json:"virtualDeviceUUID,omitempty"`
 	VlanSTag            int                          `json:"vlanSTag,omitempty"`
 	VlanCTag            int                          `json:"vlanCTag,omitempty"`
 	NamedTag            string                       `json:"namedTag,omitempty"`
@@ -39,7 +40,7 @@ type L2ConnectionRequest struct {
 	Notifications              []string                     `json:"notifications"`
 	PurchaseOrderNumber        string                       `json:"purchaseOrderNumber"`
 	PrimaryPortUUID            string                       `json:"primaryPortUUID,omitempty"`
-	VirtualDeviceUUID          string                       `json:"VirtualDeviceUUID,omitempty"`
+	VirtualDeviceUUID          string                       `json:"virtualDeviceUUID,omitempty"`
 	PrimaryVlanSTag            int                          `json:"primaryVlanSTag,omitempty"`
 	PrimaryVlanCTag            int                          `json:"primaryVlanCTag,omitempty"`
 	NamedTag                   string                       `json:"namedTag,omitempty"`

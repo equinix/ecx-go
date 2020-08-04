@@ -6,6 +6,8 @@
     "vlanSTag": 775,
     "portUUID": "febc9d80-11e0-4dc8-8eb8-c41b6b378df2",
     "portName": "1-DC5-Qinq-NL-Primary-161318",
+    "virtualDeviceName": "sowmya-velopri",
+    "virtualDeviceUUID": "afac0049-7020-428e-99d5-6a079b646f58",
     "asideEncapsulation": "qinq",
     "zsideEncapsulation": "dot1q",
     "metroCode": "DC",
