@@ -241,6 +241,19 @@ func verifyL2ServiceProfile(t *testing.T, prof L2ServiceProfile, resp api.L2Serv
 		assert.Equal(t, resp.SpeedBands[i].Speed, prof.SpeedBands[i].Speed, fmt.Sprintf("SpeedBands[%v].Speed matches", i))
 		assert.Equal(t, resp.SpeedBands[i].SpeedUnit, prof.SpeedBands[i].SpeedUnit, fmt.Sprintf("SpeedBands[%v].SpeedUnit matches", i))
 	}
+	for i := range resp.Metros {
+		assert.Equal(t, resp.Metros[i].Code, prof.Metros[i].Code, fmt.Sprintf("Metros[%v].Code matches", i))
+		assert.Equal(t, resp.Metros[i].Name, prof.Metros[i].Name, fmt.Sprintf("Metros[%v].Name matches", i))
+		assert.ElementsMatch(t, resp.Metros[i].IBXs, prof.Metros[i].IBXes, fmt.Sprintf("Metros[%v].IBXs matches", i))
+		assert.Equal(t, resp.Metros[i].Regions, prof.Metros[i].Regions, fmt.Sprintf("Metros[%v].Regions matches", i))
+	}
+	for i := range resp.AdditionalInfos {
+		assert.Equal(t, resp.AdditionalInfos[i].Name, prof.AdditionalInfos[i].Name, fmt.Sprintf("AdditionalInfos[%v].Name matches", i))
+		assert.Equal(t, resp.AdditionalInfos[i].Description, prof.AdditionalInfos[i].Description, fmt.Sprintf("AdditionalInfos[%v].Description matches", i))
+		assert.Equal(t, resp.AdditionalInfos[i].DataType, prof.AdditionalInfos[i].DataType, fmt.Sprintf("AdditionalInfos[%v].DataType matches", i))
+		assert.Equal(t, resp.AdditionalInfos[i].Mandatory, prof.AdditionalInfos[i].IsMandatory, fmt.Sprintf("Mandatory[%v].DataType matches", i))
+		assert.Equal(t, resp.AdditionalInfos[i].CaptureInEmail, prof.AdditionalInfos[i].IsCaptureInEmail, fmt.Sprintf("Mandatory[%v].IsCaptureInEmail matches", i))
+	}
 }
 
 func verifyL2ServiceProfileUpdate(t *testing.T, prof L2ServiceProfile, req api.L2ServiceProfile) {

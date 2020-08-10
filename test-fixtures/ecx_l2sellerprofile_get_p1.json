@@ -5,111 +5,10 @@
     "pageSize": 4,
     "content": [
         {
-            "uuid": "aa52f03e-3999-4679-8c14-a982dfc79d33",
-            "name": "L2-QnQ-Red-Genseller",
-            "connectionNameLabel": "Connection",
-            "requiredRedundancy": true,
-            "allowCustomSpeed": false,
-            "speedBands": [
-                {
-                    "speed": 50,
-                    "unit": "MB"
-                },
-                {
-                    "speed": 200,
-                    "unit": "MB"
-                },
-                {
-                    "speed": 500,
-                    "unit": "MB"
-                },
-                {
-                    "speed": 1000,
-                    "unit": "MB"
-                },
-                {
-                    "speed": 5,
-                    "unit": "GB"
-                }
-            ],
-            "description": "layer 2, QnQ, with redundancy requirement",
-            "metros": [
-                {
-                    "code": "SV",
-                    "name": "Silicon Valley",
-                    "ibxs": [
-                        "SV5"
-                    ],
-                    "displayName": "Silicon Valley"
-                },
-                {
-                    "code": "CH",
-                    "name": "Chicago",
-                    "ibxs": [
-                        "CH1"
-                    ],
-                    "displayName": "Chicago"
-                },
-                {
-                    "code": "LD",
-                    "name": "London",
-                    "ibxs": [
-                        "LD5",
-                        "LD4"
-                    ],
-                    "displayName": "London"
-                },
-                {
-                    "code": "ME",
-                    "name": "Melbourne",
-                    "ibxs": [
-                        "ME1"
-                    ],
-                    "displayName": "Melbourne"
-                },
-                {
-                    "code": "DA",
-                    "name": "Dallas",
-                    "ibxs": [
-                        "DA1"
-                    ],
-                    "displayName": "Dallas"
-                },
-                {
-                    "code": "DC",
-                    "name": "Ashburn",
-                    "ibxs": [
-                        "DC11",
-                        "DC5"
-                    ],
-                    "displayName": "Ashburn"
-                }
-            ],
-            "createdDate": "2020-07-21T06:42:13.737Z",
-            "createdBy": "genseller1",
-            "lastUpdatedDate": "2020-07-21T20:28:04.768Z",
-            "lastUpdatedBy": "genseller1",
-            "vlanSameAsPrimary": false,
-            "tagType": "CTAGED",
-            "apiAvailable": false,
-            "selfProfile": false,
-            "speedFromAPI": false,
-            "profileEncapsulation": "Qinq",
-            "organizationName": "gen-seller",
-            "allowHighAvailability": true,
-            "allowAuthorizationKeyReUse": true,
-            "allowSecondaryLocation": true,
-            "integrated": false,
-            "private": false,
-            "features": {
-                "cloudReach": true,
-                "testProfile": false
-            }
-        },
-        {
-            "uuid": "6ff69373-0d98-4881-a102-8041f3915526",
-            "name": "L2-QnQ-No-Red-Genseller",
-            "connectionNameLabel": "Connection",
+            "uuid": "bb9a0e43-3f9f-478e-8e64-74591fd8fd83",
+            "name": "AWS Direct Connect",
+            "authKeyLabel": "AWS ACCOUNT ID",
+            "connectionNameLabel": "Virtual Circuit Name",
             "requiredRedundancy": false,
             "allowCustomSpeed": false,
             "speedBands": [
@@ -118,6 +17,92 @@
                     "unit": "MB"
                 },
                 {
+                    "speed": 100,
+                    "unit": "MB"
+                },
+                {
+                    "speed": 200,
+                    "unit": "MB"
+                },
+                {
+                    "speed": 300,
+                    "unit": "MB"
+                },
+                {
+                    "speed": 400,
+                    "unit": "MB"
+                },
+                {
+                    "speed": 500,
+                    "unit": "MB"
+                }
+            ],
+            "description": "You must have AWS Account ID to create Layer 2 connection to Amazon - AWS Direct Connect",
+            "metros": [
+                {
+                    "code": "SV",
+                    "name": "Silicon Valley",
+                    "ibxs": [
+                        "SV5",
+                        "SV1"
+                    ],
+                    "displayName": "Silicon Valley",
+                    "sellerRegions": {
+                        "us-west-1": "US West N.California"
+                    }
+                },
+                {
+                    "code": "DC",
+                    "name": "Ashburn",
+                    "ibxs": [
+                        "DC6",
+                        "DC5"
+                    ],
+                    "displayName": "Ashburn",
+                    "sellerRegions": {
+                        "us-east-1": "US East - N.Virginia"
+                    }
+                }
+            ],
+            "createdDate": "2020-06-26T22:13:13.110Z",
+            "createdBy": "awsuser01",
+            "lastUpdatedDate": "2020-06-30T17:01:40.917Z",
+            "lastUpdatedBy": "awsuser01",
+            "vlanSameAsPrimary": false,
+            "tagType": "CTAGED",
+            "apiAvailable": true,
+            "selfProfile": false,
+            "speedFromAPI": false,
+            "profileEncapsulation": "Dot1q",
+            "globalOrganization": "AWS",
+            "organizationName": "aws",
+            "allowHighAvailability": true,
+            "allowAuthorizationKeyReUse": true,
+            "allowSecondaryLocation": true,
+            "integrated": true,
+            "private": false,
+            "features": {
+                "cloudReach": true,
+                "testProfile": false
+            }
+        },
+        {
+            "uuid": "2dedda43-16ea-4507-a99e-14459475d18b",
+            "name": "IBM Cloud Direct Link Exchange",
+            "authKeyLabel": "IBM Cloud Account ID",
+            "connectionNameLabel": "Name Of Direct Link Connection",
+            "requiredRedundancy": false,
+            "allowCustomSpeed": false,
+            "speedBands": [
+                {
+                    "speed": 50,
+                    "unit": "MB"
+                },
+                {
+                    "speed": 100,
+                    "unit": "MB"
+                },
+                {
                     "speed": 200,
                     "unit": "MB"
                 },
@@ -126,116 +111,120 @@
                     "unit": "MB"
                 },
                 {
-                    "speed": 1000,
+                    "speed": 1,
+                    "unit": "GB"
+                },
+                {
+                    "speed": 5,
+                    "unit": "GB"
+                },
+                {
+                    "speed": 2,
+                    "unit": "GB"
+                }
+            ],
+            "additionalBuyerInfo": [
+                {
+                    "name": "Global",
+                    "description": "Global Data Center Peering Connection",
+                    "mandatory": false,
+                    "datatype": "BOOLEAN",
+                    "captureInEmail": false
+                },
+                {
+                    "name": "ASN",
+                    "description": "Default(64999) OR 2-byte range, 1-64495 OR 4-byte range, 131072-4199999999 OR 4201000000-4201064511.",
+                    "mandatory": true,
+                    "datatype": "INTEGER",
+                    "captureInEmail": false
+                }
+            ],
+            "metros": [
+                {
+                    "code": "SV",
+                    "name": "Silicon Valley",
+                    "ibxs": [
+                        "SV5",
+                        "SV1"
+                    ],
+                    "displayName": "Silicon Valley",
+                    "sellerRegions": {
+                        "Frankfurt 3": "EU - Frankfurt"
+                    }
+                }
+            ],
+            "createdDate": "2020-06-26T22:57:17.837Z",
+            "createdBy": "ibmuser01",
+            "lastUpdatedDate": "2020-08-03T19:37:21.110Z",
+            "lastUpdatedBy": "ibmuser01",
+            "vlanSameAsPrimary": false,
+            "tagType": "CTAGED",
+            "apiAvailable": true,
+            "selfProfile": false,
+            "speedFromAPI": false,
+            "profileEncapsulation": "Dot1q",
+            "globalOrganization": "IBM",
+            "organizationName": "ibm-200131",
+            "allowHighAvailability": true,
+            "allowAuthorizationKeyReUse": true,
+            "allowSecondaryLocation": true,
+            "integrated": true,
+            "private": false,
+            "features": {
+                "cloudReach": true,
+                "testProfile": false
+            }
+        },
+        {
+            "uuid": "5205a692-fb52-43fa-bdf9-9896654ef043",
+            "name": "Google Cloud Partner Interconnect Zone 1",
+            "authKeyLabel": "Google Pairing Key - Ends with /1",
+            "connectionNameLabel": "Connection Name",
+            "requiredRedundancy": false,
+            "allowCustomSpeed": false,
+            "speedBands": [
+                {
+                    "speed": 50,
                     "unit": "MB"
+                },
+                {
+                    "speed": 100,
+                    "unit": "MB"
+                },
+                {
+                    "speed": 200,
+                    "unit": "MB"
+                },
+                {
+                    "speed": 300,
+                    "unit": "MB"
+                },
+                {
+                    "speed": 400,
+                    "unit": "MB"
+                },
+                {
+                    "speed": 500,
+                    "unit": "MB"
+                },
+                {
+                    "speed": 1,
+                    "unit": "GB"
+                },
+                {
+                    "speed": 2,
+                    "unit": "GB"
+                },
+                {
+                    "speed": 5,
+                    "unit": "GB"
                 },
                 {
                     "speed": 10,
                     "unit": "GB"
                 }
             ],
-            "description": "Layer 2, QnQ, Non redundant service profile",
-            "metros": [
-                {
-                    "code": "SV",
-                    "name": "Silicon Valley",
-                    "ibxs": [
-                        "SV5"
-                    ],
-                    "displayName": "Silicon Valley"
-                },
-                {
-                    "code": "CH",
-                    "name": "Chicago",
-                    "ibxs": [
-                        "CH1"
-                    ],
-                    "displayName": "Chicago"
-                },
-                {
-                    "code": "LD",
-                    "name": "London",
-                    "ibxs": [
-                        "LD5",
-                        "LD4"
-                    ],
-                    "displayName": "London"
-                },
-                {
-                    "code": "ME",
-                    "name": "Melbourne",
-                    "ibxs": [
-                        "ME1"
-                    ],
-                    "displayName": "Melbourne"
-                },
-                {
-                    "code": "DA",
-                    "name": "Dallas",
-                    "ibxs": [
-                        "DA1"
-                    ],
-                    "displayName": "Dallas"
-                },
-                {
-                    "code": "DC",
-                    "name": "Ashburn",
-                    "ibxs": [
-                        "DC11",
-                        "DC5"
-                    ],
-                    "displayName": "Ashburn"
-                }
-            ],
-            "createdDate": "2020-07-21T06:39:16.878Z",
-            "createdBy": "genseller1",
-            "lastUpdatedDate": "2020-07-21T20:27:50.546Z",
-            "lastUpdatedBy": "genseller1",
-            "vlanSameAsPrimary": false,
-            "tagType": "CTAGED",
-            "apiAvailable": false,
-            "selfProfile": false,
-            "speedFromAPI": false,
-            "profileEncapsulation": "Qinq",
-            "organizationName": "gen-seller",
-            "allowHighAvailability": true,
-            "allowAuthorizationKeyReUse": true,
-            "allowSecondaryLocation": true,
-            "integrated": false,
-            "private": false,
-            "features": {
-                "cloudReach": true,
-                "testProfile": false
-            }
-        },
-        {
-            "uuid": "f6e1f06b-43bf-4875-bca1-9c9d5cb78a3e",
-            "name": "L2-Dot1q-Red-Genseller",
-            "connectionNameLabel": "Connection",
-            "requiredRedundancy": true,
-            "allowCustomSpeed": false,
-            "speedBands": [
-                {
-                    "speed": 50,
-                    "unit": "MB"
-                },
-                {
-                    "speed": 200,
-                    "unit": "MB"
-                },
-                {
-                    "speed": 500,
-                    "unit": "MB"
-                },
-                {
-                    "speed": 1000,
-                    "unit": "MB"
-                },
-                {
-                    "speed": 5,
-                    "unit": "GB"
-                }
-            ],
+            "description": "<p>Google Cloud Partner Interconnect offers layer 2 connectivity to your projects in Google Compute Engine. This is the zone 1 connection only for use with Google Pairing keys which end with 1. More information and instructions found <a href=\"https://equinix.box.com/v/GCI-Partner-PDF\" target=\"_blank\">here</a>.</p>",
             "metros": [
                 {
                     "code": "SV",
@@ -244,56 +233,29 @@
                         "SV5",
                         "SV1"
                     ],
-                    "displayName": "Silicon Valley"
-                },
-                {
-                    "code": "CH",
-                    "name": "Chicago",
-                    "ibxs": [
-                        "CH2"
-                    ],
-                    "displayName": "Chicago"
-                },
-                {
-                    "code": "ME",
-                    "name": "Melbourne",
-                    "ibxs": [
-                        "ME1"
-                    ],
-                    "displayName": "Melbourne"
-                },
-                {
-                    "code": "AM",
-                    "name": "Amsterdam",
-                    "ibxs": [
-                        "AM3"
-                    ],
-                    "displayName": "Amsterdam"
-                },
-                {
-                    "code": "DA",
-                    "name": "Dallas",
-                    "ibxs": [
-                        "DA1"
-                    ],
-                    "displayName": "Dallas"
+                    "displayName": "Silicon Valley",
+                    "sellerRegions": {
+                        "us-west1": "US West 1"
+                    }
                 }
             ],
-            "createdDate": "2020-07-21T06:50:48.150Z",
-            "createdBy": "genseller1",
-            "lastUpdatedDate": "2020-07-21T06:56:19.149Z",
-            "lastUpdatedBy": "eqx-admin",
+            "createdDate": "2020-06-26T22:24:26.715Z",
+            "createdBy": "googleuser1",
+            "lastUpdatedDate": "2020-07-31T23:52:38.690Z",
+            "lastUpdatedBy": "googleuser1",
             "vlanSameAsPrimary": false,
             "tagType": "CTAGED",
-            "apiAvailable": false,
+            "apiAvailable": true,
             "selfProfile": false,
             "speedFromAPI": false,
             "profileEncapsulation": "Dot1q",
-            "organizationName": "gen-seller",
+            "globalOrganization": "GOOGLE",
+            "organizationName": "google-200051",
             "allowHighAvailability": true,
-            "allowAuthorizationKeyReUse": true,
+            "allowAuthorizationKeyReUse": false,
             "allowSecondaryLocation": true,
-            "integrated": false,
+            "redundantProfileId": "63b0f340-c1b3-4c6d-a54f-b2a3813a00bb",
+            "integrated": true,
             "private": false,
             "features": {
                 "cloudReach": true,
@@ -301,9 +263,10 @@
             }
         },
         {
-            "uuid": "7cc071bc-e860-4068-8f0f-5316a09ecb34",
-            "name": "L2-Dot1q-No-Red-Genseller",
-            "connectionNameLabel": "Connection",
+            "uuid": "63b0f340-c1b3-4c6d-a54f-b2a3813a00bb",
+            "name": "Google Cloud Partner Interconnect Zone 2",
+            "authKeyLabel": "Google Pairing Key - Ends with /2",
+            "connectionNameLabel": "Connection Name",
             "requiredRedundancy": false,
             "allowCustomSpeed": false,
             "speedBands": [
@@ -312,7 +275,19 @@
                     "unit": "MB"
                 },
                 {
+                    "speed": 100,
+                    "unit": "MB"
+                },
+                {
                     "speed": 200,
+                    "unit": "MB"
+                },
+                {
+                    "speed": 300,
+                    "unit": "MB"
+                },
+                {
+                    "speed": 400,
                     "unit": "MB"
                 },
                 {
@@ -320,14 +295,23 @@
                     "unit": "MB"
                 },
                 {
-                    "speed": 1000,
-                    "unit": "MB"
+                    "speed": 1,
+                    "unit": "GB"
+                },
+                {
+                    "speed": 2,
+                    "unit": "GB"
                 },
                 {
                     "speed": 5,
                     "unit": "GB"
+                },
+                {
+                    "speed": 10,
+                    "unit": "GB"
                 }
             ],
+            "description": "<p>Google Cloud Partner Interconnect offers layer 2 connectivity to your projects in Google Compute Engine. This is the zone 2 connection only for use with Google Pairing keys which end with 2. More information and instructions found <a href=\"https://equinix.box.com/v/GCI-Partner-PDF\" target=\"_blank\">here</a>.</p>",
             "metros": [
                 {
                     "code": "SV",
@@ -336,56 +320,29 @@
                         "SV5",
                         "SV1"
                     ],
-                    "displayName": "Silicon Valley"
-                },
-                {
-                    "code": "CH",
-                    "name": "Chicago",
-                    "ibxs": [
-                        "CH2"
-                    ],
-                    "displayName": "Chicago"
-                },
-                {
-                    "code": "ME",
-                    "name": "Melbourne",
-                    "ibxs": [
-                        "ME1"
-                    ],
-                    "displayName": "Melbourne"
-                },
-                {
-                    "code": "AM",
-                    "name": "Amsterdam",
-                    "ibxs": [
-                        "AM3"
-                    ],
-                    "displayName": "Amsterdam"
-                },
-                {
-                    "code": "DA",
-                    "name": "Dallas",
-                    "ibxs": [
-                        "DA1"
-                    ],
-                    "displayName": "Dallas"
+                    "displayName": "Silicon Valley",
+                    "sellerRegions": {
+                        "us-west1": "US West 1"
+                    }
                 }
             ],
-            "createdDate": "2020-07-21T06:53:06.655Z",
-            "createdBy": "genseller1",
-            "lastUpdatedDate": "2020-07-21T06:56:04.150Z",
-            "lastUpdatedBy": "eqx-admin",
+            "createdDate": "2020-06-26T22:25:35.771Z",
+            "createdBy": "googleuser1",
+            "lastUpdatedDate": "2020-07-31T22:25:04.456Z",
+            "lastUpdatedBy": "googleuser1",
             "vlanSameAsPrimary": false,
             "tagType": "CTAGED",
-            "apiAvailable": false,
+            "apiAvailable": true,
             "selfProfile": false,
             "speedFromAPI": false,
             "profileEncapsulation": "Dot1q",
-            "organizationName": "gen-seller",
+            "globalOrganization": "GOOGLE",
+            "organizationName": "google-200051",
             "allowHighAvailability": true,
-            "allowAuthorizationKeyReUse": true,
+            "allowAuthorizationKeyReUse": false,
             "allowSecondaryLocation": true,
-            "integrated": false,
+            "redundantProfileId": "5205a692-fb52-43fa-bdf9-9896654ef043",
+            "integrated": true,
             "private": false,
             "features": {
                 "cloudReach": true,

@@ -105,6 +105,8 @@ type L2ServiceProfile struct {
 	TagType                             string
 	VlanSameAsPrimary                   bool
 	Description                         string
+	Metros                              []L2SellerProfileMetro
+	AdditionalInfos                     []L2SellerProfileAdditionalInfo
 }
 
 //L2ServiceProfilePort describes port used in L2 service profile
@@ -137,4 +139,21 @@ type Port struct {
 	Buyout        bool
 	Bandwidth     string
 	Status        string
+}
+
+//L2SellerProfileMetro describces details of a metro in which service provices is present
+type L2SellerProfileMetro struct {
+	Code    string
+	Name    string
+	IBXes   []string
+	Regions map[string]string
+}
+
+//L2SellerProfileAdditionalInfo describces additional information that might be provided by service buyer when using given seller profile
+type L2SellerProfileAdditionalInfo struct {
+	Name             string
+	Description      string
+	DataType         string
+	IsMandatory      bool
+	IsCaptureInEmail bool
 }

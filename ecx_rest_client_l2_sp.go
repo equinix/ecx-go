@@ -144,6 +144,8 @@ func mapL2ServiceProfileAPIToDomain(apiProfile api.L2ServiceProfile) *L2ServiceP
 		TagType:                             apiProfile.TagType,
 		VlanSameAsPrimary:                   apiProfile.VlanSameAsPrimary,
 		Description:                         apiProfile.Description,
+		Metros:                              mapL2SellerProfileMetrosAPIToDomain(apiProfile.Metros),
+		AdditionalInfos:                     mapL2SellerProfileAdditionalInfosAPIToDomain(apiProfile.AdditionalInfos),
 	}
 }
 
@@ -209,6 +211,31 @@ func mapL2SellerProfilesAPIToDomain(apiProfiles []api.L2ServiceProfile) []L2Serv
 	transformed := make([]L2ServiceProfile, len(apiProfiles))
 	for i := range apiProfiles {
 		transformed[i] = *mapL2ServiceProfileAPIToDomain(apiProfiles[i])
+	}
+	return transformed
+}
+
+func mapL2SellerProfileMetrosAPIToDomain(apiMetros []api.L2SellerProfileMetro) []L2SellerProfileMetro {
+	transformed := make([]L2SellerProfileMetro, len(apiMetros))
+	for i := range apiMetros {
+		transformed[i] = L2SellerProfileMetro{
+			Code:    apiMetros[i].Code,
+			Name:    apiMetros[i].Name,
+			IBXes:   apiMetros[i].IBXs,
+			Regions: apiMetros[i].Regions}
+	}
+	return transformed
+}
+
+func mapL2SellerProfileAdditionalInfosAPIToDomain(apiInfos []api.L2SellerProfileAdditionalInfo) []L2SellerProfileAdditionalInfo {
+	transformed := make([]L2SellerProfileAdditionalInfo, len(apiInfos))
+	for i := range apiInfos {
+		transformed[i] = L2SellerProfileAdditionalInfo{
+			Name:             apiInfos[i].Name,
+			Description:      apiInfos[i].Description,
+			DataType:         apiInfos[i].DataType,
+			IsMandatory:      apiInfos[i].Mandatory,
+			IsCaptureInEmail: apiInfos[i].CaptureInEmail}
 	}
 	return transformed
 }
