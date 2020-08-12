@@ -254,6 +254,9 @@ func verifyL2ServiceProfile(t *testing.T, prof L2ServiceProfile, resp api.L2Serv
 		assert.Equal(t, resp.AdditionalInfos[i].Mandatory, prof.AdditionalInfos[i].IsMandatory, fmt.Sprintf("Mandatory[%v].DataType matches", i))
 		assert.Equal(t, resp.AdditionalInfos[i].CaptureInEmail, prof.AdditionalInfos[i].IsCaptureInEmail, fmt.Sprintf("Mandatory[%v].IsCaptureInEmail matches", i))
 	}
+	assert.Equal(t, resp.ProfileEncapsulation, prof.Encapsulation, "ProfileEncapsulation matches")
+	assert.Equal(t, resp.OrganizationName, prof.OrganizationName, "OrganizationName matches")
+	assert.Equal(t, resp.GlobalOrganization, prof.GlobalOrganization, "GlobalOrganization matches")
 }
 
 func verifyL2ServiceProfileUpdate(t *testing.T, prof L2ServiceProfile, req api.L2ServiceProfile) {

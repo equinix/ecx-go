@@ -107,6 +107,9 @@ type L2ServiceProfile struct {
 	Description                         string
 	Metros                              []L2SellerProfileMetro
 	AdditionalInfos                     []L2SellerProfileAdditionalInfo
+	Encapsulation                       string
+	GlobalOrganization                  string
+	OrganizationName                    string
 }
 
 //L2ServiceProfilePort describes port used in L2 service profile

@@ -146,6 +146,9 @@ func mapL2ServiceProfileAPIToDomain(apiProfile api.L2ServiceProfile) *L2ServiceP
 		Description:                         apiProfile.Description,
 		Metros:                              mapL2SellerProfileMetrosAPIToDomain(apiProfile.Metros),
 		AdditionalInfos:                     mapL2SellerProfileAdditionalInfosAPIToDomain(apiProfile.AdditionalInfos),
+		Encapsulation:                       apiProfile.ProfileEncapsulation,
+		OrganizationName:                    apiProfile.OrganizationName,
+		GlobalOrganization:                  apiProfile.GlobalOrganization,
 	}
 }
 

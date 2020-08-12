@@ -31,6 +31,9 @@ type L2ServiceProfile struct {
 	Description                         string                          `json:"description,omitempty"`
 	Metros                              []L2SellerProfileMetro          `json:"metros,omitempty"`
 	AdditionalInfos                     []L2SellerProfileAdditionalInfo `json:"additionalBuyerInfo,omitempty"`
+	ProfileEncapsulation                string                          `json:"profileEncapsulation,omitempty"`
+	GlobalOrganization                  string                          `json:"globalOrganization,omitempty"`
+	OrganizationName                    string                          `json:"organizationName,omitempty"`
 }
 
 //L2ServiceProfileDeleteResponse delete l2 service profile response
