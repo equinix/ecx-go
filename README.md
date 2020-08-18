@@ -3,6 +3,13 @@ ECX Fabric Go client
 
 Equinix Cloud Exchange (ECX) Fabric client library written in Go.
 
+[![Build Status](https://travis-ci.com/equinix/ecx-go.svg?branch=master)](https://travis-ci.com/github/equinix/ecx-go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/equinix/ecx-go)](https://goreportcard.com/report/github.com/equinix/ecx-go)
+[![GoDoc](https://godoc.org/github.com/equinix/ecx-go?status.svg)](https://godoc.org/github.com/equinix/ecx-go)
+![GitHub](https://img.shields.io/github/license/equinix/ecx-go)
+
+---
+
 Purpose
 ------------------
 ECXF client library was written in Go for purpose of managing ECX resources from Terraform provider plugin.
