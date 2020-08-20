@@ -31,6 +31,9 @@ func (c RestClient) GetL2Connection(uuid string) (*L2Connection, error) {
 //Upon successful creation, connection structure, enriched with assigned UUID, will be returned
 func (c RestClient) CreateL2Connection(l2connection L2Connection) (*L2Connection, error) {
 	url := fmt.Sprintf("%s/ecx/v3/l2/connections", c.baseURL)
+	if l2connection.DeviceUUID != "" {
+		url = fmt.Sprintf("%s/ne/v1/l2/connections", c.baseURL)
+	}
 	reqBody := createL2ConnectionRequest(l2connection)
 	respBody := api.CreateL2ConnectionResponse{}
 	req := c.R().SetBody(&reqBody).SetResult(&respBody)

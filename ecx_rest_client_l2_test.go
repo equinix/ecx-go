@@ -24,7 +24,6 @@ var testPrimaryConnection = L2Connection{
 	Notifications:       []string{"janek@equinix.com", "marek@equinix.com"},
 	PurchaseOrderNumber: "orderNumber",
 	PortUUID:            "primaryPortUUID",
-	DeviceUUID:          "primaryDeviceUUID",
 	VlanSTag:            100,
 	VlanCTag:            101,
 	NamedTag:            "Private",
@@ -82,6 +81,39 @@ func TestCreateL2Connection(t *testing.T) {
 	)
 	defer httpmock.DeactivateAndReset()
 	newConnection := testPrimaryConnection
+
+	//When
+	ecxClient := NewClient(context.Background(), baseURL, testHc)
+	conn, err := ecxClient.CreateL2Connection(newConnection)
+
+	//Then
+	assert.Nil(t, err, "Client should not return an error")
+	assert.NotNil(t, conn, "Client should return a response")
+	verifyL2ConnectionRequest(t, *conn, reqBody)
+	assert.Equal(t, conn.UUID, respBody.PrimaryConnectionID, "UUID matches")
+}
+
+func TestCreateDeviceL2Connection(t *testing.T) {
+	//Given
+	respBody := api.CreateL2ConnectionResponse{}
+	if err := readJSONData("./test-fixtures/ecx_l2connection_post_resp.json", &respBody); err != nil {
+		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+	}
+	reqBody := api.L2ConnectionRequest{}
+	testHc := &http.Client{}
+	httpmock.ActivateNonDefault(testHc)
+	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/ne/v1/l2/connections", baseURL),
+		func(r *http.Request) (*http.Response, error) {
+			if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
+				return httpmock.NewStringResponse(400, ""), nil
+			}
+			resp, _ := httpmock.NewJsonResponse(200, respBody)
+			return resp, nil
+		},
+	)
+	defer httpmock.DeactivateAndReset()
+	newConnection := testPrimaryConnection
+	newConnection.DeviceUUID = "deviceUUID"
 
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
