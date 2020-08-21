@@ -50,6 +50,9 @@ func (c RestClient) CreateL2Connection(l2connection L2Connection) (*L2Connection
 //Upon successful creation, primary connection structure, enriched with assigned UUID and redundant connection UUID, will be returned
 func (c RestClient) CreateL2RedundantConnection(primary L2Connection, secondary L2Connection) (*L2Connection, error) {
 	url := fmt.Sprintf("%s/ecx/v3/l2/connections", c.baseURL)
+	if primary.DeviceUUID != "" {
+		url = fmt.Sprintf("%s/ne/v1/l2/connections", c.baseURL)
+	}
 	reqBody := createL2RedundantConnectionRequest(primary, secondary)
 	respBody := api.CreateL2ConnectionResponse{}
 	req := c.R().SetBody(&reqBody).SetResult(&respBody)
