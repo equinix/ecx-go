@@ -1,3 +1,12 @@
+## 1.2.0 (Unreleased)
+
+ENHANCEMENTS:
+
+- **L2Connection** added additional attributes:
+  - *ProviderStatus* indicates connection status on a z-side
+  - *RedundancyType* indicates whether connection is primary or secondary
+  (for redundant connections)
+
 ## 1.1.0 (September 22, 2020)
 
 FEATURES:

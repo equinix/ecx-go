@@ -8,6 +8,7 @@ type L2ConnectionResponse struct {
 	Speed               int                          `json:"speed,omitempty"`
 	SpeedUnit           string                       `json:"speedUnit,omitempty"`
 	Status              string                       `json:"status,omitempty"`
+	ProviderStatus      string                       `json:"providerStatus,omitempty"`
 	Notifications       []string                     `json:"notifications"`
 	PurchaseOrderNumber string                       `json:"purchaseOrderNumber"`
 	PortUUID            string                       `json:"portUUID,omitempty"`
@@ -23,6 +24,7 @@ type L2ConnectionResponse struct {
 	SellerMetroCode     string                       `json:"sellerMetroCode,omitempty"`
 	AuthorizationKey    string                       `json:"authorizationKey,omitempty"`
 	RedundantUUID       string                       `json:"redundantUUID,omitempty"`
+	RedundancyType      string                       `json:"redundancyType,omitempty"`
 }
 
 //DeleteL2ConnectionResponse l2 connection delete response

@@ -123,6 +123,7 @@ func mapGETToL2Connection(getResponse api.L2ConnectionResponse) *L2Connection {
 		Speed:               getResponse.Speed,
 		SpeedUnit:           getResponse.SpeedUnit,
 		Status:              getResponse.Status,
+		ProviderStatus:      getResponse.ProviderStatus,
 		Notifications:       getResponse.Notifications,
 		PurchaseOrderNumber: getResponse.PurchaseOrderNumber,
 		PortUUID:            getResponse.PortUUID,
@@ -137,7 +138,8 @@ func mapGETToL2Connection(getResponse api.L2ConnectionResponse) *L2Connection {
 		SellerRegion:        getResponse.SellerRegion,
 		SellerMetroCode:     getResponse.SellerMetroCode,
 		AuthorizationKey:    getResponse.AuthorizationKey,
-		RedundantUUID:       getResponse.RedundantUUID}
+		RedundantUUID:       getResponse.RedundantUUID,
+		RedundancyType:      getResponse.RedundancyType}
 }
 
 func createL2ConnectionRequest(l2connection L2Connection) api.L2ConnectionRequest {

@@ -41,6 +41,7 @@ type L2Connection struct {
 	Speed               int
 	SpeedUnit           string
 	Status              string
+	ProviderStatus      string
 	Notifications       []string
 	PurchaseOrderNumber string
 	PortUUID            string
@@ -56,6 +57,7 @@ type L2Connection struct {
 	SellerMetroCode     string
 	AuthorizationKey    string
 	RedundantUUID       string
+	RedundancyType      string
 }
 
 //L2ConnectionAdditionalInfo additional info object used in L2 connections

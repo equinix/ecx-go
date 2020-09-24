@@ -237,6 +237,7 @@ func verifyL2Connection(t *testing.T, conn L2Connection, resp api.L2ConnectionRe
 	assert.Equal(t, resp.Speed, conn.Speed, "Speed matches")
 	assert.Equal(t, resp.SpeedUnit, conn.SpeedUnit, "SpeedUnit matches")
 	assert.Equal(t, resp.Status, conn.Status, "Status matches")
+	assert.Equal(t, resp.ProviderStatus, conn.ProviderStatus, "ProviderStatus matches")
 	assert.ElementsMatch(t, resp.Notifications, conn.Notifications, "Notifications match")
 	assert.Equal(t, resp.PurchaseOrderNumber, conn.PurchaseOrderNumber, "PurchaseOrderNumber match")
 	assert.Equal(t, resp.PortUUID, conn.PortUUID, "PrimaryPortUUID matches")
@@ -250,6 +251,7 @@ func verifyL2Connection(t *testing.T, conn L2Connection, resp api.L2ConnectionRe
 	assert.Equal(t, resp.SellerMetroCode, conn.SellerMetroCode, "SellerMetroCode matches")
 	assert.Equal(t, resp.AuthorizationKey, conn.AuthorizationKey, "AuthorizationKey matches")
 	assert.Equal(t, resp.RedundantUUID, conn.RedundantUUID, "RedundantUUID key matches")
+	assert.Equal(t, resp.RedundancyType, conn.RedundancyType, "RedundancyType matches")
 	assert.Equal(t, len(resp.AdditionalInfo), len(conn.AdditionalInfo), "AdditionalInfo array size matches")
 	for i := range resp.AdditionalInfo {
 		verifyL2ConnectionAdditionalInfo(t, conn.AdditionalInfo[i], resp.AdditionalInfo[i])
