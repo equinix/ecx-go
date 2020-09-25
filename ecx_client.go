@@ -1,6 +1,41 @@
 //Package ecx implements ECX fabric client
 package ecx
 
+const (
+	//ConnectionStatusNotAvailable indicates that request to create connection was not sent
+	//to the provider. Applicable for provider status only
+	ConnectionStatusNotAvailable = "NOT_AVAILABLE"
+	//ConnectionStatusPendingApproval indicates that connection awaits provider's approval.
+	ConnectionStatusPendingApproval = "PENDING_APPROVAL"
+	//ConnectionStatusPendingAutoApproval indicates that connection is in process of
+	//automatic approval
+	ConnectionStatusPendingAutoApproval = "PENDING_AUTO_APPROVAL"
+	//ConnectionStatusProvisioning indicates that connection is in creation process
+	ConnectionStatusProvisioning = "PROVISIONING"
+	//ConnectionStatusRejected indicates that provider has rejected the connection
+	ConnectionStatusRejected = "REJECTED"
+	//ConnectionStatusPendingBGPPeering indicates that connection was approved by provider and
+	//awaits for BGP peering configuration on provider side
+	ConnectionStatusPendingBGPPeering = "PENDING_BGP_PEERING"
+	//ConnectionStatusPendingProviderVlan indicates that connection awaits for provider approval
+	//and vlan assignment
+	ConnectionStatusPendingProviderVlan = "PENDING_PROVIDER_VLAN"
+	//ConnectionStatusProvisioned indicates that connection is created successfully
+	ConnectionStatusProvisioned = "PROVISIONED"
+	//ConnectionStatusAvailable indicates that connection is established.
+	//Applicable for provider status only
+	ConnectionStatusAvailable = "AVAILABLE"
+	//ConnectionStatusPendingDelete indicates that connection is in deletion process and awaits
+	//for providers approval to be removed
+	ConnectionStatusPendingDelete = "PENDING_DELETE"
+	//ConnectionStatusDeprovisioning indicates that connection is being removed
+	ConnectionStatusDeprovisioning = "DEPROVISIONING"
+	//ConnectionStatusDeprovisioned indicates that connection is removed
+	ConnectionStatusDeprovisioned = "DEPROVISIONED"
+	//ConnectionStatusDeleted indicates that connection was administratively deleted
+	ConnectionStatusDeleted = "DELETED"
+)
+
 //Client describes operations provided by ECX Fabric client module
 type Client interface {
 	GetUserPorts() ([]Port, error)
