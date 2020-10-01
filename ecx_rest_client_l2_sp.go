@@ -11,10 +11,10 @@ import (
 
 //GetL2SellerProfiles operations retrievies available layer2 seller service profiles
 func (c RestClient) GetL2SellerProfiles() ([]L2ServiceProfile, error) {
-	url := fmt.Sprintf("%s/ecx/v3/l2/serviceprofiles/services", c.baseURL)
+	path := "/ecx/v3/l2/serviceprofiles/services"
 	respBody := api.L2SellerProfilesResponse{}
 	req := c.R().SetResult(&respBody)
-	if err := c.execute(req, resty.MethodGet, url); err != nil {
+	if err := c.Execute(req, resty.MethodGet, path); err != nil {
 		return nil, err
 	}
 	content := make([]api.L2ServiceProfile, 0, respBody.TotalCount)
@@ -22,7 +22,7 @@ func (c RestClient) GetL2SellerProfiles() ([]L2ServiceProfile, error) {
 	isLast := respBody.IsLastPage
 	for pageNum := 1; !isLast; pageNum++ {
 		req := c.R().SetResult(&respBody).SetQueryParam("pageNumber", strconv.Itoa(pageNum))
-		if err := c.execute(req, resty.MethodGet, url); err != nil {
+		if err := c.Execute(req, resty.MethodGet, path); err != nil {
 			return nil, err
 		}
 		content = append(content, respBody.Content...)
@@ -33,10 +33,10 @@ func (c RestClient) GetL2SellerProfiles() ([]L2ServiceProfile, error) {
 
 //GetL2ServiceProfile operation retrieves layer 2 servie profile with a given UUID
 func (c RestClient) GetL2ServiceProfile(uuid string) (*L2ServiceProfile, error) {
-	url := fmt.Sprintf("%s/ecx/v3/l2/serviceprofiles/%s", c.baseURL, url.PathEscape(uuid))
+	path := "/ecx/v3/l2/serviceprofiles/" + url.PathEscape(uuid)
 	respBody := api.L2ServiceProfile{}
 	req := c.R().SetResult(&respBody)
-	if err := c.execute(req, resty.MethodGet, url); err != nil {
+	if err := c.Execute(req, resty.MethodGet, path); err != nil {
 		return nil, err
 	}
 	return mapL2ServiceProfileAPIToDomain(respBody), nil
@@ -45,28 +45,28 @@ func (c RestClient) GetL2ServiceProfile(uuid string) (*L2ServiceProfile, error) 
 //CreateL2ServiceProfile operation creates layer 2 service profile with a given profile structure.
 //Upon successful creation, connection structure with assigned UUID will be returned
 func (c RestClient) CreateL2ServiceProfile(l2profile L2ServiceProfile) (*L2ServiceProfile, error) {
-	url := fmt.Sprintf("%s/ecx/v3/l2/serviceprofiles", c.baseURL)
+	path := "/ecx/v3/l2/serviceprofiles"
 	reqBody := mapL2ServiceProfileDomainToAPI(l2profile)
 	respBody := api.CreateL2ServiceProfileResponse{}
 	req := c.R().SetBody(&reqBody).SetResult(&respBody)
-	if err := c.execute(req, resty.MethodPost, url); err != nil {
+	if err := c.Execute(req, resty.MethodPost, path); err != nil {
 		return nil, err
 	}
 	l2profile.UUID = respBody.UUID
 	return &l2profile, nil
 }
 
-//UpdateL2ServiceProfile operation updates layer 2 service profile by replacing exisitng profile with a given profile structure.
+//UpdateL2ServiceProfile operation updates layer 2 service profile by replacing existing profile with a given profile structure.
 //Target profile structure needs to have UUID defined
 func (c RestClient) UpdateL2ServiceProfile(sp L2ServiceProfile) (*L2ServiceProfile, error) {
 	if sp.UUID == "" {
 		return nil, fmt.Errorf("target profile structure needs to have UUID defined")
 	}
-	url := fmt.Sprintf("%s/ecx/v3/l2/serviceprofiles", c.baseURL)
+	path := "/ecx/v3/l2/serviceprofiles"
 	reqBody := mapL2ServiceProfileDomainToAPI(sp)
 	respBody := api.CreateL2ServiceProfileResponse{}
 	req := c.R().SetBody(&reqBody).SetResult(&respBody)
-	if err := c.execute(req, resty.MethodPut, url); err != nil {
+	if err := c.Execute(req, resty.MethodPut, path); err != nil {
 		return nil, err
 	}
 	return &sp, nil
@@ -74,10 +74,10 @@ func (c RestClient) UpdateL2ServiceProfile(sp L2ServiceProfile) (*L2ServiceProfi
 
 //DeleteL2ServiceProfile deletes layer 2 service profile with a given UUID
 func (c RestClient) DeleteL2ServiceProfile(uuid string) error {
-	url := fmt.Sprintf("%s/ecx/v3/l2/serviceprofiles/%s", c.baseURL, url.PathEscape(uuid))
+	path := "/ecx/v3/l2/serviceprofiles/" + url.PathEscape(uuid)
 	respBody := api.L2ServiceProfileDeleteResponse{}
 	req := c.R().SetResult(&respBody)
-	if err := c.execute(req, resty.MethodDelete, url); err != nil {
+	if err := c.Execute(req, resty.MethodDelete, path); err != nil {
 		return err
 	}
 	return nil

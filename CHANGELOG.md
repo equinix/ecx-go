@@ -1,5 +1,10 @@
 ## 1.2.0 (Unreleased)
 
+NOTES:
+
+* this version of module started to use `equinix/rest-go` client
+for any REST interactions with Equinix APIs
+
 ENHANCEMENTS:
 
 - **L2Connection** added additional attributes:

@@ -9,10 +9,10 @@ import (
 
 //GetUserPorts operation retrieves ECXF user ports
 func (c RestClient) GetUserPorts() ([]Port, error) {
-	url := fmt.Sprintf("%s/ecx/v3/port/userport", c.baseURL)
+	path := "/ecx/v3/port/userport"
 	respBody := []api.Port{}
 	req := c.R().SetResult(&respBody)
-	if err := c.execute(req, resty.MethodGet, url); err != nil {
+	if err := c.Execute(req, resty.MethodGet, path); err != nil {
 		return nil, err
 	}
 	mapped := make([]Port, len(respBody))

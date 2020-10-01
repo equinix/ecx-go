@@ -1,7 +1,6 @@
 package ecx
 
 import (
-	"fmt"
 	"net/url"
 
 	"github.com/equinix/ecx-go/internal/api"
@@ -10,14 +9,14 @@ import (
 
 //ConfirmL2Connection operation accepts a hosted connection
 func (c RestClient) ConfirmL2Connection(uuid string, connToConfirm L2ConnectionToConfirm) (*L2ConnectionConfirmation, error) {
-	url := fmt.Sprintf("%s/ecx/v3/l2/connections/%s", c.baseURL, url.PathEscape(uuid))
+	path := "/ecx/v3/l2/connections/" + url.PathEscape(uuid)
 	reqBody := confirmL2ConnectionRequest(connToConfirm)
 	respBody := api.ConfirmL2ConnectionResponse{}
 	req := c.R().
 		SetQueryParam("action", "Approve").
 		SetBody(&reqBody).
 		SetResult(&respBody)
-	if err := c.execute(req, resty.MethodPatch, url); err != nil {
+	if err := c.Execute(req, resty.MethodPatch, path); err != nil {
 		return nil, err
 	}
 

@@ -1,7 +1,6 @@
 package ecx
 
 import (
-	"fmt"
 	"net/url"
 
 	"github.com/equinix/ecx-go/internal/api"
@@ -18,10 +17,10 @@ type restL2ConnectionUpdateRequest struct {
 
 //GetL2Connection operation retrieves layer 2 connection with a given UUID
 func (c RestClient) GetL2Connection(uuid string) (*L2Connection, error) {
-	url := fmt.Sprintf("%s/ecx/v3/l2/connections/%s", c.baseURL, url.PathEscape(uuid))
+	path := "/ecx/v3/l2/connections/" + url.PathEscape(uuid)
 	respBody := api.L2ConnectionResponse{}
 	req := c.R().SetResult(&respBody)
-	if err := c.execute(req, resty.MethodGet, url); err != nil {
+	if err := c.Execute(req, resty.MethodGet, path); err != nil {
 		return nil, err
 	}
 	return mapGETToL2Connection(respBody), nil
@@ -30,14 +29,14 @@ func (c RestClient) GetL2Connection(uuid string) (*L2Connection, error) {
 //CreateL2Connection operation creates non-redundant layer 2 connection with a given connection structure.
 //Upon successful creation, connection structure, enriched with assigned UUID, will be returned
 func (c RestClient) CreateL2Connection(l2connection L2Connection) (*L2Connection, error) {
-	url := fmt.Sprintf("%s/ecx/v3/l2/connections", c.baseURL)
+	path := "/ecx/v3/l2/connections"
 	if l2connection.DeviceUUID != "" {
-		url = fmt.Sprintf("%s/ne/v1/l2/connections", c.baseURL)
+		path = "/ne/v1/l2/connections"
 	}
 	reqBody := createL2ConnectionRequest(l2connection)
 	respBody := api.CreateL2ConnectionResponse{}
 	req := c.R().SetBody(&reqBody).SetResult(&respBody)
-	if err := c.execute(req, resty.MethodPost, url); err != nil {
+	if err := c.Execute(req, resty.MethodPost, path); err != nil {
 		return nil, err
 	}
 	l2connection.UUID = respBody.PrimaryConnectionID
@@ -49,14 +48,14 @@ func (c RestClient) CreateL2Connection(l2connection L2Connection) (*L2Connection
 //supplementary information only.
 //Upon successful creation, primary connection structure, enriched with assigned UUID and redundant connection UUID, will be returned
 func (c RestClient) CreateL2RedundantConnection(primary L2Connection, secondary L2Connection) (*L2Connection, error) {
-	url := fmt.Sprintf("%s/ecx/v3/l2/connections", c.baseURL)
+	path := "/ecx/v3/l2/connections"
 	if primary.DeviceUUID != "" {
-		url = fmt.Sprintf("%s/ne/v1/l2/connections", c.baseURL)
+		path = "/ne/v1/l2/connections"
 	}
 	reqBody := createL2RedundantConnectionRequest(primary, secondary)
 	respBody := api.CreateL2ConnectionResponse{}
 	req := c.R().SetBody(&reqBody).SetResult(&respBody)
-	if err := c.execute(req, resty.MethodPost, url); err != nil {
+	if err := c.Execute(req, resty.MethodPost, path); err != nil {
 		return nil, err
 	}
 	primary.UUID = respBody.PrimaryConnectionID
@@ -66,10 +65,10 @@ func (c RestClient) CreateL2RedundantConnection(primary L2Connection, secondary 
 
 //DeleteL2Connection deletes layer 2 connection with a given UUID
 func (c RestClient) DeleteL2Connection(uuid string) error {
-	url := fmt.Sprintf("%s/ecx/v3/l2/connections/%s", c.baseURL, url.PathEscape(uuid))
+	path := "/ecx/v3/l2/connections/" + url.PathEscape(uuid)
 	respBody := api.DeleteL2ConnectionResponse{}
 	req := c.R().SetResult(&respBody)
-	if err := c.execute(req, resty.MethodDelete, url); err != nil {
+	if err := c.Execute(req, resty.MethodDelete, path); err != nil {
 		return err
 	}
 	return nil
@@ -100,7 +99,7 @@ func (req *restL2ConnectionUpdateRequest) WithBandwidth(speed int, speedUnit str
 //This is not atomic operation and if any update will fail, other changes won't be reverted.
 //UpdateError will be returned if any of requested data failed to update
 func (req *restL2ConnectionUpdateRequest) Execute() error {
-	url := fmt.Sprintf("%s/ecx/v3/l2/connections/%s", req.c.baseURL, url.PathEscape(req.uuid))
+	path := "/ecx/v3/l2/connections/" + url.PathEscape(req.uuid)
 	reqBody := api.L2ConnectionUpdateRequest{
 		Name:      req.name,
 		Speed:     req.speed,
@@ -108,7 +107,7 @@ func (req *restL2ConnectionUpdateRequest) Execute() error {
 	}
 	if req.name != "" || (req.speed > 0 && req.speedUnit != "") {
 		restReq := req.c.R().SetQueryParam("action", "update").SetBody(&reqBody)
-		if err := req.c.execute(restReq, resty.MethodPatch, url); err != nil {
+		if err := req.c.Execute(restReq, resty.MethodPatch, path); err != nil {
 			return err
 		}
 	}

@@ -12,10 +12,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-const (
-	baseURL = "http://localhost:8888"
-)
-
 var testPrimaryConnection = L2Connection{
 	Name:                "name",
 	ProfileUUID:         "profileUUID",
