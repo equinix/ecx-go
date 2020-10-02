@@ -3,32 +3,27 @@ package ecx
 import (
 	"fmt"
 	"net/url"
-	"strconv"
 
 	"github.com/equinix/ecx-go/internal/api"
+	"github.com/equinix/rest-go"
 	"github.com/go-resty/resty/v2"
 )
 
-//GetL2SellerProfiles operations retrievies available layer2 seller service profiles
+//GetL2SellerProfiles operations retrieves available layer2 seller service profiles
 func (c RestClient) GetL2SellerProfiles() ([]L2ServiceProfile, error) {
 	path := "/ecx/v3/l2/serviceprofiles/services"
-	respBody := api.L2SellerProfilesResponse{}
-	req := c.R().SetResult(&respBody)
-	if err := c.Execute(req, resty.MethodGet, path); err != nil {
+	content, err := c.GetPaginated(path, &api.L2SellerProfilesResponse{}, rest.DefaultPagingConfig().
+		SetSizeParamName("pageSize").
+		SetPageParamName("pageNumber").
+		SetFirstPageNumber(0))
+	if err != nil {
 		return nil, err
 	}
-	content := make([]api.L2ServiceProfile, 0, respBody.TotalCount)
-	content = append(content, respBody.Content...)
-	isLast := respBody.IsLastPage
-	for pageNum := 1; !isLast; pageNum++ {
-		req := c.R().SetResult(&respBody).SetQueryParam("pageNumber", strconv.Itoa(pageNum))
-		if err := c.Execute(req, resty.MethodGet, path); err != nil {
-			return nil, err
-		}
-		content = append(content, respBody.Content...)
-		isLast = respBody.IsLastPage
+	transformed := make([]L2ServiceProfile, len(content))
+	for i := range content {
+		transformed[i] = *mapL2ServiceProfileAPIToDomain(content[i].(api.L2ServiceProfile))
 	}
-	return mapL2SellerProfilesAPIToDomain(content), nil
+	return transformed, nil
 }
 
 //GetL2ServiceProfile operation retrieves layer 2 servie profile with a given UUID
@@ -208,14 +203,6 @@ func mapSpeedBandsAPIToDomain(apiBands []api.L2ServiceProfileSpeedBand) []L2Serv
 		}
 	}
 	return bands
-}
-
-func mapL2SellerProfilesAPIToDomain(apiProfiles []api.L2ServiceProfile) []L2ServiceProfile {
-	transformed := make([]L2ServiceProfile, len(apiProfiles))
-	for i := range apiProfiles {
-		transformed[i] = *mapL2ServiceProfileAPIToDomain(apiProfiles[i])
-	}
-	return transformed
 }
 
 func mapL2SellerProfileMetrosAPIToDomain(apiMetros []api.L2SellerProfileMetro) []L2SellerProfileMetro {

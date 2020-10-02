@@ -4,6 +4,7 @@ import (
 	"net/url"
 
 	"github.com/equinix/ecx-go/internal/api"
+	"github.com/equinix/rest-go"
 	"github.com/go-resty/resty/v2"
 )
 
@@ -13,6 +14,28 @@ type restL2ConnectionUpdateRequest struct {
 	speed     int
 	speedUnit string
 	c         RestClient
+}
+
+//GetL2OutgoingConnections retrieves list of all originating (a-side) layer 2 connections
+//for a customer account associated with authenticated application
+func (c RestClient) GetL2OutgoingConnections(statuses []string) ([]L2Connection, error) {
+	path := "/ecx/v3/l2/buyer/connections"
+	pagingConfig := rest.DefaultPagingConfig().
+		SetSizeParamName("pageSize").
+		SetPageParamName("pageNumber").
+		SetFirstPageNumber(0)
+	if len(statuses) > 0 {
+		pagingConfig.SetAdditionalParams(map[string]string{"status": buildQueryParamValueString(statuses)})
+	}
+	content, err := c.GetPaginated(path, &api.L2BuyerConnectionsResponse{}, pagingConfig)
+	if err != nil {
+		return nil, err
+	}
+	transformed := make([]L2Connection, len(content))
+	for i := range content {
+		transformed[i] = *mapGETToL2Connection(content[i].(api.L2ConnectionResponse))
+	}
+	return transformed, nil
 }
 
 //GetL2Connection operation retrieves layer 2 connection with a given UUID

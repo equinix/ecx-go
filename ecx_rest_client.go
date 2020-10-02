@@ -3,6 +3,8 @@ package ecx
 import (
 	"context"
 	"net/http"
+	"net/url"
+	"strings"
 
 	"github.com/equinix/rest-go"
 )
@@ -17,4 +19,15 @@ func NewClient(ctx context.Context, baseURL string, httpClient *http.Client) *Re
 	rest := rest.NewClient(ctx, baseURL, httpClient)
 	rest.SetHeader("User-agent", "equinix/ecx-go")
 	return &RestClient{rest}
+}
+
+func buildQueryParamValueString(values []string) string {
+	var sb strings.Builder
+	for i := range values {
+		sb.WriteString(url.QueryEscape(values[i]))
+		if i < len(values)-1 {
+			sb.WriteString(",")
+		}
+	}
+	return sb.String()
 }

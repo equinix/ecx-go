@@ -84,9 +84,20 @@ type L2ConnectionUpdateRequest struct {
 	SpeedUnit string `json:"speedUnit,omitempty"`
 }
 
-//L2ConnectionUpdateRequest describes layer2 connection update response
+//L2ConnectionUpdateResponse describes layer2 connection update response
 type L2ConnectionUpdateResponse struct {
 	Message             string `json:"message,omitempty"`
 	PrimaryConnectionID string `json:"primaryConnectionId,omitempty"`
 	Status              string `json:"status,omitempty"`
+}
+
+//L2BuyerConnectionsResponse describes collection of layer2 connections
+//originating from a correspoding customer account
+type L2BuyerConnectionsResponse struct {
+	IsFirstPage bool                   `json:"isFirstPage,omitempty"`
+	IsLastPage  bool                   `json:"isLastPage,omitempty"`
+	TotalCount  int                    `json:"totalCount,omitempty"`
+	PageSize    int                    `json:"pageSize,omitempty"`
+	Content     []L2ConnectionResponse `json:"content,omitempty"`
+	PageNumber  int                    `json:"pageNumber,omitempty"`
 }

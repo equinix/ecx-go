@@ -39,6 +39,8 @@ const (
 //Client describes operations provided by ECX Fabric client module
 type Client interface {
 	GetUserPorts() ([]Port, error)
+
+	GetL2OutgoingConnections(statuses []string) ([]L2Connection, error)
 	GetL2Connection(uuid string) (*L2Connection, error)
 	CreateL2Connection(conn L2Connection) (*L2Connection, error)
 	CreateL2RedundantConnection(priConn L2Connection, secConn L2Connection) (*L2Connection, error)

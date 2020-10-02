@@ -61,36 +61,30 @@ var testProfile = L2ServiceProfile{
 
 func TestGetL2SellerProfiles(t *testing.T) {
 	//Given
-	respBodyOne := api.L2SellerProfilesResponse{}
-	if err := readJSONData("./test-fixtures/ecx_l2sellerprofile_get_p0.json", &respBodyOne); err != nil {
-		assert.Failf(t, "Cannont read test response due to %s", err.Error())
-	}
-	respBodyTwo := api.L2SellerProfilesResponse{}
-	if err := readJSONData("./test-fixtures/ecx_l2sellerprofile_get_p1.json", &respBodyTwo); err != nil {
-		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+	respBody := api.L2SellerProfilesResponse{}
+	if err := readJSONData("./test-fixtures/ecx_l2sellerprofile_get.json", &respBody); err != nil {
+		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
 	testHc := &http.Client{}
+	pageSize := respBody.PageSize
 	httpmock.ActivateNonDefault(testHc)
-	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/ecx/v3/l2/serviceprofiles/services", baseURL),
+	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/ecx/v3/l2/serviceprofiles/services?pageSize=%d", baseURL, pageSize),
 		func(r *http.Request) (*http.Response, error) {
-			resp, _ := httpmock.NewJsonResponse(200, respBodyOne)
+			resp, _ := httpmock.NewJsonResponse(200, respBody)
 			return resp, nil
 		},
 	)
-	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/ecx/v3/l2/serviceprofiles/services?pageNumber=1", baseURL),
-		func(r *http.Request) (*http.Response, error) {
-			resp, _ := httpmock.NewJsonResponse(200, respBodyTwo)
-			return resp, nil
-		},
-	)
+	defer httpmock.DeactivateAndReset()
+
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
+	ecxClient.SetPageSize(pageSize)
 	profiles, err := ecxClient.GetL2SellerProfiles()
 
 	//Then
 	assert.Nil(t, err, "Client should not return an error")
 	assert.NotNil(t, profiles, "Client should return a response")
-	assert.Equal(t, respBodyOne.TotalCount, len(profiles))
+	assert.Equal(t, len(respBody.Content), len(profiles), "Number of profiles matches")
 }
 
 func TestGetL2ServiceProfile(t *testing.T) {

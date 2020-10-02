@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"testing"
 
 	"github.com/equinix/ecx-go/internal/api"
@@ -31,11 +32,42 @@ var testPrimaryConnection = L2Connection{
 	SellerMetroCode:     "AM",
 	AuthorizationKey:    "authorizationKey"}
 
+func TestGetL2OutgoingConnections(t *testing.T) {
+	//Given
+	respBody := api.L2BuyerConnectionsResponse{}
+	if err := readJSONData("./test-fixtures/ecx_l2connections_get_resp.json", &respBody); err != nil {
+		assert.Failf(t, "Cannot read test response due to %s", err.Error())
+	}
+	pageSize := respBody.PageSize
+	testHc := &http.Client{}
+	httpmock.ActivateNonDefault(testHc)
+	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/ecx/v3/l2/buyer/connections?pageSize=%d&status=%s", baseURL, pageSize, url.QueryEscape("PROVISIONED,PROVISIONING")),
+		func(r *http.Request) (*http.Response, error) {
+			resp, _ := httpmock.NewJsonResponse(200, respBody)
+			return resp, nil
+		},
+	)
+	defer httpmock.DeactivateAndReset()
+
+	//When
+	ecxClient := NewClient(context.Background(), baseURL, testHc)
+	ecxClient.SetPageSize(pageSize)
+	conns, err := ecxClient.GetL2OutgoingConnections([]string{ConnectionStatusProvisioned, ConnectionStatusProvisioning})
+
+	//Then
+	assert.Nil(t, err, "Client should not return an error")
+	assert.NotNil(t, conns, "Client should return a response")
+	assert.Equal(t, len(respBody.Content), len(conns), "Number of connections matches")
+	for i := range respBody.Content {
+		verifyL2Connection(t, conns[i], respBody.Content[i])
+	}
+}
+
 func TestGetL2Connection(t *testing.T) {
 	//Given
 	respBody := api.L2ConnectionResponse{}
 	if err := readJSONData("./test-fixtures/ecx_l2connection_get_resp.json", &respBody); err != nil {
-		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
 	connID := "connId"
 	testHc := &http.Client{}
@@ -46,6 +78,7 @@ func TestGetL2Connection(t *testing.T) {
 			return resp, nil
 		},
 	)
+	defer httpmock.DeactivateAndReset()
 
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
@@ -61,7 +94,7 @@ func TestCreateL2Connection(t *testing.T) {
 	//Given
 	respBody := api.CreateL2ConnectionResponse{}
 	if err := readJSONData("./test-fixtures/ecx_l2connection_post_resp.json", &respBody); err != nil {
-		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
 	reqBody := api.L2ConnectionRequest{}
 	testHc := &http.Client{}
@@ -93,7 +126,7 @@ func TestCreateDeviceL2Connection(t *testing.T) {
 	//Given
 	respBody := api.CreateL2ConnectionResponse{}
 	if err := readJSONData("./test-fixtures/ecx_l2connection_post_resp.json", &respBody); err != nil {
-		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
 	reqBody := api.L2ConnectionRequest{}
 	testHc := &http.Client{}
@@ -126,7 +159,7 @@ func TestCreateRedundantL2Connection(t *testing.T) {
 	//Given
 	respBody := api.CreateL2ConnectionResponse{}
 	if err := readJSONData("./test-fixtures/ecx_l2connection_post_resp.json", &respBody); err != nil {
-		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
 	reqBody := api.L2ConnectionRequest{}
 	testHc := &http.Client{}
@@ -168,7 +201,7 @@ func TestDeleteL2Connection(t *testing.T) {
 	//Given
 	respBody := api.DeleteL2ConnectionResponse{}
 	if err := readJSONData("./test-fixtures/ecx_l2connection_delete_resp.json", &respBody); err != nil {
-		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
 	connID := "connId"
 	testHc := &http.Client{}
@@ -192,7 +225,7 @@ func TestUpdateL2Connection(t *testing.T) {
 	//Given
 	respBody := api.L2ConnectionUpdateResponse{}
 	if err := readJSONData("./test-fixtures/ecx_l2connection_update_resp.json", &respBody); err != nil {
-		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
 	connID := "connId"
 	newName := "newConnName"
