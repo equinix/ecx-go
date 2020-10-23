@@ -7,13 +7,14 @@ for any REST interactions with Equinix APIs
 
 FEATRUES:
 
-* **L2Connection**: `func GetL2OutgoingConnections()` gives possibility to fetch all
- a-side (outgoing) connections for a customer account associated with
+* **L2Connection**: `func GetL2OutgoingConnections()` gives possibility to fetch
+ all a-side (outgoing) connections for a customer account associated with
 authenticated application
 
 ENHANCEMENTS:
 
 * **L2Connection** added additional attributes:
+  * *DeviceInterfaceID* indicates network interface identifier on a network device
   * *ProviderStatus* indicates connection status on a z-side
   * *RedundancyType* indicates whether connection is primary or secondary
   (for redundant connections)
