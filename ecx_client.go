@@ -83,6 +83,7 @@ type L2Connection struct {
 	PurchaseOrderNumber string
 	PortUUID            string
 	DeviceUUID          string
+	DeviceInterfaceID   int
 	VlanSTag            int
 	VlanCTag            int
 	NamedTag            string

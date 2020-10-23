@@ -143,6 +143,7 @@ func TestCreateDeviceL2Connection(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 	newConnection := testPrimaryConnection
 	newConnection.DeviceUUID = "deviceUUID"
+	newConnection.DeviceInterfaceID = 5
 
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
@@ -296,6 +297,7 @@ func verifyL2ConnectionRequest(t *testing.T, conn L2Connection, req api.L2Connec
 	assert.Equal(t, conn.PurchaseOrderNumber, req.PurchaseOrderNumber, "PurchaseOrderNumber matches")
 	assert.Equal(t, conn.PortUUID, req.PrimaryPortUUID, "PrimaryPortUUID matches")
 	assert.Equal(t, conn.DeviceUUID, req.VirtualDeviceUUID, "VirtualDeviceUUID matches")
+	assert.Equal(t, conn.DeviceInterfaceID, req.InterfaceID, "DeviceInterfaceID matches")
 	assert.Equal(t, conn.VlanSTag, req.PrimaryVlanSTag, "PrimaryVlanSTag matches")
 	assert.Equal(t, conn.VlanCTag, req.PrimaryVlanCTag, "PrimaryVlanCTag matches")
 	assert.Equal(t, conn.NamedTag, req.NamedTag, "NamedTag matches")

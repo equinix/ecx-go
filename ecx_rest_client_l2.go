@@ -174,6 +174,7 @@ func createL2ConnectionRequest(l2connection L2Connection) api.L2ConnectionReques
 		PurchaseOrderNumber:  l2connection.PurchaseOrderNumber,
 		PrimaryPortUUID:      l2connection.PortUUID,
 		VirtualDeviceUUID:    l2connection.DeviceUUID,
+		InterfaceID:          l2connection.DeviceInterfaceID,
 		PrimaryVlanSTag:      l2connection.VlanSTag,
 		PrimaryVlanCTag:      l2connection.VlanCTag,
 		NamedTag:             l2connection.NamedTag,

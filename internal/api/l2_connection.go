@@ -43,6 +43,7 @@ type L2ConnectionRequest struct {
 	PurchaseOrderNumber        string                       `json:"purchaseOrderNumber"`
 	PrimaryPortUUID            string                       `json:"primaryPortUUID,omitempty"`
 	VirtualDeviceUUID          string                       `json:"virtualDeviceUUID,omitempty"`
+	InterfaceID                int                          `json:"interfaceId,omitempty"`
 	PrimaryVlanSTag            int                          `json:"primaryVlanSTag,omitempty"`
 	PrimaryVlanCTag            int                          `json:"primaryVlanCTag,omitempty"`
 	NamedTag                   string                       `json:"namedTag,omitempty"`
