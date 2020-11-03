@@ -161,7 +161,9 @@ func mapGETToL2Connection(getResponse api.L2ConnectionResponse) *L2Connection {
 		SellerMetroCode:     getResponse.SellerMetroCode,
 		AuthorizationKey:    getResponse.AuthorizationKey,
 		RedundantUUID:       getResponse.RedundantUUID,
-		RedundancyType:      getResponse.RedundancyType}
+		RedundancyType:      getResponse.RedundancyType,
+		Actions:             mapL2ConnectionActionsAPIToDomain(getResponse.ActionDetails),
+	}
 }
 
 func createL2ConnectionRequest(l2connection L2Connection) api.L2ConnectionRequest {
@@ -220,4 +222,31 @@ func mapAdditionalInfoAPIToDomain(apiInfo []api.L2ConnectionAdditionalInfo) []L2
 		}
 	}
 	return info
+}
+
+func mapL2ConnectionActionsAPIToDomain(apiActions []api.L2ConnectionActionDetail) []L2ConnectionAction {
+	transformed := make([]L2ConnectionAction, len(apiActions))
+	for i := range apiActions {
+		transformed[i] = L2ConnectionAction{
+			Type:         apiActions[i].ActionType,
+			OperationID:  apiActions[i].OperationID,
+			Message:      apiActions[i].ActionMessage,
+			RequiredData: mapL2ConnectionActionDataAPIToDomain(apiActions[i].ActionRequiredData),
+		}
+	}
+	return transformed
+}
+
+func mapL2ConnectionActionDataAPIToDomain(apiActionData []api.L2ConnectionActionRequiredData) []L2ConnectionActionData {
+	transformed := make([]L2ConnectionActionData, len(apiActionData))
+	for i := range apiActionData {
+		transformed[i] = L2ConnectionActionData{
+			Key:               apiActionData[i].Key,
+			Label:             apiActionData[i].Label,
+			Value:             apiActionData[i].Value,
+			IsEditable:        apiActionData[i].Editable,
+			ValidationPattern: apiActionData[i].ValidationPattern,
+		}
+	}
+	return transformed
 }

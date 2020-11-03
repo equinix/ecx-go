@@ -25,6 +25,7 @@ type L2ConnectionResponse struct {
 	AuthorizationKey    string                       `json:"authorizationKey,omitempty"`
 	RedundantUUID       string                       `json:"redundantUUID,omitempty"`
 	RedundancyType      string                       `json:"redundancyType,omitempty"`
+	ActionDetails       []L2ConnectionActionDetail   `json:"actionDetails,omitempty"`
 }
 
 //DeleteL2ConnectionResponse l2 connection delete response
@@ -101,4 +102,21 @@ type L2BuyerConnectionsResponse struct {
 	PageSize    int                    `json:"pageSize,omitempty"`
 	Content     []L2ConnectionResponse `json:"content,omitempty"`
 	PageNumber  int                    `json:"pageNumber,omitempty"`
+}
+
+//L2ConnectionActionDetail describes pending actions to complete connection provisioning
+type L2ConnectionActionDetail struct {
+	ActionType         string                           `json:"actionType,omitempty"`
+	OperationID        string                           `json:"operationId,omitempty"`
+	ActionMessage      string                           `json:"actionMessage,omitempty"`
+	ActionRequiredData []L2ConnectionActionRequiredData `json:"actionRequiredData,omitempty"`
+}
+
+//L2ConnectionActionRequiredData describes data required for a given to complete
+type L2ConnectionActionRequiredData struct {
+	Key               string `json:"key,omitempty"`
+	Label             string `json:"label,omitempty"`
+	Value             string `json:"value,omitempty"`
+	Editable          bool   `json:"editable,omitempty"`
+	ValidationPattern string `json:"validationPattern,omitempty"`
 }

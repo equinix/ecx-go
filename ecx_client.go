@@ -96,12 +96,30 @@ type L2Connection struct {
 	AuthorizationKey    string
 	RedundantUUID       string
 	RedundancyType      string
+	Actions             []L2ConnectionAction
 }
 
 //L2ConnectionAdditionalInfo additional info object used in L2 connections
 type L2ConnectionAdditionalInfo struct {
 	Name  string
 	Value string
+}
+
+//L2ConnectionAction describes pending actions to complete connection provisioning
+type L2ConnectionAction struct {
+	Type         string
+	Message      string
+	OperationID  string
+	RequiredData []L2ConnectionActionData
+}
+
+//L2ConnectionActionData describes data required for a given to complete
+type L2ConnectionActionData struct {
+	Key               string
+	Label             string
+	Value             string
+	IsEditable        bool
+	ValidationPattern string
 }
 
 //L2ConnectionToConfirm accepts the hosted connection in the seller side

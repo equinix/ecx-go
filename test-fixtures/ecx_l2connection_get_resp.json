@@ -56,5 +56,35 @@
             "name": "ASN",
             "value": "345"
         }
+    ],
+    "actionDetails": [
+        {
+            "actionType": "EQUINIX_EXECUTE_ACTION",
+            "operationId": "CONFIRM_CONNECTION",
+            "actionMessage": "Please provide the following credentials so that we can confirm the connection on your behalf. You also have the option to do this operation on AWS Console",
+            "actionRequiredData": [
+                {
+                    "key": "accessKey",
+                    "label": "Amazon Access Key",
+                    "value": "",
+                    "editable": true,
+                    "validationPattern": "{RegexForString50chars}"
+                },
+                {
+                    "key": "secretKey",
+                    "label": "Amazon Secret Key",
+                    "value": "",
+                    "editable": true,
+                    "validationPattern": "{RegexForString24chars}"
+                },
+                {
+                    "key": "awsConnectionId",
+                    "label": "AWS Hosted Connection Id",
+                    "value": "UAT-AWS-SV1-CX-Primary-02",
+                    "editable": false,
+                    "validationPattern": ""
+                }
+            ]
+        }
     ]
 }

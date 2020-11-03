@@ -286,6 +286,10 @@ func verifyL2Connection(t *testing.T, conn L2Connection, resp api.L2ConnectionRe
 	for i := range resp.AdditionalInfo {
 		verifyL2ConnectionAdditionalInfo(t, conn.AdditionalInfo[i], resp.AdditionalInfo[i])
 	}
+	assert.Equal(t, len(resp.ActionDetails), len(conn.Actions), "Number of connection actions matches")
+	for i := range resp.ActionDetails {
+		verifyL2ConnectionAction(t, conn.Actions[i], resp.ActionDetails[i])
+	}
 }
 
 func verifyL2ConnectionRequest(t *testing.T, conn L2Connection, req api.L2ConnectionRequest) {
@@ -329,4 +333,18 @@ func verifyRedundantL2ConnectionRequest(t *testing.T, primary L2Connection, seco
 func verifyL2ConnectionAdditionalInfo(t *testing.T, info L2ConnectionAdditionalInfo, apiInfo api.L2ConnectionAdditionalInfo) {
 	assert.Equal(t, info.Name, apiInfo.Name, "Name matches")
 	assert.Equal(t, info.Value, apiInfo.Value, "Value matches")
+}
+
+func verifyL2ConnectionAction(t *testing.T, action L2ConnectionAction, apiAction api.L2ConnectionActionDetail) {
+	assert.Equal(t, action.Type, apiAction.ActionType, "Action Type matches")
+	assert.Equal(t, action.OperationID, apiAction.OperationID, "Action OperationID matches")
+	assert.Equal(t, action.Message, apiAction.ActionMessage, "Action Message matches")
+	assert.Equal(t, len(action.RequiredData), len(apiAction.ActionRequiredData), "Number of ActionRequiredData matches")
+	for i := range action.RequiredData {
+		assert.Equal(t, action.RequiredData[i].Key, apiAction.ActionRequiredData[i].Key, "ActionRequiredData Key matches")
+		assert.Equal(t, action.RequiredData[i].Label, apiAction.ActionRequiredData[i].Label, "Label matches")
+		assert.Equal(t, action.RequiredData[i].Value, apiAction.ActionRequiredData[i].Value, "Value matches")
+		assert.Equal(t, action.RequiredData[i].IsEditable, apiAction.ActionRequiredData[i].Editable, "Editable matches")
+		assert.Equal(t, action.RequiredData[i].ValidationPattern, apiAction.ActionRequiredData[i].ValidationPattern, "ValidationPattern matches")
+	}
 }
