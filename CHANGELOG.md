@@ -5,7 +5,7 @@ NOTES:
 * this version of module started to use `equinix/rest-go` client
 for any REST interactions with Equinix APIs
 
-FEATRUES:
+FEATURES:
 
 * **L2Connection**: `func GetL2OutgoingConnections()` gives possibility to fetch
  all a-side (outgoing) connections for a customer account associated with
@@ -14,6 +14,7 @@ authenticated application
 ENHANCEMENTS:
 
 * **L2Connection** added additional attributes:
+  * *Actions* provide details about pending actions to complete connection provisioning
   * *DeviceInterfaceID* indicates network interface identifier on a network device
   * *ProviderStatus* indicates connection status on a z-side
   * *RedundancyType* indicates whether connection is primary or secondary
