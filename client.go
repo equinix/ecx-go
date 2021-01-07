@@ -1,4 +1,4 @@
-//Package ecx implements ECX fabric client
+//Package ecx implements Equinix Fabric client
 package ecx
 
 const (
@@ -36,7 +36,7 @@ const (
 	ConnectionStatusDeleted = "DELETED"
 )
 
-//Client describes operations provided by ECX Fabric client module
+//Client describes operations provided by Equinix Fabric client module
 type Client interface {
 	GetUserPorts() ([]Port, error)
 
@@ -62,7 +62,7 @@ type L2ConnectionUpdateRequest interface {
 	Execute() error
 }
 
-//Error describes ECX Fabric error that occurs during API call processing
+//Error describes Equinix Fabric error that occurs during API call processing
 type Error struct {
 	//ErrorCode is short error identifier
 	ErrorCode string
@@ -70,7 +70,7 @@ type Error struct {
 	ErrorMessage string
 }
 
-//L2Connection describes layer 2 connection managed by ECX Fabric
+//L2Connection describes layer 2 connection managed by Equinix Fabric
 type L2Connection struct {
 	UUID                string
 	Name                string
@@ -134,7 +134,7 @@ type L2ConnectionConfirmation struct {
 	Message             string
 }
 
-//L2ServiceProfile describes layer 2 service profile managed by ECX Fabric
+//L2ServiceProfile describes layer 2 service profile managed by Equinix Fabric
 type L2ServiceProfile struct {
 	UUID                                string
 	State                               string
@@ -188,7 +188,7 @@ type L2ServiceProfileFeatures struct {
 	TestProfile bool
 }
 
-//Port describes ECX Fabric's user port
+//Port describes Equinix Fabric's user port
 type Port struct {
 	UUID          string
 	Name          string

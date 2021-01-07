@@ -7,7 +7,7 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-//GetUserPorts operation retrieves ECXF user ports
+//GetUserPorts operation retrieves Equinix Fabric user ports
 func (c RestClient) GetUserPorts() ([]Port, error) {
 	path := "/ecx/v3/port/userport"
 	respBody := []api.Port{}

@@ -66,10 +66,12 @@ func (c RestClient) CreateL2Connection(l2connection L2Connection) (*L2Connection
 	return &l2connection, nil
 }
 
-//CreateL2RedundantConnection operation creates redundant layer2 connection with given connection structures.
-//Primary connection structure is used as a baseline for underlaying API call, whereas secondary connection strucutre provices
-//supplementary information only.
-//Upon successful creation, primary connection structure, enriched with assigned UUID and redundant connection UUID, will be returned
+//CreateL2RedundantConnection operation creates redundant layer2 connection with
+//given connection structures.
+//Primary connection structure is used as a baseline for underlaying API call,
+//whereas secondary connection structure provices supplementary information only.
+//Upon successful creation, primary connection structure, enriched with assigned UUID
+//and redundant connection UUID, will be returned
 func (c RestClient) CreateL2RedundantConnection(primary L2Connection, secondary L2Connection) (*L2Connection, error) {
 	path := "/ecx/v3/l2/connections"
 	if primary.DeviceUUID != "" {
@@ -97,7 +99,8 @@ func (c RestClient) DeleteL2Connection(uuid string) error {
 	return nil
 }
 
-//NewL2ConnectionUpdateRequest creates new composite update request for a connection with a given UUID
+//NewL2ConnectionUpdateRequest creates new composite update request
+//for a connection with a given UUID
 func (c RestClient) NewL2ConnectionUpdateRequest(uuid string) L2ConnectionUpdateRequest {
 	return &restL2ConnectionUpdateRequest{
 		uuid: uuid,

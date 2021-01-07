@@ -4,6 +4,8 @@ NOTES:
 
 * this version of module started to use `equinix/rest-go` client
 for any REST interactions with Equinix APIs
+* ECX names were removed from descriptions and documentation in favor
+of Equinix Fabric name
 
 FEATURES:
 
