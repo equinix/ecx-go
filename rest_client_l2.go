@@ -202,6 +202,13 @@ func createL2RedundantConnectionRequest(primary L2Connection, secondary L2Connec
 	connReq.SecondaryZSidePortUUID = secondary.ZSidePortUUID
 	connReq.SecondaryZSideVlanSTag = secondary.ZSideVlanSTag
 	connReq.SecondaryZSideVlanCTag = secondary.ZSideVlanCTag
+	connReq.SecondarySpeed = secondary.Speed
+	connReq.SecondarySpeedUnit = secondary.SpeedUnit
+	connReq.SecondaryProfileUUID = secondary.ProfileUUID
+	connReq.SecondaryAuthorizationKey = secondary.AuthorizationKey
+	connReq.SecondarySellerMetroCode = secondary.SellerMetroCode
+	connReq.SecondarySellerRegion = secondary.SellerRegion
+	connReq.SecondaryInterfaceID = secondary.DeviceInterfaceID
 	return connReq
 }
 

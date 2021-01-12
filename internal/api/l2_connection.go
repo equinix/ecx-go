@@ -60,6 +60,13 @@ type L2ConnectionRequest struct {
 	SecondaryZSidePortUUID     string                       `json:"secondaryZSidePortUUID,omitempty"`
 	SecondaryZSideVlanSTag     int                          `json:"secondaryZSideVlanSTag,omitempty"`
 	SecondaryZSideVlanCTag     int                          `json:"secondaryZSideVlanCTag,omitempty"`
+	SecondarySpeed             int                          `json:"secondarySpeed,omitempty"`
+	SecondarySpeedUnit         string                       `json:"secondarySpeedUnit,omitempty"`
+	SecondaryProfileUUID       string                       `json:"secondaryProfileUUID,omitempty"`
+	SecondaryAuthorizationKey  string                       `json:"secondaryAuthorizationKey,omitempty"`
+	SecondarySellerMetroCode   string                       `json:"secondarySellerMetroCode,omitempty"`
+	SecondarySellerRegion      string                       `json:"secondarySellerRegion,omitempty"`
+	SecondaryInterfaceID       int                          `json:"secondaryInterfaceId,omitempty"`
 	SellerRegion               string                       `json:"sellerRegion,omitempty"`
 	SellerMetroCode            string                       `json:"sellerMetroCode,omitempty"`
 	AuthorizationKey           string                       `json:"authorizationKey,omitempty"`

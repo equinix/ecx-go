@@ -1,3 +1,17 @@
+## 1.3.0 (Unreleased)
+
+ENHANCEMENTS:
+
+* **L2Connection** redundant connection creation requests maps additional secondary
+connection attributes ([equinix/terraform-provider-equinix#17](https://github.com/equinix/terraform-provider-equinix/issues/17)):
+  * Speed
+  * SpeedUnit
+  * ProfileUUID
+  * AuthorizationKey
+  * SellerRegion
+  * SellerMetroCode
+  * InterfaceID
+
 ## 1.2.0 (January 07, 2021)
 
 NOTES:

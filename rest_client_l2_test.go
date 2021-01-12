@@ -177,14 +177,22 @@ func TestCreateRedundantL2Connection(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 	newPriConn := testPrimaryConnection
 	newSecConn := L2Connection{
-		Name:          "secName",
-		PortUUID:      "secondaryPortUUID",
-		DeviceUUID:    "secondaryDeviceUUID",
-		VlanSTag:      690,
-		VlanCTag:      691,
-		ZSidePortUUID: "secondaryZSidePortUUID",
-		ZSideVlanSTag: 717,
-		ZSideVlanCTag: 718}
+		Name:              "secName",
+		PortUUID:          "secondaryPortUUID",
+		DeviceUUID:        "secondaryDeviceUUID",
+		VlanSTag:          690,
+		VlanCTag:          691,
+		ZSidePortUUID:     "secondaryZSidePortUUID",
+		ZSideVlanSTag:     717,
+		ZSideVlanCTag:     718,
+		Speed:             1,
+		SpeedUnit:         "GB",
+		ProfileUUID:       "37cfad58-5275-4d12-8787-be326cc2b87a",
+		SellerRegion:      "us-west-2",
+		SellerMetroCode:   "SV",
+		AuthorizationKey:  "key-2",
+		DeviceInterfaceID: 10,
+	}
 
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
@@ -328,6 +336,13 @@ func verifyRedundantL2ConnectionRequest(t *testing.T, primary L2Connection, seco
 	assert.Equal(t, secondary.ZSidePortUUID, req.SecondaryZSidePortUUID, "SecondaryZSidePortUUID matches")
 	assert.Equal(t, secondary.ZSideVlanSTag, req.SecondaryZSideVlanSTag, "SecondaryZSideVlanSTag matches")
 	assert.Equal(t, secondary.ZSideVlanCTag, req.SecondaryZSideVlanCTag, "SecondaryZSideVlanCTag matches")
+	assert.Equal(t, secondary.Speed, req.SecondarySpeed, "SecondarySpeed matches")
+	assert.Equal(t, secondary.SpeedUnit, req.SecondarySpeedUnit, "SecondarySpeedUnit matches")
+	assert.Equal(t, secondary.ProfileUUID, req.SecondaryProfileUUID, "SecondaryProfileUUID matches")
+	assert.Equal(t, secondary.SellerMetroCode, req.SecondarySellerMetroCode, "SecondarySellerMetroCode matches")
+	assert.Equal(t, secondary.SellerRegion, req.SecondarySellerRegion, "SecondarySellerRegion matches")
+	assert.Equal(t, secondary.AuthorizationKey, req.SecondaryAuthorizationKey, "SecondaryAuthorizationKey matches")
+	assert.Equal(t, secondary.DeviceInterfaceID, req.SecondaryInterfaceID, "SecondaryInterfaceID matches")
 }
 
 func verifyL2ConnectionAdditionalInfo(t *testing.T, info L2ConnectionAdditionalInfo, apiInfo api.L2ConnectionAdditionalInfo) {
