@@ -121,6 +121,18 @@ func (req *restL2ConnectionUpdateRequest) WithBandwidth(speed int, speedUnit str
 	return req
 }
 
+//WithSpeed sets new connection speed in a composite connection update request
+func (req *restL2ConnectionUpdateRequest) WithSpeed(speed int) L2ConnectionUpdateRequest {
+	req.speed = speed
+	return req
+}
+
+//WithSpeedUnit sets new connection speed unit in a composite connection update request
+func (req *restL2ConnectionUpdateRequest) WithSpeedUnit(speedUnit string) L2ConnectionUpdateRequest {
+	req.speedUnit = speedUnit
+	return req
+}
+
 //Execute attempts to update connection according new data set in composite update request.
 //This is not atomic operation and if any update will fail, other changes won't be reverted.
 //UpdateError will be returned if any of requested data failed to update

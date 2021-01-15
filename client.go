@@ -59,6 +59,8 @@ type Client interface {
 type L2ConnectionUpdateRequest interface {
 	WithName(name string) L2ConnectionUpdateRequest
 	WithBandwidth(speed int, speedUnit string) L2ConnectionUpdateRequest
+	WithSpeed(speed int) L2ConnectionUpdateRequest
+	WithSpeedUnit(speedUnit string) L2ConnectionUpdateRequest
 	Execute() error
 }
 
