@@ -42,16 +42,16 @@ type Client interface {
 
 	GetL2OutgoingConnections(statuses []string) ([]L2Connection, error)
 	GetL2Connection(uuid string) (*L2Connection, error)
-	CreateL2Connection(conn L2Connection) (*L2Connection, error)
-	CreateL2RedundantConnection(priConn L2Connection, secConn L2Connection) (*L2Connection, error)
+	CreateL2Connection(conn L2Connection) (*string, error)
+	CreateL2RedundantConnection(priConn L2Connection, secConn L2Connection) (*string, *string, error)
 	NewL2ConnectionUpdateRequest(uuid string) L2ConnectionUpdateRequest
 	DeleteL2Connection(uuid string) error
 	ConfirmL2Connection(uuid string, confirmConn L2ConnectionToConfirm) (*L2ConnectionConfirmation, error)
 
 	GetL2SellerProfiles() ([]L2ServiceProfile, error)
 	GetL2ServiceProfile(uuid string) (*L2ServiceProfile, error)
-	CreateL2ServiceProfile(sp L2ServiceProfile) (*L2ServiceProfile, error)
-	UpdateL2ServiceProfile(sp L2ServiceProfile) (*L2ServiceProfile, error)
+	CreateL2ServiceProfile(sp L2ServiceProfile) (*string, error)
+	UpdateL2ServiceProfile(sp L2ServiceProfile) error
 	DeleteL2ServiceProfile(uuid string) error
 }
 

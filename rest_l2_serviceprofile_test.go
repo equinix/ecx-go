@@ -135,12 +135,12 @@ func TestCreateL2ServiceProfile(t *testing.T) {
 
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
-	prof, err := ecxClient.CreateL2ServiceProfile(newProfile)
+	uuid, err := ecxClient.CreateL2ServiceProfile(newProfile)
 
 	//Then
 	assert.Nil(t, err, "Client should not return an error")
-	assert.NotNil(t, prof, "Client should return a response")
-	verifyL2ServiceProfile(t, *prof, reqBody)
+	assert.NotNil(t, uuid, "Client should return a response")
+	verifyL2ServiceProfile(t, newProfile, reqBody)
 }
 
 func TestUpdateL2ServiceProfile(t *testing.T) {
@@ -168,12 +168,11 @@ func TestUpdateL2ServiceProfile(t *testing.T) {
 
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
-	prof, err := ecxClient.UpdateL2ServiceProfile(newProfile)
+	err := ecxClient.UpdateL2ServiceProfile(newProfile)
 
 	//Then
 	assert.Nil(t, err, "Client should not return an error")
-	assert.NotNil(t, prof, "Client should return a response")
-	verifyL2ServiceProfileUpdate(t, *prof, reqBody)
+	verifyL2ServiceProfileUpdate(t, newProfile, reqBody)
 }
 
 func TestDeleteServiceProfile(t *testing.T) {

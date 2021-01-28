@@ -39,7 +39,7 @@ func (c RestClient) GetL2ServiceProfile(uuid string) (*L2ServiceProfile, error) 
 
 //CreateL2ServiceProfile operation creates layer 2 service profile with a given profile structure.
 //Upon successful creation, connection structure with assigned UUID will be returned
-func (c RestClient) CreateL2ServiceProfile(l2profile L2ServiceProfile) (*L2ServiceProfile, error) {
+func (c RestClient) CreateL2ServiceProfile(l2profile L2ServiceProfile) (*string, error) {
 	path := "/ecx/v3/l2/serviceprofiles"
 	reqBody := mapL2ServiceProfileDomainToAPI(l2profile)
 	respBody := api.CreateL2ServiceProfileResponse{}
@@ -47,24 +47,23 @@ func (c RestClient) CreateL2ServiceProfile(l2profile L2ServiceProfile) (*L2Servi
 	if err := c.Execute(req, http.MethodPost, path); err != nil {
 		return nil, err
 	}
-	l2profile.UUID = respBody.UUID
-	return &l2profile, nil
+	return respBody.UUID, nil
 }
 
 //UpdateL2ServiceProfile operation updates layer 2 service profile by replacing existing profile with a given profile structure.
 //Target profile structure needs to have UUID defined
-func (c RestClient) UpdateL2ServiceProfile(sp L2ServiceProfile) (*L2ServiceProfile, error) {
+func (c RestClient) UpdateL2ServiceProfile(sp L2ServiceProfile) error {
 	if StringValue(sp.UUID) == "" {
-		return nil, fmt.Errorf("target profile structure needs to have UUID defined")
+		return fmt.Errorf("target profile structure needs to have UUID defined")
 	}
 	path := "/ecx/v3/l2/serviceprofiles"
 	reqBody := mapL2ServiceProfileDomainToAPI(sp)
 	respBody := api.CreateL2ServiceProfileResponse{}
 	req := c.R().SetBody(&reqBody).SetResult(&respBody)
 	if err := c.Execute(req, http.MethodPut, path); err != nil {
-		return nil, err
+		return err
 	}
-	return &sp, nil
+	return nil
 }
 
 //DeleteL2ServiceProfile deletes layer 2 service profile with a given UUID

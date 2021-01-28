@@ -113,13 +113,13 @@ func TestCreateL2Connection(t *testing.T) {
 
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
-	conn, err := ecxClient.CreateL2Connection(newConnection)
+	uuid, err := ecxClient.CreateL2Connection(newConnection)
 
 	//Then
 	assert.Nil(t, err, "Client should not return an error")
-	assert.NotNil(t, conn, "Client should return a response")
-	verifyL2ConnectionRequest(t, *conn, reqBody)
-	assert.Equal(t, conn.UUID, respBody.PrimaryConnectionID, "UUID matches")
+	assert.NotNil(t, uuid, "Client should return a response")
+	verifyL2ConnectionRequest(t, newConnection, reqBody)
+	assert.Equal(t, uuid, respBody.PrimaryConnectionID, "UUID matches")
 }
 
 func TestCreateDeviceL2Connection(t *testing.T) {
@@ -147,13 +147,13 @@ func TestCreateDeviceL2Connection(t *testing.T) {
 
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
-	conn, err := ecxClient.CreateL2Connection(newConnection)
+	uuid, err := ecxClient.CreateL2Connection(newConnection)
 
 	//Then
 	assert.Nil(t, err, "Client should not return an error")
-	assert.NotNil(t, conn, "Client should return a response")
-	verifyL2ConnectionRequest(t, *conn, reqBody)
-	assert.Equal(t, conn.UUID, respBody.PrimaryConnectionID, "UUID matches")
+	assert.NotNil(t, uuid, "Client should return a response")
+	verifyL2ConnectionRequest(t, newConnection, reqBody)
+	assert.Equal(t, uuid, respBody.PrimaryConnectionID, "UUID matches")
 }
 
 func TestCreateRedundantL2Connection(t *testing.T) {
@@ -196,14 +196,15 @@ func TestCreateRedundantL2Connection(t *testing.T) {
 
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
-	conn, err := ecxClient.CreateL2RedundantConnection(newPriConn, newSecConn)
+	priUUID, secUUID, err := ecxClient.CreateL2RedundantConnection(newPriConn, newSecConn)
 
 	//Then
 	assert.Nil(t, err, "Client should not return an error")
-	assert.NotNil(t, conn, "Client should return a response")
+	assert.NotNil(t, priUUID, "Client should return primary connection UUID")
+	assert.NotNil(t, priUUID, "Client should return secondary connection UUID")
 	verifyRedundantL2ConnectionRequest(t, newPriConn, newSecConn, reqBody)
-	assert.Equal(t, conn.UUID, respBody.PrimaryConnectionID, "UUID matches")
-	assert.Equal(t, conn.RedundantUUID, respBody.SecondaryConnectionID, "RedundantUUID matches")
+	assert.Equal(t, priUUID, respBody.PrimaryConnectionID, "UUID matches")
+	assert.Equal(t, secUUID, respBody.SecondaryConnectionID, "RedundantUUID matches")
 }
 
 func TestDeleteL2Connection(t *testing.T) {

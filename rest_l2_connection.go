@@ -51,7 +51,7 @@ func (c RestClient) GetL2Connection(uuid string) (*L2Connection, error) {
 
 //CreateL2Connection operation creates non-redundant layer 2 connection with a given connection structure.
 //Upon successful creation, connection structure, enriched with assigned UUID, will be returned
-func (c RestClient) CreateL2Connection(l2connection L2Connection) (*L2Connection, error) {
+func (c RestClient) CreateL2Connection(l2connection L2Connection) (*string, error) {
 	path := "/ecx/v3/l2/connections"
 	if StringValue(l2connection.DeviceUUID) != "" {
 		path = "/ne/v1/l2/connections"
@@ -62,8 +62,7 @@ func (c RestClient) CreateL2Connection(l2connection L2Connection) (*L2Connection
 	if err := c.Execute(req, http.MethodPost, path); err != nil {
 		return nil, err
 	}
-	l2connection.UUID = respBody.PrimaryConnectionID
-	return &l2connection, nil
+	return respBody.PrimaryConnectionID, nil
 }
 
 //CreateL2RedundantConnection operation creates redundant layer2 connection with
@@ -72,7 +71,7 @@ func (c RestClient) CreateL2Connection(l2connection L2Connection) (*L2Connection
 //whereas secondary connection structure provices supplementary information only.
 //Upon successful creation, primary connection structure, enriched with assigned UUID
 //and redundant connection UUID, will be returned
-func (c RestClient) CreateL2RedundantConnection(primary L2Connection, secondary L2Connection) (*L2Connection, error) {
+func (c RestClient) CreateL2RedundantConnection(primary L2Connection, secondary L2Connection) (*string, *string, error) {
 	path := "/ecx/v3/l2/connections"
 	if StringValue(primary.DeviceUUID) != "" {
 		path = "/ne/v1/l2/connections"
@@ -81,11 +80,9 @@ func (c RestClient) CreateL2RedundantConnection(primary L2Connection, secondary 
 	respBody := api.CreateL2ConnectionResponse{}
 	req := c.R().SetBody(&reqBody).SetResult(&respBody)
 	if err := c.Execute(req, http.MethodPost, path); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	primary.UUID = respBody.PrimaryConnectionID
-	primary.RedundantUUID = respBody.SecondaryConnectionID
-	return &primary, nil
+	return respBody.PrimaryConnectionID, respBody.SecondaryConnectionID, nil
 }
 
 //DeleteL2Connection deletes layer 2 connection with a given UUID
