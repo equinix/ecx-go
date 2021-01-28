@@ -74,149 +74,149 @@ type Error struct {
 
 //L2Connection describes layer 2 connection managed by Equinix Fabric
 type L2Connection struct {
-	UUID                string
-	Name                string
-	ProfileUUID         string
-	Speed               int
-	SpeedUnit           string
-	Status              string
-	ProviderStatus      string
+	UUID                *string
+	Name                *string
+	ProfileUUID         *string
+	Speed               *int
+	SpeedUnit           *string
+	Status              *string
+	ProviderStatus      *string
 	Notifications       []string
-	PurchaseOrderNumber string
-	PortUUID            string
-	DeviceUUID          string
-	DeviceInterfaceID   int
-	VlanSTag            int
-	VlanCTag            int
-	NamedTag            string
+	PurchaseOrderNumber *string
+	PortUUID            *string
+	DeviceUUID          *string
+	DeviceInterfaceID   *int
+	VlanSTag            *int
+	VlanCTag            *int
+	NamedTag            *string
 	AdditionalInfo      []L2ConnectionAdditionalInfo
-	ZSidePortUUID       string
-	ZSideVlanSTag       int
-	ZSideVlanCTag       int
-	SellerRegion        string
-	SellerMetroCode     string
-	AuthorizationKey    string
-	RedundantUUID       string
-	RedundancyType      string
+	ZSidePortUUID       *string
+	ZSideVlanSTag       *int
+	ZSideVlanCTag       *int
+	SellerRegion        *string
+	SellerMetroCode     *string
+	AuthorizationKey    *string
+	RedundantUUID       *string
+	RedundancyType      *string
 	Actions             []L2ConnectionAction
 }
 
 //L2ConnectionAdditionalInfo additional info object used in L2 connections
 type L2ConnectionAdditionalInfo struct {
-	Name  string
-	Value string
+	Name  *string
+	Value *string
 }
 
 //L2ConnectionAction describes pending actions to complete connection provisioning
 type L2ConnectionAction struct {
-	Type         string
-	Message      string
-	OperationID  string
+	Type         *string
+	Message      *string
+	OperationID  *string
 	RequiredData []L2ConnectionActionData
 }
 
 //L2ConnectionActionData describes data required for a given to complete
 type L2ConnectionActionData struct {
-	Key               string
-	Label             string
-	Value             string
-	IsEditable        bool
-	ValidationPattern string
+	Key               *string
+	Label             *string
+	Value             *string
+	IsEditable        *bool
+	ValidationPattern *string
 }
 
 //L2ConnectionToConfirm accepts the hosted connection in the seller side
 type L2ConnectionToConfirm struct {
-	AccessKey string
-	SecretKey string
+	AccessKey *string
+	SecretKey *string
 }
 
 //L2ConnectionConfirmation describes a connection confirmed
 type L2ConnectionConfirmation struct {
-	PrimaryConnectionID string
-	Message             string
+	PrimaryConnectionID *string
+	Message             *string
 }
 
 //L2ServiceProfile describes layer 2 service profile managed by Equinix Fabric
 type L2ServiceProfile struct {
-	UUID                                string
-	State                               string
-	AlertPercentage                     float64
-	AllowCustomSpeed                    bool
-	AllowOverSubscription               bool
-	APIAvailable                        bool
-	AuthKeyLabel                        string
-	ConnectionNameLabel                 string
-	CTagLabel                           string
-	EnableAutoGenerateServiceKey        bool
-	EquinixManagedPortAndVlan           bool
+	UUID                                *string
+	State                               *string
+	AlertPercentage                     *float64
+	AllowCustomSpeed                    *bool
+	AllowOverSubscription               *bool
+	APIAvailable                        *bool
+	AuthKeyLabel                        *string
+	ConnectionNameLabel                 *string
+	CTagLabel                           *string
+	EnableAutoGenerateServiceKey        *bool
+	EquinixManagedPortAndVlan           *bool
 	Features                            L2ServiceProfileFeatures
-	IntegrationID                       string
-	Name                                string
+	IntegrationID                       *string
+	Name                                *string
 	OnBandwidthThresholdNotification    []string
 	OnProfileApprovalRejectNotification []string
 	OnVcApprovalRejectionNotification   []string
-	OverSubscription                    string
+	OverSubscription                    *string
 	Ports                               []L2ServiceProfilePort
-	Private                             bool
+	Private                             *bool
 	PrivateUserEmails                   []string
-	RequiredRedundancy                  bool
+	RequiredRedundancy                  *bool
 	SpeedBands                          []L2ServiceProfileSpeedBand
-	SpeedFromAPI                        bool
-	TagType                             string
-	VlanSameAsPrimary                   bool
-	Description                         string
+	SpeedFromAPI                        *bool
+	TagType                             *string
+	VlanSameAsPrimary                   *bool
+	Description                         *string
 	Metros                              []L2SellerProfileMetro
 	AdditionalInfos                     []L2SellerProfileAdditionalInfo
-	Encapsulation                       string
-	GlobalOrganization                  string
-	OrganizationName                    string
+	Encapsulation                       *string
+	GlobalOrganization                  *string
+	OrganizationName                    *string
 }
 
 //L2ServiceProfilePort describes port used in L2 service profile
 type L2ServiceProfilePort struct {
-	ID        string
-	MetroCode string
+	ID        *string
+	MetroCode *string
 }
 
 //L2ServiceProfileSpeedBand describes speed / bandwidth used in L2 service profile
 type L2ServiceProfileSpeedBand struct {
-	Speed     int
-	SpeedUnit string
+	Speed     *int
+	SpeedUnit *string
 }
 
 //L2ServiceProfileFeatures describes features used in L2 service profile
 type L2ServiceProfileFeatures struct {
-	CloudReach  bool
-	TestProfile bool
+	CloudReach  *bool
+	TestProfile *bool
 }
 
 //Port describes Equinix Fabric's user port
 type Port struct {
-	UUID          string
-	Name          string
-	Region        string
-	IBX           string
-	MetroCode     string
-	Priority      string
-	Encapsulation string
-	Buyout        bool
-	Bandwidth     string
-	Status        string
+	UUID          *string
+	Name          *string
+	Region        *string
+	IBX           *string
+	MetroCode     *string
+	Priority      *string
+	Encapsulation *string
+	Buyout        *bool
+	Bandwidth     *string
+	Status        *string
 }
 
 //L2SellerProfileMetro describces details of a metro in which service provices is present
 type L2SellerProfileMetro struct {
-	Code    string
-	Name    string
+	Code    *string
+	Name    *string
 	IBXes   []string
 	Regions map[string]string
 }
 
 //L2SellerProfileAdditionalInfo describces additional information that might be provided by service buyer when using given seller profile
 type L2SellerProfileAdditionalInfo struct {
-	Name             string
-	Description      string
-	DataType         string
-	IsMandatory      bool
-	IsCaptureInEmail bool
+	Name             *string
+	Description      *string
+	DataType         *string
+	IsMandatory      *bool
+	IsCaptureInEmail *bool
 }

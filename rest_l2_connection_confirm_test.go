@@ -13,8 +13,8 @@ import (
 )
 
 var testConnectionToConfirm = L2ConnectionToConfirm{
-	AccessKey: "accessKey",
-	SecretKey: "secretKey",
+	AccessKey: String("accessKey"),
+	SecretKey: String("secretKey"),
 }
 
 func TestConfirmL2Connection(t *testing.T) {

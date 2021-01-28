@@ -13,50 +13,50 @@ import (
 )
 
 var testProfile = L2ServiceProfile{
-	AlertPercentage:              30.2,
-	AllowCustomSpeed:             true,
-	AllowOverSubscription:        false,
-	APIAvailable:                 true,
-	AuthKeyLabel:                 "authKeyLabel",
-	ConnectionNameLabel:          "connectionNameLabel",
-	CTagLabel:                    "cTagLabel",
-	EnableAutoGenerateServiceKey: false,
-	EquinixManagedPortAndVlan:    false,
+	AlertPercentage:              Float64(30.2),
+	AllowCustomSpeed:             Bool(true),
+	AllowOverSubscription:        Bool(false),
+	APIAvailable:                 Bool(true),
+	AuthKeyLabel:                 String("authKeyLabel"),
+	ConnectionNameLabel:          String("connectionNameLabel"),
+	CTagLabel:                    String("cTagLabel"),
+	EnableAutoGenerateServiceKey: Bool(false),
+	EquinixManagedPortAndVlan:    Bool(false),
 	Features: L2ServiceProfileFeatures{
-		CloudReach:  true,
-		TestProfile: true,
+		CloudReach:  Bool(true),
+		TestProfile: Bool(true),
 	},
-	IntegrationID:                       "integrationID",
-	Name:                                "name",
+	IntegrationID:                       String("integrationID"),
+	Name:                                String("name"),
 	OnBandwidthThresholdNotification:    []string{"miro@equinix.com", "jane@equinix.com"},
 	OnProfileApprovalRejectNotification: []string{"miro@equinix.com", "jane@equinix.com"},
 	OnVcApprovalRejectionNotification:   []string{"miro@equinix.com", "jane@equinix.com"},
-	OverSubscription:                    "2x",
+	OverSubscription:                    String("2x"),
 	Ports: []L2ServiceProfilePort{
 		{
-			ID:        "port-id1",
-			MetroCode: "FR",
+			ID:        String("port-id1"),
+			MetroCode: String("FR"),
 		}, {
-			ID:        "port-id2",
-			MetroCode: "AM",
+			ID:        String("port-id2"),
+			MetroCode: String("AM"),
 		},
 	},
-	Private:            true,
+	Private:            Bool(true),
 	PrivateUserEmails:  []string{"miro@equinix.com", "jane@equinix.com"},
-	RequiredRedundancy: false,
+	RequiredRedundancy: Bool(false),
 	SpeedBands: []L2ServiceProfileSpeedBand{
 		{
-			Speed:     100,
-			SpeedUnit: "MB",
+			Speed:     Int(100),
+			SpeedUnit: String("MB"),
 		}, {
-			Speed:     1000,
-			SpeedUnit: "MB",
+			Speed:     Int(1000),
+			SpeedUnit: String("MB"),
 		},
 	},
-	SpeedFromAPI:      false,
-	TagType:           "tagType",
-	VlanSameAsPrimary: false,
-	Description:       "Test profile",
+	SpeedFromAPI:      Bool(false),
+	TagType:           String("tagType"),
+	VlanSameAsPrimary: Bool(false),
+	Description:       String("Test profile"),
 }
 
 func TestGetL2SellerProfiles(t *testing.T) {
@@ -66,7 +66,7 @@ func TestGetL2SellerProfiles(t *testing.T) {
 		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
 	testHc := &http.Client{}
-	pageSize := respBody.PageSize
+	pageSize := IntValue(respBody.PageSize)
 	httpmock.ActivateNonDefault(testHc)
 	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/ecx/v3/l2/serviceprofiles/services?pageSize=%d", baseURL, pageSize),
 		func(r *http.Request) (*http.Response, error) {
@@ -91,7 +91,7 @@ func TestGetL2ServiceProfile(t *testing.T) {
 	//Given
 	respBody := api.L2ServiceProfile{}
 	if err := readJSONData("./test-fixtures/ecx_l2serviceprofile_get_resp.json", &respBody); err != nil {
-		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
 	profileID := "spId"
 	testHc := &http.Client{}
@@ -116,7 +116,7 @@ func TestCreateL2ServiceProfile(t *testing.T) {
 	//Given
 	respBody := api.CreateL2ServiceProfileResponse{}
 	if err := readJSONData("./test-fixtures/ecx_l2serviceprofile_post_resp.json", &respBody); err != nil {
-		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
 	reqBody := api.L2ServiceProfile{}
 	testHc := &http.Client{}
@@ -147,7 +147,7 @@ func TestUpdateL2ServiceProfile(t *testing.T) {
 	//Given
 	respBody := api.CreateL2ServiceProfileResponse{}
 	if err := readJSONData("./test-fixtures/ecx_l2serviceprofile_post_resp.json", &respBody); err != nil {
-		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
 	reqBody := api.L2ServiceProfile{}
 	testHc := &http.Client{}
@@ -163,8 +163,8 @@ func TestUpdateL2ServiceProfile(t *testing.T) {
 	)
 	defer httpmock.DeactivateAndReset()
 	newProfile := testProfile
-	newProfile.UUID = "someUUID"
-	newProfile.State = "APPROVED"
+	newProfile.UUID = String("someUUID")
+	newProfile.State = String("APPROVED")
 
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
@@ -180,7 +180,7 @@ func TestDeleteServiceProfile(t *testing.T) {
 	//Given
 	respBody := api.CreateL2ServiceProfileResponse{}
 	if err := readJSONData("./test-fixtures/ecx_l2serviceprofile_delete_resp.json", &respBody); err != nil {
-		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
 	profileID := "existingId"
 	testHc := &http.Client{}

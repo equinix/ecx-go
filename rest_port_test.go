@@ -16,7 +16,7 @@ func TestGetUserPort(t *testing.T) {
 	//Given
 	respBody := []api.Port{}
 	if err := readJSONData("./test-fixtures/ecx_ports_get.json", &respBody); err != nil {
-		assert.Failf(t, "Cannont read test response due to %s", err.Error())
+		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
 	testHc := &http.Client{}
 	httpmock.ActivateNonDefault(testHc)
@@ -49,8 +49,8 @@ func verifyPort(t *testing.T, port Port, apiPort api.Port) {
 	assert.Equal(t, apiPort.Encapsulation, port.Encapsulation, "Encapsulation matches")
 	assert.Equal(t, apiPort.Buyout, port.Buyout, "Buyout matches")
 	assert.Equal(t, apiPort.ProvisionStatus, port.Status, "ProvisionStatus matches")
-	convBandwidth, err := strconv.ParseInt(port.Bandwidth, 10, 64)
+	convBandwidth, err := strconv.ParseInt(StringValue(port.Bandwidth), 10, 64)
 	assert.Nil(t, err, "Bandwidth string should be convertable to int64")
-	assert.Equal(t, apiPort.TotalBandwidth, convBandwidth, "TotalBandwidth matches")
+	assert.Equal(t, Int64Value(apiPort.TotalBandwidth), convBandwidth, "TotalBandwidth matches")
 
 }

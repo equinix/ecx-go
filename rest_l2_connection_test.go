@@ -14,23 +14,23 @@ import (
 )
 
 var testPrimaryConnection = L2Connection{
-	Name:                "name",
-	ProfileUUID:         "profileUUID",
-	Speed:               666,
-	SpeedUnit:           "MB",
+	Name:                String("name"),
+	ProfileUUID:         String("profileUUID"),
+	Speed:               Int(666),
+	SpeedUnit:           String("MB"),
 	Notifications:       []string{"janek@equinix.com", "marek@equinix.com"},
-	PurchaseOrderNumber: "orderNumber",
-	PortUUID:            "primaryPortUUID",
-	VlanSTag:            100,
-	VlanCTag:            101,
-	NamedTag:            "Private",
-	AdditionalInfo:      []L2ConnectionAdditionalInfo{{Name: "asn", Value: "1543"}, {Name: "global", Value: "false"}},
-	ZSidePortUUID:       "primaryZSidePortUUID",
-	ZSideVlanSTag:       200,
-	ZSideVlanCTag:       201,
-	SellerRegion:        "EMEA",
-	SellerMetroCode:     "AM",
-	AuthorizationKey:    "authorizationKey"}
+	PurchaseOrderNumber: String("orderNumber"),
+	PortUUID:            String("primaryPortUUID"),
+	VlanSTag:            Int(100),
+	VlanCTag:            Int(101),
+	NamedTag:            String("Private"),
+	AdditionalInfo:      []L2ConnectionAdditionalInfo{{Name: String("asn"), Value: String("1543")}, {Name: String("global"), Value: String("false")}},
+	ZSidePortUUID:       String("primaryZSidePortUUID"),
+	ZSideVlanSTag:       Int(200),
+	ZSideVlanCTag:       Int(201),
+	SellerRegion:        String("EMEA"),
+	SellerMetroCode:     String("AM"),
+	AuthorizationKey:    String("authorizationKey")}
 
 func TestGetL2OutgoingConnections(t *testing.T) {
 	//Given
@@ -38,7 +38,7 @@ func TestGetL2OutgoingConnections(t *testing.T) {
 	if err := readJSONData("./test-fixtures/ecx_l2connections_get_resp.json", &respBody); err != nil {
 		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
-	pageSize := respBody.PageSize
+	pageSize := IntValue(respBody.PageSize)
 	testHc := &http.Client{}
 	httpmock.ActivateNonDefault(testHc)
 	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/ecx/v3/l2/buyer/connections?pageSize=%d&status=%s", baseURL, pageSize, url.QueryEscape("PROVISIONED,PROVISIONING")),
@@ -142,8 +142,8 @@ func TestCreateDeviceL2Connection(t *testing.T) {
 	)
 	defer httpmock.DeactivateAndReset()
 	newConnection := testPrimaryConnection
-	newConnection.DeviceUUID = "deviceUUID"
-	newConnection.DeviceInterfaceID = 5
+	newConnection.DeviceUUID = String("deviceUUID")
+	newConnection.DeviceInterfaceID = Int(5)
 
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
@@ -177,21 +177,21 @@ func TestCreateRedundantL2Connection(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 	newPriConn := testPrimaryConnection
 	newSecConn := L2Connection{
-		Name:              "secName",
-		PortUUID:          "secondaryPortUUID",
-		DeviceUUID:        "secondaryDeviceUUID",
-		VlanSTag:          690,
-		VlanCTag:          691,
-		ZSidePortUUID:     "secondaryZSidePortUUID",
-		ZSideVlanSTag:     717,
-		ZSideVlanCTag:     718,
-		Speed:             1,
-		SpeedUnit:         "GB",
-		ProfileUUID:       "37cfad58-5275-4d12-8787-be326cc2b87a",
-		SellerRegion:      "us-west-2",
-		SellerMetroCode:   "SV",
-		AuthorizationKey:  "key-2",
-		DeviceInterfaceID: 10,
+		Name:              String("secName"),
+		PortUUID:          String("secondaryPortUUID"),
+		DeviceUUID:        String("secondaryDeviceUUID"),
+		VlanSTag:          Int(690),
+		VlanCTag:          Int(691),
+		ZSidePortUUID:     String("secondaryZSidePortUUID"),
+		ZSideVlanSTag:     Int(717),
+		ZSideVlanCTag:     Int(718),
+		Speed:             Int(1),
+		SpeedUnit:         String("GB"),
+		ProfileUUID:       String("37cfad58-5275-4d12-8787-be326cc2b87a"),
+		SellerRegion:      String("us-west-2"),
+		SellerMetroCode:   String("SV"),
+		AuthorizationKey:  String("key-2"),
+		DeviceInterfaceID: Int(10),
 	}
 
 	//When
@@ -263,9 +263,9 @@ func TestUpdateL2Connection(t *testing.T) {
 
 	//Then
 	assert.Nil(t, err, "Client should not return an error")
-	assert.Equal(t, newName, reqBody.Name, "Name matches")
-	assert.Equal(t, newSpeed, reqBody.Speed, "Speed matches")
-	assert.Equal(t, newSpeedUnit, reqBody.SpeedUnit, "SpeedUnit matches")
+	assert.Equal(t, newName, StringValue(reqBody.Name), "Name matches")
+	assert.Equal(t, newSpeed, IntValue(reqBody.Speed), "Speed matches")
+	assert.Equal(t, newSpeedUnit, StringValue(reqBody.SpeedUnit), "SpeedUnit matches")
 }
 
 func verifyL2Connection(t *testing.T, conn L2Connection, resp api.L2ConnectionResponse) {

@@ -54,7 +54,7 @@ func (c RestClient) CreateL2ServiceProfile(l2profile L2ServiceProfile) (*L2Servi
 //UpdateL2ServiceProfile operation updates layer 2 service profile by replacing existing profile with a given profile structure.
 //Target profile structure needs to have UUID defined
 func (c RestClient) UpdateL2ServiceProfile(sp L2ServiceProfile) (*L2ServiceProfile, error) {
-	if sp.UUID == "" {
+	if StringValue(sp.UUID) == "" {
 		return nil, fmt.Errorf("target profile structure needs to have UUID defined")
 	}
 	path := "/ecx/v3/l2/serviceprofiles"

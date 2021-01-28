@@ -10,9 +10,9 @@ import (
 
 type restL2ConnectionUpdateRequest struct {
 	uuid      string
-	name      string
-	speed     int
-	speedUnit string
+	name      *string
+	speed     *int
+	speedUnit *string
 	c         RestClient
 }
 
@@ -53,7 +53,7 @@ func (c RestClient) GetL2Connection(uuid string) (*L2Connection, error) {
 //Upon successful creation, connection structure, enriched with assigned UUID, will be returned
 func (c RestClient) CreateL2Connection(l2connection L2Connection) (*L2Connection, error) {
 	path := "/ecx/v3/l2/connections"
-	if l2connection.DeviceUUID != "" {
+	if StringValue(l2connection.DeviceUUID) != "" {
 		path = "/ne/v1/l2/connections"
 	}
 	reqBody := createL2ConnectionRequest(l2connection)
@@ -74,7 +74,7 @@ func (c RestClient) CreateL2Connection(l2connection L2Connection) (*L2Connection
 //and redundant connection UUID, will be returned
 func (c RestClient) CreateL2RedundantConnection(primary L2Connection, secondary L2Connection) (*L2Connection, error) {
 	path := "/ecx/v3/l2/connections"
-	if primary.DeviceUUID != "" {
+	if StringValue(primary.DeviceUUID) != "" {
 		path = "/ne/v1/l2/connections"
 	}
 	reqBody := createL2RedundantConnectionRequest(primary, secondary)
@@ -110,26 +110,26 @@ func (c RestClient) NewL2ConnectionUpdateRequest(uuid string) L2ConnectionUpdate
 
 //WithName sets new connection name in a composite connection update request
 func (req *restL2ConnectionUpdateRequest) WithName(name string) L2ConnectionUpdateRequest {
-	req.name = name
+	req.name = &name
 	return req
 }
 
 //WithBandwidth sets new connection bandwidth in a composite connection update request
 func (req *restL2ConnectionUpdateRequest) WithBandwidth(speed int, speedUnit string) L2ConnectionUpdateRequest {
-	req.speed = speed
-	req.speedUnit = speedUnit
+	req.speed = &speed
+	req.speedUnit = &speedUnit
 	return req
 }
 
 //WithSpeed sets new connection speed in a composite connection update request
 func (req *restL2ConnectionUpdateRequest) WithSpeed(speed int) L2ConnectionUpdateRequest {
-	req.speed = speed
+	req.speed = &speed
 	return req
 }
 
 //WithSpeedUnit sets new connection speed unit in a composite connection update request
 func (req *restL2ConnectionUpdateRequest) WithSpeedUnit(speedUnit string) L2ConnectionUpdateRequest {
-	req.speedUnit = speedUnit
+	req.speedUnit = &speedUnit
 	return req
 }
 
@@ -143,7 +143,7 @@ func (req *restL2ConnectionUpdateRequest) Execute() error {
 		Speed:     req.speed,
 		SpeedUnit: req.speedUnit,
 	}
-	if req.name != "" || (req.speed > 0 && req.speedUnit != "") {
+	if StringValue(req.name) != "" || (IntValue(req.speed) > 0 && StringValue(req.speedUnit) != "") {
 		restReq := req.c.R().SetQueryParam("action", "update").SetBody(&reqBody)
 		if err := req.c.Execute(restReq, http.MethodPatch, path); err != nil {
 			return err

@@ -32,7 +32,7 @@ func mapPortAPIToDomain(apiPort api.Port) Port {
 		Priority:      apiPort.DevicePriority,
 		Encapsulation: apiPort.Encapsulation,
 		Buyout:        apiPort.Buyout,
-		Bandwidth:     fmt.Sprintf("%d", apiPort.TotalBandwidth),
+		Bandwidth:     String(fmt.Sprintf("%d", Int64Value(apiPort.TotalBandwidth))),
 		Status:        apiPort.ProvisionStatus,
 	}
 }
