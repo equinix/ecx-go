@@ -1,10 +1,10 @@
 package ecx
 
 import (
+	"net/http"
 	"net/url"
 
 	"github.com/equinix/ecx-go/internal/api"
-	"github.com/go-resty/resty/v2"
 )
 
 //ConfirmL2Connection operation accepts a hosted connection
@@ -16,7 +16,7 @@ func (c RestClient) ConfirmL2Connection(uuid string, connToConfirm L2ConnectionT
 		SetQueryParam("action", "Approve").
 		SetBody(&reqBody).
 		SetResult(&respBody)
-	if err := c.Execute(req, resty.MethodPatch, path); err != nil {
+	if err := c.Execute(req, http.MethodPatch, path); err != nil {
 		return nil, err
 	}
 

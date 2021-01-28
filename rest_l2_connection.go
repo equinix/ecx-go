@@ -1,11 +1,11 @@
 package ecx
 
 import (
+	"net/http"
 	"net/url"
 
 	"github.com/equinix/ecx-go/internal/api"
 	"github.com/equinix/rest-go"
-	"github.com/go-resty/resty/v2"
 )
 
 type restL2ConnectionUpdateRequest struct {
@@ -43,7 +43,7 @@ func (c RestClient) GetL2Connection(uuid string) (*L2Connection, error) {
 	path := "/ecx/v3/l2/connections/" + url.PathEscape(uuid)
 	respBody := api.L2ConnectionResponse{}
 	req := c.R().SetResult(&respBody)
-	if err := c.Execute(req, resty.MethodGet, path); err != nil {
+	if err := c.Execute(req, http.MethodGet, path); err != nil {
 		return nil, err
 	}
 	return mapGETToL2Connection(respBody), nil
@@ -59,7 +59,7 @@ func (c RestClient) CreateL2Connection(l2connection L2Connection) (*L2Connection
 	reqBody := createL2ConnectionRequest(l2connection)
 	respBody := api.CreateL2ConnectionResponse{}
 	req := c.R().SetBody(&reqBody).SetResult(&respBody)
-	if err := c.Execute(req, resty.MethodPost, path); err != nil {
+	if err := c.Execute(req, http.MethodPost, path); err != nil {
 		return nil, err
 	}
 	l2connection.UUID = respBody.PrimaryConnectionID
@@ -80,7 +80,7 @@ func (c RestClient) CreateL2RedundantConnection(primary L2Connection, secondary 
 	reqBody := createL2RedundantConnectionRequest(primary, secondary)
 	respBody := api.CreateL2ConnectionResponse{}
 	req := c.R().SetBody(&reqBody).SetResult(&respBody)
-	if err := c.Execute(req, resty.MethodPost, path); err != nil {
+	if err := c.Execute(req, http.MethodPost, path); err != nil {
 		return nil, err
 	}
 	primary.UUID = respBody.PrimaryConnectionID
@@ -93,7 +93,7 @@ func (c RestClient) DeleteL2Connection(uuid string) error {
 	path := "/ecx/v3/l2/connections/" + url.PathEscape(uuid)
 	respBody := api.DeleteL2ConnectionResponse{}
 	req := c.R().SetResult(&respBody)
-	if err := c.Execute(req, resty.MethodDelete, path); err != nil {
+	if err := c.Execute(req, http.MethodDelete, path); err != nil {
 		return err
 	}
 	return nil
@@ -145,7 +145,7 @@ func (req *restL2ConnectionUpdateRequest) Execute() error {
 	}
 	if req.name != "" || (req.speed > 0 && req.speedUnit != "") {
 		restReq := req.c.R().SetQueryParam("action", "update").SetBody(&reqBody)
-		if err := req.c.Execute(restReq, resty.MethodPatch, path); err != nil {
+		if err := req.c.Execute(restReq, http.MethodPatch, path); err != nil {
 			return err
 		}
 	}

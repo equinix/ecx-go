@@ -2,9 +2,9 @@ package ecx
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/equinix/ecx-go/internal/api"
-	"github.com/go-resty/resty/v2"
 )
 
 //GetUserPorts operation retrieves Equinix Fabric user ports
@@ -12,7 +12,7 @@ func (c RestClient) GetUserPorts() ([]Port, error) {
 	path := "/ecx/v3/port/userport"
 	respBody := []api.Port{}
 	req := c.R().SetResult(&respBody)
-	if err := c.Execute(req, resty.MethodGet, path); err != nil {
+	if err := c.Execute(req, http.MethodGet, path); err != nil {
 		return nil, err
 	}
 	mapped := make([]Port, len(respBody))

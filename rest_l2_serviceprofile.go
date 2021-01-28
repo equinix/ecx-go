@@ -2,11 +2,11 @@ package ecx
 
 import (
 	"fmt"
+	"net/http"
 	"net/url"
 
 	"github.com/equinix/ecx-go/internal/api"
 	"github.com/equinix/rest-go"
-	"github.com/go-resty/resty/v2"
 )
 
 //GetL2SellerProfiles operations retrieves available layer2 seller service profiles
@@ -31,7 +31,7 @@ func (c RestClient) GetL2ServiceProfile(uuid string) (*L2ServiceProfile, error) 
 	path := "/ecx/v3/l2/serviceprofiles/" + url.PathEscape(uuid)
 	respBody := api.L2ServiceProfile{}
 	req := c.R().SetResult(&respBody)
-	if err := c.Execute(req, resty.MethodGet, path); err != nil {
+	if err := c.Execute(req, http.MethodGet, path); err != nil {
 		return nil, err
 	}
 	return mapL2ServiceProfileAPIToDomain(respBody), nil
@@ -44,7 +44,7 @@ func (c RestClient) CreateL2ServiceProfile(l2profile L2ServiceProfile) (*L2Servi
 	reqBody := mapL2ServiceProfileDomainToAPI(l2profile)
 	respBody := api.CreateL2ServiceProfileResponse{}
 	req := c.R().SetBody(&reqBody).SetResult(&respBody)
-	if err := c.Execute(req, resty.MethodPost, path); err != nil {
+	if err := c.Execute(req, http.MethodPost, path); err != nil {
 		return nil, err
 	}
 	l2profile.UUID = respBody.UUID
@@ -61,7 +61,7 @@ func (c RestClient) UpdateL2ServiceProfile(sp L2ServiceProfile) (*L2ServiceProfi
 	reqBody := mapL2ServiceProfileDomainToAPI(sp)
 	respBody := api.CreateL2ServiceProfileResponse{}
 	req := c.R().SetBody(&reqBody).SetResult(&respBody)
-	if err := c.Execute(req, resty.MethodPut, path); err != nil {
+	if err := c.Execute(req, http.MethodPut, path); err != nil {
 		return nil, err
 	}
 	return &sp, nil
@@ -72,7 +72,7 @@ func (c RestClient) DeleteL2ServiceProfile(uuid string) error {
 	path := "/ecx/v3/l2/serviceprofiles/" + url.PathEscape(uuid)
 	respBody := api.L2ServiceProfileDeleteResponse{}
 	req := c.R().SetResult(&respBody)
-	if err := c.Execute(req, resty.MethodDelete, path); err != nil {
+	if err := c.Execute(req, http.MethodDelete, path); err != nil {
 		return err
 	}
 	return nil
