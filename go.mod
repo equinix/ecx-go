@@ -1,4 +1,4 @@
-module github.com/equinix/ecx-go
+module github.com/equinix/ecx-go/v2
 
 go 1.14
 

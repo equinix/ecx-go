@@ -204,7 +204,7 @@ type Port struct {
 	Status        *string
 }
 
-//L2SellerProfileMetro describces details of a metro in which service provices is present
+//L2SellerProfileMetro describes details of a metro in which service provices is present
 type L2SellerProfileMetro struct {
 	Code    *string
 	Name    *string
@@ -212,7 +212,7 @@ type L2SellerProfileMetro struct {
 	Regions map[string]string
 }
 
-//L2SellerProfileAdditionalInfo describces additional information that might be provided by service buyer when using given seller profile
+//L2SellerProfileAdditionalInfo describes additional information that might be provided by service buyer when using given seller profile
 type L2SellerProfileAdditionalInfo struct {
 	Name             *string
 	Description      *string

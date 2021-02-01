@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/equinix/ecx-go/internal/api"
+	"github.com/equinix/ecx-go/v2/internal/api"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 )

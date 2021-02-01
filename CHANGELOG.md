@@ -1,4 +1,29 @@
-## 1.3.0 (Unreleased)
+## 2.0.0 (February 01, 2021)
+
+BREAKING CHANGES:
+
+* General change in create functions: instead of returning copy of input structure,
+that might be outdated anyway, functions return pointers to created object's identifiers.
+Change affects below functions:
+  * `CreateL2Connection`
+  * `CreateL2Connection`
+  * `CreateL2ServiceProfile`
+* `UpdateL2ServiceProfile` doest not return service profile's structure anymore
+* General change in L2 Connection and Service Profile models: all basic type fields
+are pointers now. Change affects below structures:
+  * `L2Connection`
+  * `L2ConnectionAdditionalInfo`
+  * `L2ConnectionAction`
+  * `L2ConnectionActionData`
+  * `L2ConnectionToConfirm`
+  * `L2ConnectionConfirmation`
+  * `L2ServiceProfile`
+  * `L2ServiceProfilePort`
+  * `L2ServiceProfileSpeedBand`
+  * `L2ServiceProfileFeatures`
+  * `Port`
+  * `L2SellerProfileMetro`
+  * `L2SellerProfileAdditionalInfo`
 
 ENHANCEMENTS:
 

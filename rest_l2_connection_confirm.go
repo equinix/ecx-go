@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/equinix/ecx-go/internal/api"
+	"github.com/equinix/ecx-go/v2/internal/api"
 )
 
 //ConfirmL2Connection operation accepts a hosted connection

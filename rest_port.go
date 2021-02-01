@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/equinix/ecx-go/internal/api"
+	"github.com/equinix/ecx-go/v2/internal/api"
 )
 
 //GetUserPorts operation retrieves Equinix Fabric user ports
