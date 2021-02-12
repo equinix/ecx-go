@@ -1,3 +1,10 @@
+## 2.0.1 (February 12, 2021)
+
+BUG FIXES:
+
+* upgraded to rest-go v1.2.2 to solve pagination issues
+[equinix/terraform-provider-equinix#41](https://github.com/equinix/terraform-provider-equinix/issues/41)
+
 ## 2.0.0 (February 01, 2021)
 
 BREAKING CHANGES:
