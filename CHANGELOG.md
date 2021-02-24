@@ -1,3 +1,9 @@
+## 2.0.2 (February 24, 2021)
+
+NOTES:
+
+* upgraded rest-go to v1.3.0 + testify and httpmock modules
+
 ## 2.0.1 (February 12, 2021)
 
 BUG FIXES:
