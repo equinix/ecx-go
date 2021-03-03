@@ -364,3 +364,29 @@ func verifyL2ConnectionAction(t *testing.T, action L2ConnectionAction, apiAction
 		assert.Equal(t, action.RequiredData[i].ValidationPattern, apiAction.ActionRequiredData[i].ValidationPattern, "ValidationPattern matches")
 	}
 }
+
+func TestCreateL2RedundantConnectionRequest_oneDevice(t *testing.T) {
+	//given
+	primary := L2Connection{
+		Name:              String("primary"),
+		ProfileUUID:       String("profileID"),
+		DeviceUUID:        String("deviceID"),
+		DeviceInterfaceID: Int(4),
+		Speed:             Int(50),
+		SpeedUnit:         String("Mbps"),
+		SellerMetroCode:   String("SV"),
+		SellerRegion:      String("us-west1"),
+		AuthorizationKey:  String("authKey"),
+	}
+	secondary := L2Connection{
+		Name:              String("secondary"),
+		DeviceUUID:        primary.DeviceUUID,
+		DeviceInterfaceID: Int(5),
+	}
+	//when
+	request := createL2RedundantConnectionRequest(primary, secondary)
+	//then
+	assert.Nil(t, request.SecondaryVirtualDeviceUUID, "Secondary device UUID is not set")
+	assert.Equal(t, secondary.Name, request.SecondaryName, "Secondary name matches")
+	assert.Equal(t, secondary.DeviceInterfaceID, request.SecondaryInterfaceID, "Secondary deviceInterfaceID name matches")
+}

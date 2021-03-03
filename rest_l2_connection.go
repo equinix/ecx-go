@@ -205,7 +205,9 @@ func createL2RedundantConnectionRequest(primary L2Connection, secondary L2Connec
 	connReq := createL2ConnectionRequest(primary)
 	connReq.SecondaryName = secondary.Name
 	connReq.SecondaryPortUUID = secondary.PortUUID
-	connReq.SecondaryVirtualDeviceUUID = secondary.DeviceUUID
+	if StringValue(primary.DeviceUUID) != StringValue(secondary.DeviceUUID) {
+		connReq.SecondaryVirtualDeviceUUID = secondary.DeviceUUID
+	}
 	connReq.SecondaryVlanSTag = secondary.VlanSTag
 	connReq.SecondaryVlanCTag = secondary.VlanCTag
 	connReq.SecondaryZSidePortUUID = secondary.ZSidePortUUID

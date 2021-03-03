@@ -1,3 +1,10 @@
+## 2.0.3 (March 03, 2021)
+
+BUG FIXES:
+
+* creation of redundant connection from a single device is now reflecting
+upstream API logic
+
 ## 2.0.2 (February 24, 2021)
 
 NOTES:
