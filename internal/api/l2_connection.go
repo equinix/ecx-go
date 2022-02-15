@@ -26,6 +26,7 @@ type L2ConnectionResponse struct {
 	RedundantUUID       *string                      `json:"redundantUUID,omitempty"`
 	RedundancyType      *string                      `json:"redundancyType,omitempty"`
 	ActionDetails       []L2ConnectionActionDetail   `json:"actionDetails,omitempty"`
+	VendorToken         *string                      `json:"vendorToken,omitempty"`
 }
 
 //DeleteL2ConnectionResponse l2 connection delete response
@@ -70,6 +71,7 @@ type L2ConnectionRequest struct {
 	SellerRegion               *string                      `json:"sellerRegion,omitempty"`
 	SellerMetroCode            *string                      `json:"sellerMetroCode,omitempty"`
 	AuthorizationKey           *string                      `json:"authorizationKey,omitempty"`
+	PrimaryServiceToken        *string                      `json:"primaryServiceToken,omitempty"`
 }
 
 //CreateL2ConnectionResponse post l2 connection response

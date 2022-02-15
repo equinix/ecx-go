@@ -156,6 +156,39 @@ func TestCreateDeviceL2Connection(t *testing.T) {
 	assert.Equal(t, uuid, respBody.PrimaryConnectionID, "UUID matches")
 }
 
+func TestCreateServiceTokenL2Connection(t *testing.T) {
+	//Given
+	respBody := api.CreateL2ConnectionResponse{}
+	if err := readJSONData("./test-fixtures/ecx_l2connection_post_resp.json", &respBody); err != nil {
+		assert.Failf(t, "Cannot read test response due to %s", err.Error())
+	}
+	reqBody := api.L2ConnectionRequest{}
+	testHc := &http.Client{}
+	httpmock.ActivateNonDefault(testHc)
+	httpmock.RegisterResponder("POST", fmt.Sprintf("%s/ecx/v3/l2/connections", baseURL),
+		func(r *http.Request) (*http.Response, error) {
+			if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
+				return httpmock.NewStringResponse(400, ""), nil
+			}
+			resp, _ := httpmock.NewJsonResponse(200, respBody)
+			return resp, nil
+		},
+	)
+	defer httpmock.DeactivateAndReset()
+	newConnection := testPrimaryConnection
+	newConnection.ServiceToken = String("serviceToken")
+
+	//When
+	ecxClient := NewClient(context.Background(), baseURL, testHc)
+	uuid, err := ecxClient.CreateL2Connection(newConnection)
+
+	//Then
+	assert.Nil(t, err, "Client should not return an error")
+	assert.NotNil(t, uuid, "Client should return a response")
+	verifyL2ConnectionRequest(t, newConnection, reqBody)
+	assert.Equal(t, uuid, respBody.PrimaryConnectionID, "UUID matches")
+}
+
 func TestCreateRedundantL2Connection(t *testing.T) {
 	//Given
 	respBody := api.CreateL2ConnectionResponse{}
@@ -319,7 +352,8 @@ func verifyL2ConnectionRequest(t *testing.T, conn L2Connection, req api.L2Connec
 	assert.Equal(t, conn.ZSideVlanCTag, req.PrimaryZSideVlanCTag, "PrimaryZSideVlanCTag matches")
 	assert.Equal(t, conn.SellerRegion, req.SellerRegion, "SellerRegion matches")
 	assert.Equal(t, conn.SellerMetroCode, req.SellerMetroCode, "SellerMetroCode matches")
-	assert.Equal(t, conn.AuthorizationKey, req.AuthorizationKey, "Authorization key matches")
+	assert.Equal(t, conn.AuthorizationKey, req.AuthorizationKey, "AuthorizationKey matches")
+	assert.Equal(t, conn.ServiceToken, req.PrimaryServiceToken, "PrimaryServiceToken matches")
 
 	assert.Equal(t, len(conn.AdditionalInfo), len(req.AdditionalInfo), "AdditionalInfo array size matches")
 	for i := range conn.AdditionalInfo {

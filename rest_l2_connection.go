@@ -175,6 +175,7 @@ func mapGETToL2Connection(getResponse api.L2ConnectionResponse) *L2Connection {
 		RedundantUUID:       getResponse.RedundantUUID,
 		RedundancyType:      getResponse.RedundancyType,
 		Actions:             mapL2ConnectionActionsAPIToDomain(getResponse.ActionDetails),
+		ServiceToken:        getResponse.VendorToken,
 	}
 }
 
@@ -198,7 +199,9 @@ func createL2ConnectionRequest(l2connection L2Connection) api.L2ConnectionReques
 		PrimaryZSideVlanCTag: l2connection.ZSideVlanCTag,
 		SellerRegion:         l2connection.SellerRegion,
 		SellerMetroCode:      l2connection.SellerMetroCode,
-		AuthorizationKey:     l2connection.AuthorizationKey}
+		AuthorizationKey:     l2connection.AuthorizationKey,
+		PrimaryServiceToken:  l2connection.ServiceToken,
+	}
 }
 
 func createL2RedundantConnectionRequest(primary L2Connection, secondary L2Connection) api.L2ConnectionRequest {
