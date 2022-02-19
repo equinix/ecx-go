@@ -99,6 +99,7 @@ type L2Connection struct {
 	RedundantUUID       *string
 	RedundancyType      *string
 	Actions             []L2ConnectionAction
+	ServiceToken        *string
 }
 
 //L2ConnectionAdditionalInfo additional info object used in L2 connections
