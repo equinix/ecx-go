@@ -40,7 +40,7 @@ const (
 type Client interface {
 	GetUserPorts() ([]Port, error)
 
-	GetL2OutgoingConnections(statuses []string) ([]L2Connection, error)
+	GetL2OutgoingConnections(criteria L2ConnectionsSearchCriteria) ([]L2Connection, error)
 	GetL2Connection(uuid string) (*L2Connection, error)
 	CreateL2Connection(conn L2Connection) (*string, error)
 	CreateL2RedundantConnection(priConn L2Connection, secConn L2Connection) (*string, *string, error)
@@ -98,6 +98,7 @@ type L2Connection struct {
 	AuthorizationKey    *string
 	RedundantUUID       *string
 	RedundancyType      *string
+	RedundancyGroup     *string
 	Actions             []L2ConnectionAction
 	ServiceToken        *string
 }

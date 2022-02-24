@@ -16,17 +16,26 @@ type restL2ConnectionUpdateRequest struct {
 	c         RestClient
 }
 
+// Valid fields to filter GetL2OutgoingConnections results
+type L2ConnectionsSearchCriteria struct {
+	authorizationKey string
+	statuses         []string
+	metroCode        string
+	buyerPortName    string
+	buyerPortUUID    string
+	searchType       string
+	subAccount       string
+}
+
 //GetL2OutgoingConnections retrieves list of all originating (a-side) layer 2 connections
 //for a customer account associated with authenticated application
-func (c RestClient) GetL2OutgoingConnections(statuses []string) ([]L2Connection, error) {
+func (c RestClient) GetL2OutgoingConnections(sc L2ConnectionsSearchCriteria) ([]L2Connection, error) {
 	path := "/ecx/v3/l2/buyer/connections"
 	pagingConfig := rest.DefaultPagingConfig().
 		SetSizeParamName("pageSize").
 		SetPageParamName("pageNumber").
 		SetFirstPageNumber(0)
-	if len(statuses) > 0 {
-		pagingConfig.SetAdditionalParams(map[string]string{"status": buildQueryParamValueString(statuses)})
-	}
+	pagingConfig.SetAdditionalParams(buildAdditionalParamsFromCriteria(sc))
 	content, err := c.GetPaginated(path, &api.L2BuyerConnectionsResponse{}, pagingConfig)
 	if err != nil {
 		return nil, err
@@ -174,6 +183,7 @@ func mapGETToL2Connection(getResponse api.L2ConnectionResponse) *L2Connection {
 		AuthorizationKey:    getResponse.AuthorizationKey,
 		RedundantUUID:       getResponse.RedundantUUID,
 		RedundancyType:      getResponse.RedundancyType,
+		RedundancyGroup:     getResponse.RedundancyGroup,
 		Actions:             mapL2ConnectionActionsAPIToDomain(getResponse.ActionDetails),
 		ServiceToken:        getResponse.VendorToken,
 	}
@@ -273,4 +283,30 @@ func mapL2ConnectionActionDataAPIToDomain(apiActionData []api.L2ConnectionAction
 		}
 	}
 	return transformed
+}
+
+func buildAdditionalParamsFromCriteria(sc L2ConnectionsSearchCriteria) map[string]string {
+	additionalParams := make(map[string]string)
+	if sc.authorizationKey != "" {
+		additionalParams["authorizationKey"] = sc.authorizationKey
+	}
+	if len(sc.statuses) > 0 {
+		additionalParams["status"] = buildQueryParamValueString(sc.statuses)
+	}
+	if sc.metroCode != "" {
+		additionalParams["metroCode"] = sc.metroCode
+	}
+	if sc.buyerPortName != "" {
+		additionalParams["buyerPortName"] = sc.buyerPortName
+	}
+	if sc.buyerPortUUID != "" {
+		additionalParams["buyerPortUUID"] = sc.buyerPortUUID
+	}
+	if sc.searchType != "" {
+		additionalParams["searchType"] = sc.searchType
+	}
+	if sc.subAccount != "" {
+		additionalParams["subAccount"] = sc.subAccount
+	}
+	return additionalParams
 }

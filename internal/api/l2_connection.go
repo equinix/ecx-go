@@ -23,8 +23,9 @@ type L2ConnectionResponse struct {
 	SellerRegion        *string                      `json:"sellerRegion,omitempty"`
 	SellerMetroCode     *string                      `json:"sellerMetroCode,omitempty"`
 	AuthorizationKey    *string                      `json:"authorizationKey,omitempty"`
-	RedundantUUID       *string                      `json:"redundantUUID,omitempty"`
 	RedundancyType      *string                      `json:"redundancyType,omitempty"`
+	RedundancyGroup     *string                      `json:"redundancyGroup,omitempty"`
+	RedundantUUID       *string                      `json:"redundantUUID,omitempty"`
 	ActionDetails       []L2ConnectionActionDetail   `json:"actionDetails,omitempty"`
 	VendorToken         *string                      `json:"vendorToken,omitempty"`
 }

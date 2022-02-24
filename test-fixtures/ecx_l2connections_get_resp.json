@@ -55,8 +55,7 @@
             "zSideVlanSTag": 2,
             "remote": true,
             "private": false,
-            "self": false,
-            "redundantUUID": "cef2b892-66f9-4843-8446-43d6b06eefdc"
+            "self": false
         },
         {
             "buyerOrganizationName": "sit-001",
@@ -77,6 +76,7 @@
             "speedUnit": "MB",
             "redundancyType": "primary",
             "redundancyGroup": "467eb280-52a0-405a-8fd3-eed91fc70ff6",
+            "redundantUUID": "a653087c-f128-41d9-967d-c718223a72d6",
             "sellerRegion": "us-east-1",
             "sellerMetroCode": "SV",
             "sellerMetroDescription": "Silicon Valley",
@@ -109,8 +109,7 @@
             "zSideVlanSTag": 2,
             "remote": true,
             "private": false,
-            "self": false,
-            "redundantUUID": "1902767c-2e77-41de-a7cb-bc9db91651a2"
+            "self": false
         },
         {
             "buyerOrganizationName": "sit-001",
@@ -131,6 +130,7 @@
             "speedUnit": "MB",
             "redundancyType": "secondary",
             "redundancyGroup": "61e0ed1e-d0fe-4555-a706-0abb1ce24c86",
+            "redundantUUID": "cf2b8be6-1a9f-42a5-b415-46ad759445b4",
             "sellerRegion": "us-east-1",
             "sellerMetroCode": "SV",
             "sellerMetroDescription": "Silicon Valley",
@@ -163,8 +163,7 @@
             "zSideVlanSTag": 2,
             "remote": true,
             "private": false,
-            "self": false,
-            "redundantUUID": "671bfe87-8865-4267-990d-b20c9e771fae"
+            "self": false
         }
     ],
     "pageNumber": 0
