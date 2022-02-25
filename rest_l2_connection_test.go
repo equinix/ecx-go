@@ -41,8 +41,8 @@ func TestGetL2OutgoingConnections(t *testing.T) {
 	}
 
 	criteria := L2ConnectionsSearchCriteria{
-		statuses: []string{ConnectionStatusProvisioned, ConnectionStatusProvisioning},
-		metroCode: "SV",
+		Statuses: []string{ConnectionStatusProvisioned, ConnectionStatusProvisioning},
+		MetroCode: "SV",
 	}
 	pageSize := IntValue(respBody.PageSize)
 	testHc := &http.Client{}

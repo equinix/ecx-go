@@ -225,11 +225,12 @@ type L2SellerProfileAdditionalInfo struct {
 
 //L2ConnectionsSearchCriteria includes valid fields to filter GetL2OutgoingConnections results
 type L2ConnectionsSearchCriteria struct {
-	authorizationKey string
-	statuses         []string
-	metroCode        string
-	buyerPortName    string
-	buyerPortUUID    string
-	searchType       string
-	subAccount       string
+	AuthorizationKey string
+	Statuses         []string
+	MetroCode        string
+	BuyerPortName    string
+	BuyerPortUUID    string
+	SearchType       string
+	SubAccount       string
 }
+

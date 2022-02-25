@@ -276,26 +276,26 @@ func mapL2ConnectionActionDataAPIToDomain(apiActionData []api.L2ConnectionAction
 
 func buildAdditionalParamsFromCriteria(sc L2ConnectionsSearchCriteria) map[string]string {
 	additionalParams := make(map[string]string)
-	if sc.authorizationKey != "" {
-		additionalParams["authorizationKey"] = sc.authorizationKey
+	if sc.AuthorizationKey != "" {
+		additionalParams["authorizationKey"] = sc.AuthorizationKey
 	}
-	if len(sc.statuses) > 0 {
-		additionalParams["status"] = buildQueryParamValueString(sc.statuses)
+	if len(sc.Statuses) > 0 {
+		additionalParams["status"] = buildQueryParamValueString(sc.Statuses)
 	}
-	if sc.metroCode != "" {
-		additionalParams["metroCode"] = sc.metroCode
+	if sc.MetroCode != "" {
+		additionalParams["metroCode"] = sc.MetroCode
 	}
-	if sc.buyerPortName != "" {
-		additionalParams["buyerPortName"] = sc.buyerPortName
+	if sc.BuyerPortName != "" {
+		additionalParams["buyerPortName"] = sc.BuyerPortName
 	}
-	if sc.buyerPortUUID != "" {
-		additionalParams["buyerPortUUID"] = sc.buyerPortUUID
+	if sc.BuyerPortUUID != "" {
+		additionalParams["buyerPortUUID"] = sc.BuyerPortUUID
 	}
-	if sc.searchType != "" {
-		additionalParams["searchType"] = sc.searchType
+	if sc.SearchType != "" {
+		additionalParams["searchType"] = sc.SearchType
 	}
-	if sc.subAccount != "" {
-		additionalParams["subAccount"] = sc.subAccount
+	if sc.SubAccount != "" {
+		additionalParams["subAccount"] = sc.SubAccount
 	}
 	return additionalParams
 }
