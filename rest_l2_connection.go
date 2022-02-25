@@ -16,17 +16,6 @@ type restL2ConnectionUpdateRequest struct {
 	c         RestClient
 }
 
-// Valid fields to filter GetL2OutgoingConnections results
-type L2ConnectionsSearchCriteria struct {
-	authorizationKey string
-	statuses         []string
-	metroCode        string
-	buyerPortName    string
-	buyerPortUUID    string
-	searchType       string
-	subAccount       string
-}
-
 //GetL2OutgoingConnections retrieves list of all originating (a-side) layer 2 connections
 //for a customer account associated with authenticated application
 func (c RestClient) GetL2OutgoingConnections(sc L2ConnectionsSearchCriteria) ([]L2Connection, error) {

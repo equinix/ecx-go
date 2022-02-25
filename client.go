@@ -222,3 +222,14 @@ type L2SellerProfileAdditionalInfo struct {
 	IsMandatory      *bool
 	IsCaptureInEmail *bool
 }
+
+//L2ConnectionsSearchCriteria includes valid fields to filter GetL2OutgoingConnections results
+type L2ConnectionsSearchCriteria struct {
+	authorizationKey string
+	statuses         []string
+	metroCode        string
+	buyerPortName    string
+	buyerPortUUID    string
+	searchType       string
+	subAccount       string
+}
