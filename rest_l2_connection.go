@@ -18,13 +18,15 @@ type restL2ConnectionUpdateRequest struct {
 
 //GetL2OutgoingConnections retrieves list of all originating (a-side) layer 2 connections
 //for a customer account associated with authenticated application
-func (c RestClient) GetL2OutgoingConnections(sc L2ConnectionsSearchCriteria) ([]L2Connection, error) {
+func (c RestClient) GetL2OutgoingConnections(statuses []string) ([]L2Connection, error) {
 	path := "/ecx/v3/l2/buyer/connections"
 	pagingConfig := rest.DefaultPagingConfig().
 		SetSizeParamName("pageSize").
 		SetPageParamName("pageNumber").
 		SetFirstPageNumber(0)
-	pagingConfig.SetAdditionalParams(buildAdditionalParamsFromCriteria(sc))
+	if len(statuses) > 0 {
+		pagingConfig.SetAdditionalParams(map[string]string{"status": buildQueryParamValueString(statuses)})
+	}
 	content, err := c.GetPaginated(path, &api.L2BuyerConnectionsResponse{}, pagingConfig)
 	if err != nil {
 		return nil, err
@@ -272,30 +274,4 @@ func mapL2ConnectionActionDataAPIToDomain(apiActionData []api.L2ConnectionAction
 		}
 	}
 	return transformed
-}
-
-func buildAdditionalParamsFromCriteria(sc L2ConnectionsSearchCriteria) map[string]string {
-	additionalParams := make(map[string]string)
-	if sc.AuthorizationKey != "" {
-		additionalParams["authorizationKey"] = sc.AuthorizationKey
-	}
-	if len(sc.Statuses) > 0 {
-		additionalParams["status"] = buildQueryParamValueString(sc.Statuses)
-	}
-	if sc.MetroCode != "" {
-		additionalParams["metroCode"] = sc.MetroCode
-	}
-	if sc.BuyerPortName != "" {
-		additionalParams["buyerPortName"] = sc.BuyerPortName
-	}
-	if sc.BuyerPortUUID != "" {
-		additionalParams["buyerPortUUID"] = sc.BuyerPortUUID
-	}
-	if sc.SearchType != "" {
-		additionalParams["searchType"] = sc.SearchType
-	}
-	if sc.SubAccount != "" {
-		additionalParams["subAccount"] = sc.SubAccount
-	}
-	return additionalParams
 }

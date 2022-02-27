@@ -40,7 +40,7 @@ const (
 type Client interface {
 	GetUserPorts() ([]Port, error)
 
-	GetL2OutgoingConnections(criteria L2ConnectionsSearchCriteria) ([]L2Connection, error)
+	GetL2OutgoingConnections(statuses []string) ([]L2Connection, error)
 	GetL2Connection(uuid string) (*L2Connection, error)
 	CreateL2Connection(conn L2Connection) (*string, error)
 	CreateL2RedundantConnection(priConn L2Connection, secConn L2Connection) (*string, *string, error)
@@ -222,15 +222,3 @@ type L2SellerProfileAdditionalInfo struct {
 	IsMandatory      *bool
 	IsCaptureInEmail *bool
 }
-
-//L2ConnectionsSearchCriteria includes valid fields to filter GetL2OutgoingConnections results
-type L2ConnectionsSearchCriteria struct {
-	AuthorizationKey string
-	Statuses         []string
-	MetroCode        string
-	BuyerPortName    string
-	BuyerPortUUID    string
-	SearchType       string
-	SubAccount       string
-}
-

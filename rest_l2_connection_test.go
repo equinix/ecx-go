@@ -40,14 +40,11 @@ func TestGetL2OutgoingConnections(t *testing.T) {
 		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
 
-	criteria := L2ConnectionsSearchCriteria{
-		Statuses: []string{ConnectionStatusProvisioned, ConnectionStatusProvisioning},
-		MetroCode: "SV",
-	}
+	statuses := []string{ConnectionStatusProvisioned, ConnectionStatusProvisioning}
 	pageSize := IntValue(respBody.PageSize)
 	testHc := &http.Client{}
 	httpmock.ActivateNonDefault(testHc)
-	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/ecx/v3/l2/buyer/connections?metroCode=%s&pageSize=%d&status=%s", baseURL, criteria.metroCode, pageSize, url.QueryEscape(strings.Join(criteria.statuses[:], ","))),
+	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/ecx/v3/l2/buyer/connections?pageSize=%d&status=%s", baseURL, pageSize, url.QueryEscape(strings.Join(statuses[:], ","))),
 		func(r *http.Request) (*http.Response, error) {
 			resp, _ := httpmock.NewJsonResponse(200, respBody)
 			return resp, nil
@@ -58,7 +55,7 @@ func TestGetL2OutgoingConnections(t *testing.T) {
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
 	ecxClient.SetPageSize(pageSize)
-	conns, err := ecxClient.GetL2OutgoingConnections(criteria)
+	conns, err := ecxClient.GetL2OutgoingConnections(statuses)
 
 	//Then
 	assert.Nil(t, err, "Client should not return an error")
