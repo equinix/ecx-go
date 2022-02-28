@@ -19,6 +19,8 @@
     "speed": 50,
     "speedUnit": "MB",
     "redundancyType": "primary",
+    "redundancyGroup": "1b99d53c-b11c-4f36-be21-1a1fce8cbf3e",
+    "redundantUUID": "acc33595-a7a7-4b70-a5b1-00e9a171f112",
     "sellerRegion": "us-east-1",
     "sellerMetroCode": "SV",
     "sellerServiceName": "2020-04-16_7",
@@ -45,7 +47,6 @@
     "remote": true,
     "private": false,
     "self": false,
-    "redundantUUID": "a653087c-f128-41d9-967d-c718223a72d6",
     "namedTag": "Private",
     "vendorToken": "a87166ad0-9e02-42b6-bfc3-b3696d53db12",
     "additionalInfo": [

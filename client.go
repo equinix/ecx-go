@@ -98,6 +98,7 @@ type L2Connection struct {
 	AuthorizationKey    *string
 	RedundantUUID       *string
 	RedundancyType      *string
+	RedundancyGroup     *string
 	Actions             []L2ConnectionAction
 	ServiceToken        *string
 }

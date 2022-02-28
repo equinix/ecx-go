@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"testing"
+	"strings"
 
 	"github.com/equinix/ecx-go/v2/internal/api"
 	"github.com/jarcoal/httpmock"
@@ -38,10 +39,12 @@ func TestGetL2OutgoingConnections(t *testing.T) {
 	if err := readJSONData("./test-fixtures/ecx_l2connections_get_resp.json", &respBody); err != nil {
 		assert.Failf(t, "Cannot read test response due to %s", err.Error())
 	}
+
+	statuses := []string{ConnectionStatusProvisioned, ConnectionStatusProvisioning}
 	pageSize := IntValue(respBody.PageSize)
 	testHc := &http.Client{}
 	httpmock.ActivateNonDefault(testHc)
-	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/ecx/v3/l2/buyer/connections?pageSize=%d&status=%s", baseURL, pageSize, url.QueryEscape("PROVISIONED,PROVISIONING")),
+	httpmock.RegisterResponder("GET", fmt.Sprintf("%s/ecx/v3/l2/buyer/connections?pageSize=%d&status=%s", baseURL, pageSize, url.QueryEscape(strings.Join(statuses[:], ","))),
 		func(r *http.Request) (*http.Response, error) {
 			resp, _ := httpmock.NewJsonResponse(200, respBody)
 			return resp, nil
@@ -52,7 +55,7 @@ func TestGetL2OutgoingConnections(t *testing.T) {
 	//When
 	ecxClient := NewClient(context.Background(), baseURL, testHc)
 	ecxClient.SetPageSize(pageSize)
-	conns, err := ecxClient.GetL2OutgoingConnections([]string{ConnectionStatusProvisioned, ConnectionStatusProvisioning})
+	conns, err := ecxClient.GetL2OutgoingConnections(statuses)
 
 	//Then
 	assert.Nil(t, err, "Client should not return an error")
@@ -324,6 +327,7 @@ func verifyL2Connection(t *testing.T, conn L2Connection, resp api.L2ConnectionRe
 	assert.Equal(t, resp.AuthorizationKey, conn.AuthorizationKey, "AuthorizationKey matches")
 	assert.Equal(t, resp.RedundantUUID, conn.RedundantUUID, "RedundantUUID key matches")
 	assert.Equal(t, resp.RedundancyType, conn.RedundancyType, "RedundancyType matches")
+	assert.Equal(t, resp.RedundancyGroup, conn.RedundancyGroup, "RedundancyGroup matches")
 	assert.Equal(t, len(resp.AdditionalInfo), len(conn.AdditionalInfo), "AdditionalInfo array size matches")
 	for i := range resp.AdditionalInfo {
 		verifyL2ConnectionAdditionalInfo(t, conn.AdditionalInfo[i], resp.AdditionalInfo[i])
