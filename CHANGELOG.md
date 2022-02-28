@@ -1,3 +1,17 @@
+## 2.1.1 (February 28, 2022)
+
+ENHANCEMENTS:
+
+* **L2Connection** added additional attributes:
+  * *RedundancyGroup* an unique identifier of group containing a primary and secondary connection
+
+## 2.1.0 (February 21, 2022)
+
+FEATURES:
+
+* **L2Connection** can be created with a ServiceToken (in addition to port and device identifier)
+ key given by a provider that grants you authorization to enable connectivity from a shared multi-tenant port (a-side)
+
 ## 2.0.3 (March 03, 2021)
 
 BUG FIXES:
