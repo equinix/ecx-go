@@ -216,6 +216,7 @@ func TestCreateRedundantL2Connection(t *testing.T) {
 		Name:              String("secName"),
 		PortUUID:          String("secondaryPortUUID"),
 		DeviceUUID:        String("secondaryDeviceUUID"),
+		ServiceToken:      String("secondaryServiceToken"),
 		VlanSTag:          Int(690),
 		VlanCTag:          Int(691),
 		ZSidePortUUID:     String("secondaryZSidePortUUID"),

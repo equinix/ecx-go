@@ -1,3 +1,10 @@
+## 2.2.0 (March 11, 2022)
+
+FEATURES:
+
+* **L2Connection** redundant connection now can be created with a ServiceToken (one a-side service
+ token for each connection)
+
 ## 2.1.1 (February 28, 2022)
 
 ENHANCEMENTS:
@@ -10,7 +17,8 @@ ENHANCEMENTS:
 FEATURES:
 
 * **L2Connection** can be created with a ServiceToken (in addition to port and device identifier)
- key given by a provider that grants you authorization to enable connectivity from a shared multi-tenant port (a-side)
+ key given by a provider that grants you authorization to enable connectivity from a shared
+ multi-tenant port (a-side)
 
 ## 2.0.3 (March 03, 2021)
 

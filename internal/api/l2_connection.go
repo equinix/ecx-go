@@ -46,6 +46,7 @@ type L2ConnectionRequest struct {
 	PurchaseOrderNumber        *string                      `json:"purchaseOrderNumber"`
 	PrimaryPortUUID            *string                      `json:"primaryPortUUID,omitempty"`
 	VirtualDeviceUUID          *string                      `json:"virtualDeviceUUID,omitempty"`
+	PrimaryServiceToken        *string                      `json:"primaryServiceToken,omitempty"`
 	InterfaceID                *int                         `json:"interfaceId,omitempty"`
 	PrimaryVlanSTag            *int                         `json:"primaryVlanSTag,omitempty"`
 	PrimaryVlanCTag            *int                         `json:"primaryVlanCTag,omitempty"`
@@ -69,10 +70,10 @@ type L2ConnectionRequest struct {
 	SecondarySellerMetroCode   *string                      `json:"secondarySellerMetroCode,omitempty"`
 	SecondarySellerRegion      *string                      `json:"secondarySellerRegion,omitempty"`
 	SecondaryInterfaceID       *int                         `json:"secondaryInterfaceId,omitempty"`
+	SecondaryServiceToken      *string                      `json:"secondaryServiceToken,omitempty"`
 	SellerRegion               *string                      `json:"sellerRegion,omitempty"`
 	SellerMetroCode            *string                      `json:"sellerMetroCode,omitempty"`
 	AuthorizationKey           *string                      `json:"authorizationKey,omitempty"`
-	PrimaryServiceToken        *string                      `json:"primaryServiceToken,omitempty"`
 }
 
 //CreateL2ConnectionResponse post l2 connection response
