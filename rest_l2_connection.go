@@ -224,6 +224,7 @@ func createL2RedundantConnectionRequest(primary L2Connection, secondary L2Connec
 	connReq.SecondarySellerMetroCode = secondary.SellerMetroCode
 	connReq.SecondarySellerRegion = secondary.SellerRegion
 	connReq.SecondaryInterfaceID = secondary.DeviceInterfaceID
+	connReq.SecondaryServiceToken = secondary.ServiceToken
 	return connReq
 }
 
