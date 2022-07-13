@@ -101,6 +101,7 @@ type L2Connection struct {
 	RedundancyGroup     *string
 	Actions             []L2ConnectionAction
 	ServiceToken        *string
+	ZSideServiceToken   *string
 }
 
 //L2ConnectionAdditionalInfo additional info object used in L2 connections
