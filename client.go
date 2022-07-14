@@ -102,6 +102,7 @@ type L2Connection struct {
 	Actions             []L2ConnectionAction
 	ServiceToken        *string
 	ZSideServiceToken   *string
+	VendorToken         *string
 }
 
 //L2ConnectionAdditionalInfo additional info object used in L2 connections

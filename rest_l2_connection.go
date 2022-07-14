@@ -150,18 +150,6 @@ func (req *restL2ConnectionUpdateRequest) Execute() error {
 }
 
 func mapGETToL2Connection(getResponse api.L2ConnectionResponse) *L2Connection {
-	//Both a-side/z-side service tokens are returned in the vendorToken attribute.
-	//Service tokens cannot be used for both sides in a single connection.
-	//To distinguish between the two options, any service profile (SP) field can give us a hint,
-	//since service tokens are created at port level and not through an SP, and SPs are always
-	//the z-side of the connection, so in that case service token can only be used for the a-side.
-	var serviceToken, zSideServiceToken *string
-	if getResponse.SellerServiceUUID != nil || getResponse.AuthorizationKey != nil {
-		serviceToken = getResponse.VendorToken
-	} else {
-		zSideServiceToken = getResponse.VendorToken
-	}
-
 	return &L2Connection{
 		UUID:                getResponse.UUID,
 		Name:                getResponse.Name,
@@ -188,8 +176,7 @@ func mapGETToL2Connection(getResponse api.L2ConnectionResponse) *L2Connection {
 		RedundancyType:      getResponse.RedundancyType,
 		RedundancyGroup:     getResponse.RedundancyGroup,
 		Actions:             mapL2ConnectionActionsAPIToDomain(getResponse.ActionDetails),
-		ServiceToken:        serviceToken,
-		ZSideServiceToken:   zSideServiceToken,
+		VendorToken:         getResponse.VendorToken,
 	}
 }
 
