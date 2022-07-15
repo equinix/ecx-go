@@ -1,3 +1,25 @@
+## 2.3.0 (July 15, 2022)
+
+DEPRECATION:
+
+* General change in GET L2 connections functions: *ServiceToken* should not be used to populate the
+a-side token with which the connection was created. It is maintained for historical compability but
+can contain both a-side/z-side tokens. To access the token returned by a GET operation use the
+L2Connection.VendorToken string. Change affects below functions:
+  * `GetL2Connection`
+  * `GetL2OutgoingConnections`
+
+ENHANCEMENTS:
+
+* **L2Connection** added additional attributes:
+  * *ZSideServiceToken* can be used (in addition to service profile and zside port) to define the
+  connection destination. key given by a provider that grants you authorization to enable
+  connectivity to a shared multi-tenant port (z-side)
+  * *VendorToken* can be used to populate the Equinix Fabric Token the connection was created with
+  (if applicable).The token can be any of *ServiceToken* (a-side) or *ZSideServiceToken* (z-side).
+  Any mechanism to determine the token type (a-side/z-side), must be implemented by the
+  user/consumer of the SDK.
+
 ## 2.2.0 (March 11, 2022)
 
 FEATURES:
