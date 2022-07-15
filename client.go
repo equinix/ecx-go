@@ -100,7 +100,24 @@ type L2Connection struct {
 	RedundancyType      *string
 	RedundancyGroup     *string
 	Actions             []L2ConnectionAction
+	// ServiceToken is used to create connections with an a-side Equinix Fabric Token
+	// Applicable for CREATE operations: CreateL2Connection, CreateL2RedundantConnection...
+	//
+	// Deprecated: ServiceToken (GET operations) - Starting with v2.3.0 this field should not be
+	// used to populate the a-side token with which the connection was created. It is maintained
+	// for historical compability but can contain both a-side/z-side tokens. To access the token
+	// returned by a GET operation (GetL2Connection, GetL2OutgoingConnections...), use the
+	// L2Connection.VendorToken string.
 	ServiceToken        *string
+	// ZSideServiceToken is used to create connections using a z-side Equinix Fabric Token
+	// Applicable for CREATE operations: CreateL2Connection, CreateL2RedundantConnection...
+	ZSideServiceToken   *string
+	// VendorToken is used in GET Operations (GetL2Connection, GetL2OutgoingConnections...) to
+	// populate the Equinix Fabric Token the connection was created with (if applicable). The token
+	// can be any of ServiceToken (a-side) or ZSideServiceToken (z-side). Any mechanism to
+	// determine the token type (a-side/z-side), must be implemented by the user/consumer of the
+	// SDK.
+	VendorToken         *string
 }
 
 //L2ConnectionAdditionalInfo additional info object used in L2 connections
