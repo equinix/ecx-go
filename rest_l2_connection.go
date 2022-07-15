@@ -176,6 +176,7 @@ func mapGETToL2Connection(getResponse api.L2ConnectionResponse) *L2Connection {
 		RedundancyType:      getResponse.RedundancyType,
 		RedundancyGroup:     getResponse.RedundancyGroup,
 		Actions:             mapL2ConnectionActionsAPIToDomain(getResponse.ActionDetails),
+		ServiceToken:        getResponse.VendorToken,
 		VendorToken:         getResponse.VendorToken,
 	}
 }
