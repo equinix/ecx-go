@@ -396,7 +396,7 @@ func TestCreateL2RedundantConnectionRequest_oneDevice(t *testing.T) {
 	//when
 	request := createL2RedundantConnectionRequest(primary, secondary)
 	//then
-	assert.Nil(t, request.SecondaryVirtualDeviceUUID, "Secondary device UUID is not set")
+	assert.Equal(t, secondary.DeviceUUID, request.SecondaryVirtualDeviceUUID, "Secondary deviceUUID matches")
 	assert.Equal(t, secondary.Name, request.SecondaryName, "Secondary name matches")
 	assert.Equal(t, secondary.DeviceInterfaceID, request.SecondaryInterfaceID, "Secondary deviceInterfaceID name matches")
 }
